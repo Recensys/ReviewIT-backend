@@ -1,0 +1,4 @@
+C:\repos\Recensys-Backend\ReviewIT-Backend\RecensysRepository\bin\Release\RecensysRepository.dll
+C:\repos\Recensys-Backend\ReviewIT-Backend\RecensysRepository\bin\Release\RecensysRepository.pdb
+C:\repos\Recensys-Backend\ReviewIT-Backend\RecensysRepository\obj\Release\RecensysRepository.dll
+C:\repos\Recensys-Backend\ReviewIT-Backend\RecensysRepository\obj\Release\RecensysRepository.pdb

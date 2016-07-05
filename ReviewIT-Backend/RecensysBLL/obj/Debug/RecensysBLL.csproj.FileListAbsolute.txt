@@ -1,0 +1,14 @@
+C:\Users\Mathias\Documents\repos\Recensys-Backend\ReviewIT-Backend\RecensysBLL\obj\Debug\RecensysBLL.csprojResolveAssemblyReference.cache
+C:\Users\Mathias\Documents\repos\Recensys-Backend\ReviewIT-Backend\RecensysBLL\bin\Debug\RecensysBLL.dll
+C:\Users\Mathias\Documents\repos\Recensys-Backend\ReviewIT-Backend\RecensysBLL\bin\Debug\RecensysBLL.pdb
+C:\Users\Mathias\Documents\repos\Recensys-Backend\ReviewIT-Backend\RecensysBLL\bin\Debug\RecensysRepository.dll
+C:\Users\Mathias\Documents\repos\Recensys-Backend\ReviewIT-Backend\RecensysBLL\bin\Debug\RecensysRepository.pdb
+C:\Users\Mathias\Documents\repos\Recensys-Backend\ReviewIT-Backend\RecensysBLL\obj\Debug\RecensysBLL.dll
+C:\Users\Mathias\Documents\repos\Recensys-Backend\ReviewIT-Backend\RecensysBLL\obj\Debug\RecensysBLL.pdb
+C:\repos\Recensys-Backend\ReviewIT-Backend\RecensysBLL\bin\Debug\RecensysBLL.dll
+C:\repos\Recensys-Backend\ReviewIT-Backend\RecensysBLL\bin\Debug\RecensysBLL.pdb
+C:\repos\Recensys-Backend\ReviewIT-Backend\RecensysBLL\bin\Debug\RecensysRepository.dll
+C:\repos\Recensys-Backend\ReviewIT-Backend\RecensysBLL\bin\Debug\RecensysRepository.pdb
+C:\repos\Recensys-Backend\ReviewIT-Backend\RecensysBLL\obj\Debug\RecensysBLL.csprojResolveAssemblyReference.cache
+C:\repos\Recensys-Backend\ReviewIT-Backend\RecensysBLL\obj\Debug\RecensysBLL.dll
+C:\repos\Recensys-Backend\ReviewIT-Backend\RecensysBLL\obj\Debug\RecensysBLL.pdb
