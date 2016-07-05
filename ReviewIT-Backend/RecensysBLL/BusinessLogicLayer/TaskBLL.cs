@@ -1,10 +1,13 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
+using RecensysBLL.BusinessEntities;
 using RecensysBLL.Models;
 using RecensysBLL.Models.FullModels;
 using RecensysRepository.Entities;
 using RecensysRepository.Factory;
+using TaskType = RecensysBLL.BusinessEntities.TaskType;
 
 namespace RecensysBLL.BusinessLogicLayer
 {
@@ -35,14 +38,14 @@ namespace RecensysBLL.BusinessLogicLayer
                     var dataEntities = fieldDataRepo.GetAll().Where(d => d.Task_Id == dto.Id);
                     foreach (var dataEntity in dataEntities)
                     {
-                        var dataType = typeRepo.Read(dataEntity.DataType_Id);
+                        var dataType = typeRepo.Read(dataEntity.Field_Id);
 
                         task.Data.Add(new DataModel()
                         {
                             Id = dataEntity.Id,
-                            Data = dataEntity.Data,
+                            Data = dataEntity.Value,
                             ArticleId = dataEntity.Article_Id,
-                            DataType = dataType.Type,
+                            DataType = dataType.Value,
                             DataTypeId = dataType.Id
                         });
                     }
@@ -54,26 +57,83 @@ namespace RecensysBLL.BusinessLogicLayer
             return tasks;
         }
 
-        public void DeliverTask(TaskModel task)
+        public void DeliverTask(ReviewTask task)
         {
             using (var dataRepo = _factory.GetDataRepo())
             {
-                /* TODO figure out how to return. Either data has connection to field or 
-                 * data is stored in dictionary under fields
-                
                 foreach (var data in task.Data)
                 {
                     dataRepo.Update(new DataEntity()
                     {
                         Id = data.Id,
-                        Data = data.Data,
-                        DataType_Id = data.DataTypeId,
-                        Task_Id = task.Id,
-                        Article_Id = data.ArticleId,
-                        Field_Id = data.
+                        Value = data.Value
                     });
-                }*/
+                }
+            }
+
+            using (var taskRepo = _factory.GetTaskRepo())
+            {
+                taskRepo.Update(new TaskEntity()
+                {
+                    Id = task.Id,
+                    // TODO add done property do entity
+                });
+            }
+            
+        }
+
+        public void DeliverTask(ValidationTask task)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void CreateReviewTask(int? user, int stageId, int articleId, int[] fields)
+        {
+            int taskId;
+
+            using (var taskRepo = _factory.GetTaskRepo())
+            {
+                taskId = taskRepo.Create(new TaskEntity()
+                {
+                    User_Id = user ?? -1,
+                    Stage_Id = stageId,
+                    Article_Id = articleId,
+                    TaskType_Id = (int)TaskType.Review
+                });
+            }
+
+            using (var dataRepo = _factory.GetDataRepo())
+            {
+                foreach (int field in fields)
+                {
+                    dataRepo.Create(new DataEntity()
+                    {
+                        Article_Id = articleId,
+                        Field_Id = field,
+                        Task_Id = taskId,
+                    });
+                }
             }
         }
+
+        public void GenerateTasks(int stageId)
+        {
+            StrategyEntity reviewStrategies;
+            StrategyEntity validationStrategies;
+
+            using (var strRepo = _factory.GetStrategyRepo())
+            {
+                var strategies = strRepo.GetAll().Where(s => s.Stage_Id == stageId).ToList();
+                reviewStrategies = strategies.Single(s => s.StrategyType_Id == (int) StrategyType.Review);
+                validationStrategies = strategies.Single(s => s.StrategyType_Id == (int) StrategyType.Validation);
+            }
+
+            using (var )
+            {
+                
+            }
+            
+        }
+
     }
 }

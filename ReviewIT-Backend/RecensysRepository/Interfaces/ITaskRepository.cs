@@ -8,7 +8,7 @@ namespace RecensysRepository.Interfaces
     {
         IEnumerable<TaskEntity> GetAll();
 
-        void Create(TaskEntity item);
+        int Create(TaskEntity item);
 
         TaskEntity Read(int id);
 

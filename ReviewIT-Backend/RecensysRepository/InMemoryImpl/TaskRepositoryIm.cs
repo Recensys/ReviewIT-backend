@@ -18,9 +18,10 @@ namespace RecensysRepository.InMemoryImpl
             return _tasks;
         }
 
-        public void Create(TaskEntity item)
+        public int Create(TaskEntity item)
         {
             _tasks.Add(item);
+            return _tasks.IndexOf(item);
         }
 
         public TaskEntity Read(int id)
