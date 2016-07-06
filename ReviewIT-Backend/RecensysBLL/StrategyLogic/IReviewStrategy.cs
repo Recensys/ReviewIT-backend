@@ -3,14 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using RecensysBLL.BusinessEntities;
 using RecensysBLL.BusinessLogicLayer;
 
 namespace RecensysBLL.StrategyLogic
 {
-    public interface IStrategy
+    public interface IReviewStrategy
     {
         string Name { get; set; }
 
-        void GenerateTasks(Action<int?, int, int, int[]> generateTask);
+        void GenerateTasks(List<Article> articles, string json);
     }
 }

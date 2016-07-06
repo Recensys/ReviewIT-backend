@@ -7,7 +7,7 @@ using RecensysBLL.BusinessLogicLayer;
 
 namespace RecensysBLL.StrategyLogic
 {
-    class TestStrategy : IStrategy
+    class TestReviewStrategy : IReviewStrategy
     {
         public string Name { get; set; }
         public void GenerateTasks(Action<int?, int, int, int[]> generateTask)
