@@ -8,8 +8,6 @@ namespace RecensysRepository.InMemoryImpl
     {
 
         private List<User_Stage_RelationEntity> _relations = new List<User_Stage_RelationEntity>() {
-            new User_Stage_RelationEntity() { StudyRole_Id = 1, Study_Id = 1, Id = 1},
-            new User_Stage_RelationEntity() { StudyRole_Id = 1, Study_Id = 1, Id = 2},
         };
 
         public void Create(User_Stage_RelationEntity item)
@@ -19,7 +17,7 @@ namespace RecensysRepository.InMemoryImpl
 
         public void Delete(int uid, int sid)
         {
-            _relations.RemoveAll(dto => dto.Id == uid && dto.Study_Id == sid);
+            _relations.RemoveAll(dto => dto.User_Id == uid && dto.Stage_Id == sid);
         }
 
         public void Dispose()
@@ -33,12 +31,12 @@ namespace RecensysRepository.InMemoryImpl
 
         public User_Stage_RelationEntity Read(int uid, int sid)
         {
-            return _relations.Find(dto => dto.Id == uid && dto.Study_Id == sid);
+            return _relations.Find(dto => dto.Stage_Id == uid && dto.Stage_Id == sid);
         }
 
         public void Update(User_Stage_RelationEntity item)
         {
-            _relations.RemoveAll(dto => dto.Id == item.Id && dto.Study_Id == item.Study_Id);
+            _relations.RemoveAll(dto => dto.Stage_Id == item.Stage_Id);
             _relations.Add(item);
         }
     }

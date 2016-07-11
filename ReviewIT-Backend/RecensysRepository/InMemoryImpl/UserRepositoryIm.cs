@@ -9,16 +9,12 @@ namespace RecensysRepository.InMemoryImpl
 
         private List<UserEntity> _users = new List<UserEntity>()
         {
-            new UserEntity() {Id = 1, LastName = "Pedersen", FirstName = "Mathias"},
-            new UserEntity() {Id = 2, LastName = "Cholewa", FirstName = "Jacob"}
         };
         private List<User_Study_RelationEntity> _roles = new List<User_Study_RelationEntity>()
         {
-            new User_Study_RelationEntity() {Id = 1, Name = "Admin" }
         };
         private List<User_Stage_RelationEntity> _userStudyRelation = new List<User_Stage_RelationEntity>()
         {
-            new User_Stage_RelationEntity() {Id = 1, Study_Id = 1, StudyRole_Id = 1 }
         };
 
         public void Dispose()

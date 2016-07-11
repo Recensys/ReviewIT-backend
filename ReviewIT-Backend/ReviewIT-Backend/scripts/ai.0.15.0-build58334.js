@@ -1,4 +1,4 @@
-var Microsoft;
+﻿var Microsoft;
 (function (Microsoft) {
     var ApplicationInsights;
     (function (ApplicationInsights) {
@@ -576,14 +576,14 @@ var AI;
             this.sessionId = "ai.session.id";
             this.sessionIsFirst = "ai.session.isFirst";
             this.sessionIsNew = "ai.session.isNew";
-            this.userAccountAcquisitionDate = "ai.user.accountAcquisitionDate";
-            this.userAccountId = "ai.user.accountId";
-            this.userAgent = "ai.user.userAgent";
-            this.userId = "ai.user.id";
-            this.userStoreRegion = "ai.user.storeRegion";
-            this.userAuthUserId = "ai.user.authUserId";
-            this.userAnonymousUserAcquisitionDate = "ai.user.anonUserAcquisitionDate";
-            this.userAuthenticatedUserAcquisitionDate = "ai.user.authUserAcquisitionDate";
+            this.userAccountAcquisitionDate = "ai.userId.accountAcquisitionDate";
+            this.userAccountId = "ai.userId.accountId";
+            this.userAgent = "ai.userId.userAgent";
+            this.userId = "ai.userId.id";
+            this.userStoreRegion = "ai.userId.storeRegion";
+            this.userAuthUserId = "ai.userId.authUserId";
+            this.userAnonymousUserAcquisitionDate = "ai.userId.anonUserAcquisitionDate";
+            this.userAuthenticatedUserAcquisitionDate = "ai.userId.authUserAcquisitionDate";
             this.sampleRate = "ai.sample.sampleRate";
             this.internalSdkVersion = "ai.internal.sdkVersion";
             this.internalAgentVersion = "ai.internal.agentVersion";
@@ -936,7 +936,7 @@ var Microsoft;
                 User.prototype.setAuthenticatedUserContext = function (authenticatedUserId, accountId) {
                     var isInvalidInput = !this.validateUserInput(authenticatedUserId) || (accountId && !this.validateUserInput(accountId));
                     if (isInvalidInput) {
-                        ApplicationInsights._InternalLogging.throwInternalUserActionable(1 /* WARNING */, "Setting auth user context failed. " + "User auth/account id should be of type string, and not contain commas, semi-colons, equal signs, spaces, or vertical-bars.");
+                        ApplicationInsights._InternalLogging.throwInternalUserActionable(1 /* WARNING */, "Setting auth userId context failed. " + "User auth/account id should be of type string, and not contain commas, semi-colons, equal signs, spaces, or vertical-bars.");
                         return;
                     }
                     this.authenticatedId = authenticatedUserId;
@@ -2363,7 +2363,7 @@ var Microsoft;
                     this.context.user.setAuthenticatedUserContext(authenticatedUserId, accountId);
                 }
                 catch (e) {
-                    ApplicationInsights._InternalLogging.throwInternalUserActionable(1 /* WARNING */, "Setting auth user context failed. " + ApplicationInsights.Util.dump(e));
+                    ApplicationInsights._InternalLogging.throwInternalUserActionable(1 /* WARNING */, "Setting auth userId context failed. " + ApplicationInsights.Util.dump(e));
                 }
             };
             AppInsights.prototype.clearAuthenticatedUserContext = function () {
@@ -2371,7 +2371,7 @@ var Microsoft;
                     this.context.user.clearAuthenticatedUserContext();
                 }
                 catch (e) {
-                    ApplicationInsights._InternalLogging.throwInternalUserActionable(1 /* WARNING */, "Clearing auth user context failed. " + ApplicationInsights.Util.dump(e));
+                    ApplicationInsights._InternalLogging.throwInternalUserActionable(1 /* WARNING */, "Clearing auth userId context failed. " + ApplicationInsights.Util.dump(e));
                 }
             };
             AppInsights.prototype.SendCORSException = function (properties) {

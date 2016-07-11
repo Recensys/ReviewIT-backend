@@ -10,8 +10,7 @@ namespace RecensysRepository.InMemoryImpl
 
         private List<ArticleEntity> _articles = new List<ArticleEntity>()
         {
-            new ArticleEntity() {Id = 1, Title = "Article 1", Author = "John Doe"},
-            new ArticleEntity() {Id = 2, Title = "Article 2", Author = "Jane Doe"}
+            
         };
 
         public IEnumerable<ArticleEntity> GetAll()

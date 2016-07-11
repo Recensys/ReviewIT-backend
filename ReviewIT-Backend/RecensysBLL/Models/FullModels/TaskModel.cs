@@ -12,6 +12,5 @@ namespace RecensysBLL.Models.FullModels
     {
         public int Id { get; set; }
         public List<DataModel> Data { get; set; }
-        public TaskType
     }
 }

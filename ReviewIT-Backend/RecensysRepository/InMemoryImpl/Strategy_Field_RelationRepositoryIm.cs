@@ -29,7 +29,7 @@ namespace RecensysRepository.InMemoryImpl
 
         public Strategy_Field_RelationEntity Read(int id)
         {
-            return _entities.Where(e => e.id)
+            return _entities.Find(e => e.Field_Id == id);
         }
 
         public void Update(Strategy_Field_RelationEntity item)

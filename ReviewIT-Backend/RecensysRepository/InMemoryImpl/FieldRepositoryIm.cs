@@ -9,8 +9,7 @@ namespace RecensysRepository.InMemoryImpl
 
         private List<FieldEntity> _fields = new List<FieldEntity>()
         {
-            new FieldEntity() {Id = 1, Name = "Title", FieldType_Id = 1},
-            new FieldEntity() {Id = 2, Name = "Is GSD?", FieldType_Id = 2}
+            
         };
 
         public void Dispose()

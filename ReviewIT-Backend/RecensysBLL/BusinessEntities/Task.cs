@@ -14,6 +14,7 @@ namespace RecensysBLL.BusinessEntities
     public class Task
     {
         public int Id { get; set; }
+        public Dictionary<string,string> DataDictionary { get; set; }
         public bool Done { get; set; }
     }
 }

@@ -9,8 +9,6 @@ namespace RecensysRepository.InMemoryImpl
 
         private List<StrategyEntity> _strategies = new List<StrategyEntity>()
         {
-            new StrategyEntity() {Id = 1, Name = "Strategy 1", Description = "Description for strategy 1"},
-            new StrategyEntity() {Id = 2, Name = "Strategy 2", Description = "Description for strategy 2"},
         };
 
         public void Dispose()

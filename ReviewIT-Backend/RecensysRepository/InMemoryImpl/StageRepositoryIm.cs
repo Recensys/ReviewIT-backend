@@ -9,8 +9,6 @@ namespace RecensysRepository.InMemoryImpl
 
         private List<StageEntity> _stages = new List<StageEntity>()
         {
-            new StageEntity() {Id = 1, Name = "Stage 1", Description = "Description for stage 1", InProgress = true, Study_Id = 1, Strategy_Id = 1},
-            new StageEntity() {Id = 2, Name = "Stage 2", Description = "Description for stage 2", InProgress = false, Study_Id = 1, Strategy_Id = 1}
         };
 
         public void Dispose()

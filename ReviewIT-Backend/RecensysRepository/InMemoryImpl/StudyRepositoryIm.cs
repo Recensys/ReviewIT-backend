@@ -9,8 +9,6 @@ namespace RecensysRepository.InMemoryImpl
 
         private readonly List<StudyEntity> _studies = new List<StudyEntity>()
         {
-            new StudyEntity() {Id = 1, Name = "study1", Description = "This is the description for study 1"},
-            new StudyEntity() {Id = 2, Name = "study2", Description = "This is the description for study 2"}
         };
 
         public void Dispose()

@@ -9,9 +9,6 @@ namespace RecensysRepository.InMemoryImpl
 
         private List<User_Study_RelationEntity> _roles = new List<User_Study_RelationEntity>()
         {
-            new User_Study_RelationEntity() {Id = 1, Name = "Admin" },
-            new User_Study_RelationEntity() {Id = 2, Name = "Researcher" },
-            new User_Study_RelationEntity() {Id = 3, Name = "Guest" },
         };
 
         public void Create(User_Study_RelationEntity item)
@@ -21,7 +18,7 @@ namespace RecensysRepository.InMemoryImpl
 
         public void Delete(int id)
         {
-            _roles.RemoveAll(dto => dto.Id == id);
+            _roles.RemoveAll(dto => dto.Study_Id == id);
         }
 
         public void Dispose()
@@ -35,12 +32,12 @@ namespace RecensysRepository.InMemoryImpl
 
         public User_Study_RelationEntity Read(int id)
         {
-            return _roles.Find(dto => dto.Id == id);
+            return _roles.Find(dto => dto.Study_Id == id);
         }
 
         public void Update(User_Study_RelationEntity item)
         {
-            _roles.RemoveAll(dto => dto.Id == item.Id);
+            _roles.RemoveAll(dto => dto.Study_Id == item.Study_Id);
             _roles.Add(item);
         }
     }

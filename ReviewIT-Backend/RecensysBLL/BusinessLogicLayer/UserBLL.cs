@@ -25,9 +25,8 @@ namespace RecensysBLL.BusinessLogicLayer
                 urepo.Create(new UserEntity()
                 {
                     Id = model.Id,
-                    FirstName = model.FirstName,
-                    LastName = model.LastName,
-                    Metadata = model.Metadata
+                    First_Name = model.FirstName,
+                    Last_Name = model.LastName
                 });
             }
         }
@@ -42,9 +41,8 @@ namespace RecensysBLL.BusinessLogicLayer
                 return new UserModel()
                 {
                     Id = dto.Id,
-                    FirstName = dto.FirstName,
-                    LastName = dto.LastName,
-                    Metadata = dto.Metadata
+                    FirstName = dto.First_Name,
+                    LastName = dto.Last_Name
                 };
             }
         }
@@ -55,9 +53,7 @@ namespace RecensysBLL.BusinessLogicLayer
             {
                 repo.Create(new User_Stage_RelationEntity()
                 {
-                    Id = userId,
-                    Study_Id = studyId,
-                    StudyRole_Id = roleId
+                    User_Id = userId
                 });
             }
         }

@@ -26,7 +26,6 @@ namespace RecensysBLL.BusinessLogicLayer
                 srepo.Create(new StudyEntity()
                 {
                     Id = studyOverview.Id,
-                    Name = studyOverview.Name,
                     Description = studyOverview.Description,
                 });
             }
@@ -43,7 +42,6 @@ namespace RecensysBLL.BusinessLogicLayer
                     res.Add(new StudyOverviewModel()
                     {
                         Id = dto.Id,
-                        Name = dto.Name,
                         Description = dto.Description
                     });
                 }
@@ -53,6 +51,7 @@ namespace RecensysBLL.BusinessLogicLayer
 
         public StudyModel Get(int id)
         {
+            /*
             using (var srepo = _factory.GetStudyRepo())
             using (var strepo = _factory.GetStageRepo())
             using (var usrepo = _factory.GetUserStudyRelationRepo())
@@ -64,7 +63,6 @@ namespace RecensysBLL.BusinessLogicLayer
                 // Add basic study information
                 var studyDto = srepo.Read(id);
                 study.Id = studyDto.Id;
-                study.Name = studyDto.Name;
                 study.Description = studyDto.Description;
 
                 // Add stages
@@ -116,7 +114,8 @@ namespace RecensysBLL.BusinessLogicLayer
 
                 return study;
             }
-            
+            */
+            return null;
         }
 
         public void Remove(int id)

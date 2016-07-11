@@ -21,47 +21,51 @@ namespace RecensysBLL.BusinessLogicLayer
             _factory = factory;
         }
 
-        public List<TaskModel> GetTasks(int stageId, int userId)
+        public List<Task> GetTasks(int stageId, int userId)
         {
-            var tasks = new List<TaskModel>();
+            var tasks = new List<Task>();
             
+            // Get tasks
+            List<TaskEntity> taskEntities;
             using (var taskRepo = _factory.GetTaskRepo())
-            using (var typeRepo = _factory.GetDataTypeRepo())
-            using (var fieldDataRepo = _factory.GetDataRepo())
             {
-                var taskDtos = taskRepo.GetAll().Where(dto => dto.User_Id == userId);
-                foreach (var dto in taskDtos)
-                {
-                    var task = new TaskModel() {Id = dto.Id, Data = new List<DataModel>()};
+                taskEntities = taskRepo.GetAll().Where(t => t.User_Id == userId && t.Stage_Id == stageId).ToList();
+            }
 
-                    // Add data to taskModel
-                    var dataEntities = fieldDataRepo.GetAll().Where(d => d.Task_Id == dto.Id);
+            // Build data dictionary and create tasks for return
+            using (var dataRepo = _factory.GetDataRepo())
+            using (var fieldRepo = _factory.GetFieldRepo())
+            {
+                foreach (var taskEntity in taskEntities)
+                {
+                    var task = new Task
+                    {
+                        Id = taskEntity.Id,
+                        DataDictionary = new Dictionary<string, string>()
+                    };
+
+                    var dataEntities = dataRepo.GetAll().Where(t => t.Task_Id == taskEntity.Id);
+
                     foreach (var dataEntity in dataEntities)
                     {
-                        var dataType = typeRepo.Read(dataEntity.Field_Id);
+                        var fieldName = fieldRepo.Read(dataEntity.Field_Id).Name;
 
-                        task.Data.Add(new DataModel()
-                        {
-                            Id = dataEntity.Id,
-                            Data = dataEntity.Value,
-                            ArticleId = dataEntity.Article_Id,
-                            DataType = dataType.Value,
-                            DataTypeId = dataType.Id
-                        });
+                        task.DataDictionary.Add(fieldName, dataEntity.Value);
                     }
 
                     tasks.Add(task);
                 }
             }
-
+            
             return tasks;
         }
 
         public void DeliverTask(ReviewTask task)
         {
+            /*
             using (var dataRepo = _factory.GetDataRepo())
             {
-                foreach (var data in task.Data)
+                foreach (var data in task)
                 {
                     dataRepo.Update(new DataEntity()
                     {
@@ -69,7 +73,7 @@ namespace RecensysBLL.BusinessLogicLayer
                         Value = data.Value
                     });
                 }
-            }
+            }*/
 
             using (var taskRepo = _factory.GetTaskRepo())
             {
@@ -87,7 +91,7 @@ namespace RecensysBLL.BusinessLogicLayer
             throw new NotImplementedException();
         }
 
-        public void CreateReviewTask(int? user, int stageId, int articleId, int[] fields)
+        private void CreateReviewTask(int? userId, int stageId, int articleId, List<int> fields)
         {
             int taskId;
 
@@ -95,7 +99,7 @@ namespace RecensysBLL.BusinessLogicLayer
             {
                 taskId = taskRepo.Create(new TaskEntity()
                 {
-                    User_Id = user ?? -1,
+                    User_Id = userId ?? -1,
                     Stage_Id = stageId,
                     Article_Id = articleId,
                     TaskType_Id = (int)TaskType.Review
@@ -116,23 +120,76 @@ namespace RecensysBLL.BusinessLogicLayer
             }
         }
 
+        private void CreateValidationTask(int? userId, int stageId, int articleId, List<int> fields)
+        {
+            int taskId;
+
+            using (var taskRepo = _factory.GetTaskRepo())
+            {
+                taskId = taskRepo.Create(new TaskEntity()
+                {
+                    User_Id = userId ?? -1,
+                    Stage_Id = stageId,
+                    Article_Id = articleId,
+                    TaskType_Id = (int)TaskType.Validation
+                });
+            }
+
+            AssociateTasksToParent(articleId, taskId);
+        }
+
+        private void AssociateTasksToParent(int articleId, int parentId)
+        {
+            using (var taskRepo = _factory.GetTaskRepo())
+            {
+                var tasks = taskRepo.GetAll().Where(e => e.Article_Id == articleId);
+                foreach (var task in tasks)
+                {
+                    task.Parent_Id = parentId;
+                    taskRepo.Update(task);
+                }
+            }
+        }
+
         public void GenerateTasks(int stageId)
         {
-            StrategyEntity reviewStrategies;
-            StrategyEntity validationStrategies;
-
-            using (var strRepo = _factory.GetStrategyRepo())
+            // Get articles
+            var articleIds = new List<int>();
+            using (var articleRepo = _factory.GetArticleRepo())
             {
-                var strategies = strRepo.GetAll().Where(s => s.Stage_Id == stageId).ToList();
-                reviewStrategies = strategies.Single(s => s.StrategyType_Id == (int) StrategyType.Review);
-                validationStrategies = strategies.Single(s => s.StrategyType_Id == (int) StrategyType.Validation);
+                var articles = articleRepo.GetAll();
+                foreach (var article in articles)
+                {
+                    articleIds.Add(article.Id);
+                }
             }
 
-            using (var )
+            // Get the task distribution
+            var reviewDictionary = new StrategyBLL(_factory).GetReviewtaskDistribution(stageId, articleIds);
+
+            // Get the stage description, ie. the fields related to the stage
+            var fieldIds = new List<int>();
+            using (var stageDescRepo = _factory.GetStageDescriptionRepository())
             {
-                
+                var stageDescriptionEntities = stageDescRepo.GetAll().Where(e => e.Stage_Id == stageId);
+                foreach (var entity in stageDescriptionEntities)
+                {
+                    fieldIds.Add(entity.Field_Id);
+                }
             }
+
+            // create the review tasks
+            foreach (var entry in reviewDictionary)
+            {
+                foreach (var articleId in entry.Value)
+                {
+                    CreateReviewTask(entry.Key, stageId, articleId, fieldIds);
+                }
+            }
+
+            //TODO create the validation tasks
             
+
         }
 
     }

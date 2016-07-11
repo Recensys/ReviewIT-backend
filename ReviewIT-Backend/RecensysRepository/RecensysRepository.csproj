@@ -42,14 +42,17 @@
   <ItemGroup>
     <Compile Include="Entities\CriteriaEntity.cs" />
     <Compile Include="Entities\DataTypeEntity.cs" />
+    <Compile Include="Entities\StageDescriptionEntity.cs" />
     <Compile Include="Entities\StageRoleEntity.cs" />
     <Compile Include="Entities\StrategyType.cs" />
     <Compile Include="Entities\Strategy_Field_RelationEntity.cs" />
     <Compile Include="Entities\TaskTypeEntity.cs" />
     <Compile Include="InMemoryImpl\DataTypeRepositoryIm.cs" />
+    <Compile Include="InMemoryImpl\StageDescriptionRepository.cs" />
     <Compile Include="InMemoryImpl\Strategy_Field_RelationRepositoryIm.cs" />
     <Compile Include="Interfaces\ICriteriaRepository.cs" />
     <Compile Include="Interfaces\IDataTypeRepository.cs" />
+    <Compile Include="Interfaces\IStageDescriptionRepository.cs" />
     <Compile Include="Interfaces\IStageRoleRepository.cs" />
     <Compile Include="Interfaces\IStrategy_Field_RelationRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -67,7 +70,6 @@
     <Compile Include="Factory\RepositoryFactoryDb.cs" />
     <Compile Include="Factory\RepositoryFactoryMemory.cs" />
     <Compile Include="InMemoryImpl\ArticleRepositoryIm.cs" />
-    <Compile Include="InMemoryImpl\CredentialsRepositoryIm.cs" />
     <Compile Include="InMemoryImpl\DataRepositoryIm.cs" />
     <Compile Include="InMemoryImpl\FieldRepositoryIm.cs" />
     <Compile Include="InMemoryImpl\StageRepositoryIm.cs" />

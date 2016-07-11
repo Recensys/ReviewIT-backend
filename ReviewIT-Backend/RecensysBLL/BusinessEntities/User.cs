@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace RecensysBLL.BusinessEntities
 {
-    public class ReviewTask : Task
+    public class User
     {
     }
 }

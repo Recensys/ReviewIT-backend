@@ -9,10 +9,7 @@ namespace RecensysRepository.InMemoryImpl
 
         private List<DataEntity> _fieldData = new List<DataEntity>()
         {
-            new DataEntity() {Id = 1, Field_Id = 1, Data = "jsondata"},
-            new DataEntity() {Id = 2, Field_Id = 1, Data = "jsondata"},
-            new DataEntity() {Id = 3, Field_Id = 1, Data = "jsondata"},
-            new DataEntity() {Id = 4, Field_Id = 1, Data = "jsondata"},
+            
         };
 
         public void Dispose()

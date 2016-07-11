@@ -1,11 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.25123.0
+VisualStudioVersion = 14.0.24720.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RecensysWebAPI2", "ReviewIT-Backend\RecensysWebAPI2.csproj", "{A2F7E4AC-7116-4BE7-AE7A-1D50AB5B54F6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Unit Test", "Unit Test\Unit Test.csproj", "{0800C468-C43E-41ED-8F5F-389789A7070D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BLLUnitTest", "Unit Test\BLLUnitTest.csproj", "{0800C468-C43E-41ED-8F5F-389789A7070D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RecensysRepository", "RecensysRepository\RecensysRepository.csproj", "{3C0AAA0A-8398-4C54-BC77-57558C78E4BD}"
 EndProject
