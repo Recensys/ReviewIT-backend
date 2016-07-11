@@ -1,0 +1,103 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{3C0AAA0A-8398-4C54-BC77-57558C78E4BD}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>RecensysRepository</RootNamespace>
+    <AssemblyName>RecensysRepository</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Entities\CriteriaEntity.cs" />
+    <Compile Include="Entities\DataTypeEntity.cs" />
+    <Compile Include="Entities\StageDescriptionEntity.cs" />
+    <Compile Include="Entities\StageRoleEntity.cs" />
+    <Compile Include="Entities\StrategyType.cs" />
+    <Compile Include="Entities\Strategy_Field_RelationEntity.cs" />
+    <Compile Include="Entities\TaskTypeEntity.cs" />
+    <Compile Include="InMemoryImpl\DataTypeRepositoryIm.cs" />
+    <Compile Include="InMemoryImpl\StageDescriptionRepository.cs" />
+    <Compile Include="InMemoryImpl\Strategy_Field_RelationRepositoryIm.cs" />
+    <Compile Include="Interfaces\ICriteriaRepository.cs" />
+    <Compile Include="Interfaces\IDataTypeRepository.cs" />
+    <Compile Include="Interfaces\IStageDescriptionRepository.cs" />
+    <Compile Include="Interfaces\IStageRoleRepository.cs" />
+    <Compile Include="Interfaces\IStrategy_Field_RelationRepository.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Entities\ArticleEntity.cs" />
+    <Compile Include="Entities\DataEntity.cs" />
+    <Compile Include="Entities\FieldEntity.cs" />
+    <Compile Include="Entities\StageEntity.cs" />
+    <Compile Include="Entities\StrategyEntity.cs" />
+    <Compile Include="Entities\StudyEntity.cs" />
+    <Compile Include="Entities\User_Study_RelationEntity.cs" />
+    <Compile Include="Entities\TaskEntity.cs" />
+    <Compile Include="Entities\UserEntity.cs" />
+    <Compile Include="Entities\User_Stage_RelationEntity.cs" />
+    <Compile Include="Factory\IRepositoryFactory.cs" />
+    <Compile Include="Factory\RepositoryFactoryDb.cs" />
+    <Compile Include="Factory\RepositoryFactoryMemory.cs" />
+    <Compile Include="InMemoryImpl\ArticleRepositoryIm.cs" />
+    <Compile Include="InMemoryImpl\DataRepositoryIm.cs" />
+    <Compile Include="InMemoryImpl\FieldRepositoryIm.cs" />
+    <Compile Include="InMemoryImpl\StageRepositoryIm.cs" />
+    <Compile Include="InMemoryImpl\StrategyRepositoryIm.cs" />
+    <Compile Include="InMemoryImpl\StudyRepositoryIm.cs" />
+    <Compile Include="InMemoryImpl\StudyRoleRepository.cs" />
+    <Compile Include="InMemoryImpl\StudyRoleRepositoryIm.cs" />
+    <Compile Include="InMemoryImpl\TaskRepositoryIm.cs" />
+    <Compile Include="InMemoryImpl\UserRepositoryIm.cs" />
+    <Compile Include="InMemoryImpl\UserStudyRelationRepositoryIm.cs" />
+    <Compile Include="Interfaces\IArticleRepository.cs" />
+    <Compile Include="Interfaces\IDataRepository.cs" />
+    <Compile Include="Interfaces\IFieldRepository.cs" />
+    <Compile Include="Interfaces\IStageRepository.cs" />
+    <Compile Include="Interfaces\IStrategyRepository.cs" />
+    <Compile Include="Interfaces\IStudyRepository.cs" />
+    <Compile Include="Interfaces\IStudyRoleRepository.cs" />
+    <Compile Include="Interfaces\ITaskRepository.cs" />
+    <Compile Include="Interfaces\IUserRepository.cs" />
+    <Compile Include="Interfaces\IUserStudyRelationRepository.cs" />
+    <Compile Include="SQL-Impl\UserRepositoryDb.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
