@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Security.Authentication;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using RecensysWebAPI.Services;
@@ -17,7 +19,19 @@ namespace RecensysWebAPI.Middleware
         public async Task Invoke(HttpContext context)
         {
 
-            /*
+            // paths not subject to token check
+            var openPaths = new List<string>()
+            {
+                "/api/login",
+                "/api/user/create"
+            };
+            if (openPaths.Contains(context.Request.Path))
+            {
+                await _next.Invoke(context);
+                return;
+            }
+
+
             var token = context.Request.Headers["AuthToken"];
 
             ITokenService tokenService = new JWTTokenService();
@@ -35,15 +49,15 @@ namespace RecensysWebAPI.Middleware
                 }
                 catch (AuthenticationException e)
                 {
-                    context.Response.Redirect("login");
+                    context.Response.Redirect("/api/login");
                 }
             }
             else
             {
-                context.Response.Redirect("login");
+                context.Response.Redirect("/api/login");
             }
 
-            */
+            
                     await _next.Invoke(context);
 
         }

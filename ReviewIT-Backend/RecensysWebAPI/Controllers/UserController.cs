@@ -42,7 +42,7 @@ namespace RecensysWebAPI.Controllers
         }
 
         // POST api/values
-        [HttpPost]
+        [HttpPost("Create")]
         public void Post([FromBody]CredentialsModel model)
         {
 

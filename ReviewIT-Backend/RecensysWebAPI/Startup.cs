@@ -54,7 +54,7 @@ namespace RecensysWebAPI
 
             app.UseApplicationInsightsExceptionTelemetry();
 
-            app.UseMiddleware<AuthenticationMiddleware>();
+            app.UseMiddleware<TokenMiddleware>();
 
 
             app.UseMvc();
