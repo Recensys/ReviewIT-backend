@@ -32,13 +32,9 @@ namespace RecensysWebAPI.Controllers
 
         // GET api/values/5
         [HttpGet("{id}")]
-        public UserModel Get(int id)
+        public int Get(int id)
         {
-            return new UserModel()
-            {
-                Username = "testUsername",
-                Password = "testPassword"
-            };
+            return (int) HttpContext.Items["uid"];
         }
 
         // POST api/values

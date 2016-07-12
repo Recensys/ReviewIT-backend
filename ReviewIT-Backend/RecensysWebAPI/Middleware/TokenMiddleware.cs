@@ -7,11 +7,11 @@ using RecensysWebAPI.Services;
 
 namespace RecensysWebAPI.Middleware
 {
-    public class AuthenticationMiddleware
+    public class TokenMiddleware
     {
         private readonly RequestDelegate _next;
 
-        public AuthenticationMiddleware(RequestDelegate next)
+        public TokenMiddleware(RequestDelegate next)
         {
             _next = next;
         }
@@ -40,14 +40,15 @@ namespace RecensysWebAPI.Middleware
             {
                 try
                 {
-                    tokenService.ValidateToken(token);
+                    var uid = tokenService.ValidateToken(token);
 
+                    context.Items.Add("uid",uid);
 
                     // continue with any other middleware
                     await _next.Invoke(context);
 
                 }
-                catch (AuthenticationException e)
+                catch (AuthenticationException)
                 {
                     context.Response.Redirect("/api/login");
                 }
