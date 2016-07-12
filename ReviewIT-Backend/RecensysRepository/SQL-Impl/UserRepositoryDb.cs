@@ -7,7 +7,7 @@ using RecensysRepository.Interfaces;
 
 namespace RecensysRepository
 {
-    public class UserRepositoryDb : IUserRepository
+    public class UserRepositoryDb
     {
 
         private string _conStr;

@@ -26,9 +26,10 @@ namespace RecensysRepository.InMemoryImpl
             return _users;
         }
 
-        public void Create(UserEntity user)
+        public int Create(UserEntity user)
         {
             _users.Add(user);
+            return _users.IndexOf(user);
         }
 
         public UserEntity Read(int id)

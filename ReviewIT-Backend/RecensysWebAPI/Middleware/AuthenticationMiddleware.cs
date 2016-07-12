@@ -1,8 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
+using RecensysWebAPI.Services;
 
 namespace RecensysWebAPI.Middleware
 {
@@ -18,18 +17,37 @@ namespace RecensysWebAPI.Middleware
         public async Task Invoke(HttpContext context)
         {
 
+            /*
             var token = context.Request.Headers["AuthToken"];
 
-            if ("testToken".Equals(token))
-            {
-                await _next.Invoke(context);
+            ITokenService tokenService = new JWTTokenService();
 
+            if (!string.IsNullOrEmpty(token))
+            {
+                try
+                {
+                    tokenService.ValidateToken(token);
+
+
+                    // continue with any other middleware
+                    await _next.Invoke(context);
+
+                }
+                catch (AuthenticationException e)
+                {
+                    context.Response.Redirect("login");
+                }
             }
             else
             {
-                context.Response.Redirect("google.dk");
+                context.Response.Redirect("login");
             }
+
+            */
+                    await _next.Invoke(context);
 
         }
     }
 }
+
+

@@ -1,11 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using RecensysBLL.BusinessLogicLayer;
-using RecensysBLL.Models;
-using RecensysBLL.Models.FullModels;
 using RecensysRepository.Factory;
 
 namespace RecensysWebAPI.Controllers
@@ -30,9 +27,8 @@ namespace RecensysWebAPI.Controllers
 
         // GET api/values/5
         [HttpGet("{id}")]
-        public StudyModel Get(int id)
+        public void Get(int id)
         {
-            return _bll.Get(id);
         }
 
         // POST api/values

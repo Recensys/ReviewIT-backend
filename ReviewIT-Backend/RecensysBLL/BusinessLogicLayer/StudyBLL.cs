@@ -1,9 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Win32;
-using RecensysBLL.Models;
-using RecensysBLL.Models.FullModels;
-using RecensysBLL.Models.OverviewModels;
 using RecensysRepository.Entities;
 using RecensysRepository.Factory;
 
@@ -18,38 +15,9 @@ namespace RecensysBLL.BusinessLogicLayer
         {
             _factory = factory;
         }
+        
 
-        public void AddNew(StudyOverviewModel studyOverview)
-        {
-            using (var srepo = _factory.GetStudyRepo())
-            {
-                srepo.Create(new StudyEntity()
-                {
-                    Id = studyOverview.Id,
-                    Description = studyOverview.Description,
-                });
-            }
-        }
-
-        public List<StudyOverviewModel> Get()
-        {
-            using (var srepo = _factory.GetStudyRepo())
-            {
-                var dtos = srepo.GetAll();
-                var res = new List<StudyOverviewModel>();
-                foreach (var dto in dtos)
-                {
-                    res.Add(new StudyOverviewModel()
-                    {
-                        Id = dto.Id,
-                        Description = dto.Description
-                    });
-                }
-                return res;
-            }
-        }
-
-        public StudyModel Get(int id)
+        public void Get(int id)
         {
             /*
             using (var srepo = _factory.GetStudyRepo())
@@ -115,7 +83,6 @@ namespace RecensysBLL.BusinessLogicLayer
                 return study;
             }
             */
-            return null;
         }
 
         public void Remove(int id)
@@ -125,27 +92,7 @@ namespace RecensysBLL.BusinessLogicLayer
                 srepo.Delete(id);
             }
         }
-
-
-        public void AddStage(StageModel stage)
-        {
-            using (var repo = _factory.GetStageRepo())
-            using (var srepo = _factory.GetStrategyRepo())
-            {
-                /*
-                srepo.Update(new StrategyDTO()
-                {
-                    Study_Id = stage.Strategy.Id,
-                    Name = stage.Strategy.Name
-                });*/
-
-                repo.Create(new StageEntity()
-                {
-                    Name = stage.Name,
-                    Description = stage.Description
-                });
-            }
-        }
+        
 
         public void RemoveStage(int id)
         {

@@ -554,7 +554,7 @@ var AI;
             this.deviceIp = "ai.device.ip";
             this.deviceLanguage = "ai.device.language";
             this.deviceLocale = "ai.device.locale";
-            this.deviceModel = "ai.device.model";
+            this.deviceModel = "ai.device.user";
             this.deviceNetwork = "ai.device.network";
             this.deviceNetworkName = "ai.device.networkName";
             this.deviceOEMName = "ai.device.oemName";

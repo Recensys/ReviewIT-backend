@@ -4,7 +4,6 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
-using Newtonsoft.Json;
 using RecensysBLL.BusinessLogicLayer;
 using RecensysBLL.Models;
 using RecensysBLL.Models.FullModels;

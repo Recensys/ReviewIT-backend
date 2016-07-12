@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace RecensysWebAPI.Services
 {
-    public class TokenService
+    interface ITokenService
     {
+        string GetToken(int uid);
+        int ValidateToken(string token);
     }
 }

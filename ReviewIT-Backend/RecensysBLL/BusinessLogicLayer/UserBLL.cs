@@ -1,6 +1,7 @@
 ﻿using System;
-using RecensysBLL.Models;
-using RecensysBLL.Models.FullModels;
+using System.Collections.Generic;
+using System.Linq;
+using RecensysBLL.BusinessEntities;
 using RecensysRepository.Entities;
 using RecensysRepository.Factory;
 
@@ -15,36 +16,64 @@ namespace RecensysBLL.BusinessLogicLayer
             _factory = factory;
         }
 
-        public void Add(UserModel model)
+        public int CreateUser(User user)
         {
-            if (model == null) throw new ArgumentNullException("Model null reference");
-            if (model.Id < 0) throw new ArgumentException("id under 0");
+            if (user == null) throw new ArgumentNullException("user null reference");
+            if (string.IsNullOrEmpty(user.Username)) throw new ArgumentException("username not valid");
+            if (string.IsNullOrEmpty(user.Password)) throw new ArgumentException("password not valid");
+
+            int uid;
 
             using (var urepo = _factory.GetUserRepo())
             {
-                urepo.Create(new UserEntity()
+                uid = urepo.Create(new UserEntity()
                 {
-                    Id = model.Id,
-                    First_Name = model.FirstName,
-                    Last_Name = model.LastName
+                    Username = user.Username,
+                    Password_Salt = user.PasswordSalt,
+                    Password = user.Password
                 });
             }
+
+            return uid;
         }
 
-        public UserModel Get(int id)
+        
+
+        public List<User> Get()
         {
+            List<UserEntity> entities;
+
             using (var urepo = _factory.GetUserRepo())
             {
-                var dto = urepo.Read(id);
-                if (dto == null) throw new IndexOutOfRangeException();
-
-                return new UserModel()
-                {
-                    Id = dto.Id,
-                    FirstName = dto.First_Name,
-                    LastName = dto.Last_Name
-                };
+                entities = urepo.GetAll().ToList();
             }
+
+            List<User> users = new List<User>();
+
+            foreach (var entity in entities)
+            {
+                users.Add(new User() {Username = entity.Username, Password = entity.Password_Salt});
+            }
+
+            return users;
+        }
+
+        public User Get(string username)
+        {
+            UserEntity entity;
+
+            using (var urepo = _factory.GetUserRepo())
+            {
+                entity = urepo.GetAll().Single(e => e.Username.Equals(username));
+            }
+
+            return new User()
+            {
+                Id = entity.Id,
+                Username = entity.Username,
+                Password = entity.Password,
+                PasswordSalt = entity.Password_Salt
+            };
         }
 
         public void AssociateUserToStudy(int userId, int studyId, int roleId)
@@ -66,6 +95,5 @@ namespace RecensysBLL.BusinessLogicLayer
             }
         }
 
-        
     }
 }
