@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Cors.Infrastructure;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -42,6 +43,14 @@ namespace RecensysWebAPI
             services.AddSingleton<IRepositoryFactory, RepositoryFactoryMemory>();
 
             services.AddMvc();
+
+            //Add Cors support to the service
+            var policy = new CorsPolicy();
+            policy.Headers.Add("*");
+            policy.Methods.Add("*");
+            policy.Origins.Add("*");
+            policy.SupportsCredentials = true;
+            services.AddCors(x => x.AddPolicy("corsPolicy", policy));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline
@@ -56,6 +65,7 @@ namespace RecensysWebAPI
 
             app.UseMiddleware<TokenMiddleware>();
 
+            app.UseCors("corsPolicy");
 
             app.UseMvc();
 
