@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Win32;
+using RecensysBLL.BusinessEntities;
+using RecensysBLL.BusinessEntities.OverviewEntities;
 using RecensysRepository.Entities;
 using RecensysRepository.Factory;
 
@@ -15,18 +17,26 @@ namespace RecensysBLL.BusinessLogicLayer
         {
             _factory = factory;
         }
-        
 
-        public void Get(int id)
+
+        public List<StudyOverview> Get(int uid)
         {
-            /*
+            var studies = new List<StudyOverview>();
+
+            using (var studyRepo = _factory.GetStudyRepo())
+            {
+                
+            }
+            return null;
+        }
+
+        public StudyOverview GetOverview(int id)
+        {
+            var study = new StudyOverview();
+            
             using (var srepo = _factory.GetStudyRepo())
             using (var strepo = _factory.GetStageRepo())
-            using (var usrepo = _factory.GetUserStudyRelationRepo())
-            using (var urepo = _factory.GetUserRepo())
-            using (var rrepo = _factory.GetStudyRoleRepo())
             {
-                var study = new StudyModel();
 
                 // Add basic study information
                 var studyDto = srepo.Read(id);
@@ -35,54 +45,20 @@ namespace RecensysBLL.BusinessLogicLayer
 
                 // Add stages
                 var stageDtos = strepo.GetAll().Where(dto => dto.Study_Id == id);
-                study.Stages = new List<StageOverviewModel>();
+                study.Stages = new List<StageOverview>();
                 foreach (var dto in stageDtos)
                 {
-                    study.Stages.Add(new StageOverviewModel()
+                    study.Stages.Add(new StageOverview()
                     {
                         Id = dto.Id,
                         Name = dto.Name
                     });
                 }
-
-                // Add persons
-                var relationDtos = usrepo.GetAll().Where(us => us.Study_Id == id);
-                var userStudyRoleDictionary = new Dictionary<int, List<StudyRole>>();
-                foreach (var dto in relationDtos)
-                {
-                    if (userStudyRoleDictionary.ContainsKey(dto.Id))
-                    {
-                        userStudyRoleDictionary[id].Add(new StudyRole()
-                        {
-                            Id = dto.StudyRole_Id,
-                            Name = rrepo.Read(dto.StudyRole_Id).Name
-                        });
-                    }
-                    else
-                    {
-                        userStudyRoleDictionary.Add(dto.Id, new List<StudyRole>() { new StudyRole(){
-                            Id = dto.StudyRole_Id,
-                            Name = rrepo.Read(dto.StudyRole_Id).Name
-                        }});
-                    }
-                }
-                study.Persons = new Dictionary<UserModel, List<StudyRole>>();
-                foreach (var userPair in userStudyRoleDictionary)
-                {
-                    // TODO build dictionary in one iteration
-                    var userDto = urepo.Read(userPair.Key);
-                    study.Persons.Add(new UserModel()
-                    {
-                        Id = userDto.Id,
-                        FirstName = userDto.FirstName,
-                        LastName = userDto.LastName,
-                        Metadata = userDto.Metadata
-                    }, userPair.Value);
-                }
-
-                return study;
+                
             }
-            */
+
+            return study;
+
         }
 
         public void Remove(int id)
@@ -94,13 +70,7 @@ namespace RecensysBLL.BusinessLogicLayer
         }
         
 
-        public void RemoveStage(int id)
-        {
-            using (var repo = _factory.GetStageRepo())
-            {
-                repo.Delete(id);
-            }
-        }
+        
 
     }
 }

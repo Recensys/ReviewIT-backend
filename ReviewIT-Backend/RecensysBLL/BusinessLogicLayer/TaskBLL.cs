@@ -23,7 +23,7 @@ namespace RecensysBLL.BusinessLogicLayer
         {
             var tasks = new List<Task>();
             
-            // Get tasks
+            // GetOverview tasks
             List<TaskEntity> taskEntities;
             using (var taskRepo = _factory.GetTaskRepo())
             {
@@ -151,7 +151,7 @@ namespace RecensysBLL.BusinessLogicLayer
 
         public void GenerateTasks(int stageId)
         {
-            // Get articles
+            // GetOverview articles
             var articleIds = new List<int>();
             using (var articleRepo = _factory.GetArticleRepo())
             {
@@ -162,10 +162,10 @@ namespace RecensysBLL.BusinessLogicLayer
                 }
             }
 
-            // Get the task distribution
+            // GetOverview the task distribution
             var reviewDictionary = new StrategyBLL(_factory).GetReviewtaskDistribution(stageId, articleIds);
 
-            // Get the stage description, ie. the fields related to the stage
+            // GetOverview the stage description, ie. the fields related to the stage
             var fieldIds = new List<int>();
             using (var stageDescRepo = _factory.GetStageDescriptionRepository())
             {

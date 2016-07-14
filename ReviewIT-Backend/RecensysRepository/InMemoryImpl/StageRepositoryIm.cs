@@ -20,9 +20,10 @@ namespace RecensysRepository.InMemoryImpl
             return _stages;
         }
 
-        public void Create(StageEntity item)
+        public int Create(StageEntity item)
         {
             _stages.Add(item);
+            return _stages.IndexOf(item);
         }
 
         public StageEntity Read(int id)

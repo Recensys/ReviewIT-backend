@@ -4,13 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RecensysBLL.BusinessEntities
+namespace RecensysBLL.BusinessEntities.OverviewEntities
 {
-    public class Stage
+    public class StageOverview
     {
         public int Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
-        public List<Task> Tasks { get; set; }
     }
 }

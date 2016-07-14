@@ -8,7 +8,7 @@ namespace RecensysRepository.Interfaces
     {
         IEnumerable<StageEntity> GetAll();
 
-        void Create(StageEntity item);
+        int Create(StageEntity item);
 
         StageEntity Read(int id);
 
