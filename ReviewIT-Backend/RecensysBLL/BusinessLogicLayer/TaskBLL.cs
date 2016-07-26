@@ -30,6 +30,8 @@ namespace RecensysBLL.BusinessLogicLayer
                 taskEntities = taskRepo.GetAll().Where(t => t.User_Id == userId && t.Stage_Id == stageId).ToList();
             }
 
+            /*
+
             // Build data dictionary and create tasks for return
             using (var dataRepo = _factory.GetDataRepo())
             using (var fieldRepo = _factory.GetFieldRepo())
@@ -53,7 +55,7 @@ namespace RecensysBLL.BusinessLogicLayer
 
                     tasks.Add(task);
                 }
-            }
+            }*/
             
             return tasks;
         }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using RecensysBLL.BusinessLogicLayer;
 using RecensysRepository.Factory;
 using RecensysWebAPI.Models;
@@ -28,30 +29,40 @@ namespace RecensysWebAPI.Controllers
         [HttpPost]
         public IActionResult Login([FromBody]CredentialsModel model)
         {
-            var user = userBll.Get(model.Username);
-
             
-
-            ICryptoService cryptoService = new PBKDF2();
-
-            cryptoService.Salt = user.PasswordSalt;
-
-            string inputHash = cryptoService.Compute(model.Password);
-            bool isPasswordValid = cryptoService.Compare(user.Password, inputHash);
-
-            
-
-            if (isPasswordValid)
+            if (ModelState.IsValid & model != null)
             {
-                var tokenService = new JWTTokenService();
-                var token = tokenService.GetToken(user.Id);
+                var user = userBll.Get(model.Username);
 
-                return Json(new {token});
+
+
+                ICryptoService cryptoService = new PBKDF2();
+
+                cryptoService.Salt = user.PasswordSalt;
+
+                string inputHash = cryptoService.Compute(model.Password);
+                bool isPasswordValid = cryptoService.Compare(user.Password, inputHash);
+
+
+
+                if (isPasswordValid)
+                {
+                    var tokenService = new JWTTokenService();
+                    var token = tokenService.GetToken(user.Id);
+
+                    return Json(new { token });
+                }
+                else
+                {
+                    return Forbid();
+                }
             }
-            else
-            {
-                return Forbid();
-            }
+
+
+            return Content(JsonConvert.SerializeObject(model));
+
+            //return Json(new {sessionToken = "testToken"});
+
 
         }
 

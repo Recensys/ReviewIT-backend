@@ -4,36 +4,26 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using RecensysBLL.BusinessEntities;
-using RecensysBLL.BusinessLogicLayer;
-using RecensysRepository.Factory;
 
 // For more information on enabling Web API for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace RecensysWebAPI.Controllers
 {
-    [Route("api/[controller]")]
-    public class StudyController : Controller
+    [Route("api/study/{studyId}/field")]
+    public class FieldController : Controller
     {
 
-        private readonly StudyBLL studyBll;
 
-        public StudyController(IRepositoryFactory factory)
-        {
-            studyBll = new StudyBLL(factory); 
-        }
-
-        // GET: api/values
-        [HttpGet]
-        public IEnumerable<StudyOverview> Get()
-        {
-            return null;
-        }
-
+        
         // GET api/values/5
-        [HttpGet("{id}")]
-        public string Get(int id)
+        [HttpGet]
+        public ActionResult Get(int studyId)
         {
-            return "value";
+            return Json(new List<Field>()
+            {
+                new Field() {Id = 1, DataType = DataType.String, Name = "Title"},
+                new Field() {Id = 2, Name = "isGSD?", DataType = DataType.Boolean}
+            });
         }
 
         // POST api/values

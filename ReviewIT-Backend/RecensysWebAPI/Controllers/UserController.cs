@@ -44,10 +44,8 @@ namespace RecensysWebAPI.Controllers
 
             ICryptoService cryptoService = new PBKDF2();
             
-            //save this salt to the database
             string salt = cryptoService.GenerateSalt();
             
-            //save this hash to the database
             string hashedPassword = cryptoService.Compute(model.Password);
 
             userBll.CreateUser(new User()

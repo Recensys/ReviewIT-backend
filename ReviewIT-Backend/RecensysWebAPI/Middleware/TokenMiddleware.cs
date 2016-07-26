@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Security.Authentication;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Primitives;
 using RecensysWebAPI.Services;
 
 namespace RecensysWebAPI.Middleware
@@ -19,6 +21,9 @@ namespace RecensysWebAPI.Middleware
         public async Task Invoke(HttpContext context)
         {
 
+            await _next.Invoke(context);
+            return;
+
             // paths not subject to token check
             var openPaths = new List<string>()
             {
@@ -31,35 +36,48 @@ namespace RecensysWebAPI.Middleware
                 return;
             }
 
+            // let option calls through
+            var openMethods = new[] {"OPTIONS", "DEBUG"};
+            if (openMethods.Contains(context.Request.Method))
+            {
+                await _next.Invoke(context);
+                return;
+            }
 
-            var token = context.Request.Headers["AuthToken"];
+            
 
+            StringValues tokens;
+            
             ITokenService tokenService = new JWTTokenService();
 
-            if (!string.IsNullOrEmpty(token))
+            if (context.Request.Cookies.ContainsKey("token"))
             {
                 try
                 {
+
+                    var token = context.Request.Cookies["token"];
+
                     var uid = tokenService.ValidateToken(token);
 
                     context.Items.Add("uid",uid);
 
-                    // continue with any other middleware
+
+
                     await _next.Invoke(context);
 
                 }
                 catch (AuthenticationException)
                 {
-                    context.Response.Redirect("/api/login");
+                    context.Response.StatusCode = 401;
                 }
             }
             else
             {
-                context.Response.Redirect("/api/login");
+                context.Response.StatusCode = 401;
             }
 
-            
-                    await _next.Invoke(context);
+
+            await _next.Invoke(context);
 
         }
     }

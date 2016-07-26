@@ -36,6 +36,7 @@
   <ItemGroup>
     <Compile Include="BusinessEntities\Article.cs" />
     <Compile Include="BusinessEntities\Data.cs" />
+    <Compile Include="BusinessEntities\Field.cs" />
     <Compile Include="BusinessEntities\OverviewEntities\StageOverview.cs" />
     <Compile Include="BusinessEntities\ReviewTask.cs" />
     <Compile Include="BusinessEntities\Stage.cs" />

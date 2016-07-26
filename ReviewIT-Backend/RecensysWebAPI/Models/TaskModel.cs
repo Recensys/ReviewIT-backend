@@ -1,17 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
+using RecensysBLL.BusinessEntities;
 
-namespace RecensysBLL.BusinessEntities
+namespace RecensysWebAPI.Models
 {
-
-
-
-    public class Data
+    public class TaskModel
     {
         public int Id { get; set; }
-        public string Value { get; set; }
+        public List<Field> Fields { get; set; }
     }
 }
