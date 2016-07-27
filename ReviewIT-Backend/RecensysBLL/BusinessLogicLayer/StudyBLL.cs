@@ -68,8 +68,17 @@ namespace RecensysBLL.BusinessLogicLayer
                 srepo.Delete(id);
             }
         }
-        
 
+        public void StartStudy(int id)
+        {
+            int firstStageId;
+            using (var stageRepo = _factory.GetStageRepo())
+            {
+                firstStageId = stageRepo.GetAll().Where(s => s.Study_Id == id).Min(s => s.Id);
+            }
+
+
+        }
         
 
     }

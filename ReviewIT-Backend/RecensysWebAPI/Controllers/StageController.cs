@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using RecensysBLL.BusinessEntities;
+using RecensysRepository.Entities;
+using RecensysRepository.Factory;
 using RecensysWebAPI.Models;
 
 // For more information on enabling Web API for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
@@ -10,6 +12,13 @@ namespace RecensysWebAPI.Controllers
     [Route("api/[controller]")]
     public class StageController : Controller
     {
+
+        private IRepositoryFactory _factory;
+        public StageController(IRepositoryFactory factory)
+        {
+            _factory = factory;
+        }
+
         // GET: api/values
         [HttpGet]
         public IActionResult Get()
@@ -164,12 +173,35 @@ namespace RecensysWebAPI.Controllers
         }
 
         // POST api/values
-        [HttpPost("datafields")]
-        public IActionResult Post([FromBody] StageDescriptionModel model)
+        [HttpPost("{id}/datafields")]
+        public IActionResult Post(int id, [FromBody] StageDescriptionModel model)
         {
 
+            
             if (model != null)
             {
+                using (var stageDescRepo = _factory.GetStageDescriptionRepository())
+                {
+                    foreach (var field in model.Requested)
+                    {
+                        stageDescRepo.Update(new StageDescriptionEntity()
+                        {
+                            Stage_Id = id,
+                            Field_Id = field.Id,
+                            FieldType_Id = 1
+                        });
+                    }
+                    foreach (var field in model.Visible)
+                    {
+                        stageDescRepo.Update(new StageDescriptionEntity()
+                        {
+                            Stage_Id = id,
+                            Field_Id = field.Id,
+                            FieldType_Id = 0
+                        });
+                    }
+
+                }
                 return Ok();
             }
             else
@@ -177,6 +209,16 @@ namespace RecensysWebAPI.Controllers
                 return BadRequest();
             }
 
+        }
+
+        [HttpPost("{id}/details")]
+        public IActionResult Post(int id, [FromBody] StageDetails model)
+        {
+            if (model != null)
+            {
+                return Ok();
+            }
+            return BadRequest();
         }
 
         // PUT api/values/5

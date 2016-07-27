@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using RecensysBLL.BusinessEntities;
+using RecensysRepository.Factory;
 
 // For more information on enabling Web API for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -13,17 +14,30 @@ namespace RecensysWebAPI.Controllers
     public class FieldController : Controller
     {
 
-
+        private IRepositoryFactory _factory;
+        public FieldController(IRepositoryFactory factory)
+        {
+            _factory = factory;
+        }
         
         // GET api/values/5
         [HttpGet]
-        public ActionResult Get(int studyId)
+        public IActionResult Get(int studyId)
         {
-            return Json(new List<Field>()
+            List<Field> fields = new List<Field>();
+            using (var fieldRepo = _factory.GetFieldRepo())
             {
-                new Field() {Id = 1, DataType = DataType.String, Name = "Title"},
-                new Field() {Id = 2, Name = "isGSD?", DataType = DataType.Boolean}
-            });
+                foreach (var fieldEntity in fieldRepo.GetAll().Where(f => f.Study_Id == studyId))
+                {
+                    fields.Add(new Field()
+                    {
+                        Id = fieldEntity.Id,
+                        Name = fieldEntity.Name,
+                        DataType = (DataType)fieldEntity.DataType_Id
+                    });
+                }
+            }
+            return Json(fields);
         }
 
         // POST api/values

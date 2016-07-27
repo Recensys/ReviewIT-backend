@@ -3,30 +3,28 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using RecensysBLL.BusinessEntities;
-using RecensysBLL.BusinessLogicLayer;
+using RecensysRepository.Entities;
 using RecensysRepository.Factory;
 
 // For more information on enabling Web API for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace RecensysWebAPI.Controllers
 {
-    [Route("api/[controller]")]
-    public class StudyController : Controller
+    [Route("api/study{studyId}/stage/{stageId}/[controller]")]
+    public class StrategyController : Controller
     {
 
-        private readonly StudyBLL studyBll;
-
-        public StudyController(IRepositoryFactory factory)
+        private IRepositoryFactory _factory;
+        public StrategyController(IRepositoryFactory factory)
         {
-            studyBll = new StudyBLL(factory); 
+            _factory = factory;
         }
 
         // GET: api/values
         [HttpGet]
-        public IEnumerable<StudyOverview> Get()
+        public IEnumerable<string> Get()
         {
-            return null;
+            return new string[] { "value1", "value2" };
         }
 
         // GET api/values/5
@@ -37,10 +35,17 @@ namespace RecensysWebAPI.Controllers
         }
 
         // POST api/values
-        [HttpPost("{id}/start")]
-        public void Post(int id)
+        [HttpPost("{strategy}")]
+        public void Post(int stageId, int strategy)
         {
-            studyBll.
+            using (var strategyRepo = _factory.GetStrategyRepo())
+            {
+                strategyRepo.Create(new StrategyEntity()
+                {
+                    Stage_Id = stageId,
+                    Value = strategy.ToString()
+                });
+            }
         }
 
         // PUT api/values/5

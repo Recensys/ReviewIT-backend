@@ -7,5 +7,7 @@
         public string Description { get; set; }
         public int DataType_Id { get; set; }
 
+        public int Study_Id { get; set; }
+
     }
 }

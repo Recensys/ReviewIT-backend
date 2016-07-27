@@ -40,6 +40,7 @@
     <Compile Include="BusinessEntities\OverviewEntities\StageOverview.cs" />
     <Compile Include="BusinessEntities\ReviewTask.cs" />
     <Compile Include="BusinessEntities\Stage.cs" />
+    <Compile Include="BusinessEntities\StageDetails.cs" />
     <Compile Include="BusinessEntities\Strategy.cs" />
     <Compile Include="BusinessEntities\OverviewEntities\StudyOverview.cs" />
     <Compile Include="BusinessEntities\Task.cs" />
