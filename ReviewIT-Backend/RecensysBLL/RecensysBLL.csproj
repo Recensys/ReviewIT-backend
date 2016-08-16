@@ -43,6 +43,8 @@
     <Compile Include="BusinessEntities\StageDetails.cs" />
     <Compile Include="BusinessEntities\Strategy.cs" />
     <Compile Include="BusinessEntities\OverviewEntities\StudyOverview.cs" />
+    <Compile Include="BusinessEntities\Study\Study.cs" />
+    <Compile Include="BusinessEntities\Study\StudyDetails.cs" />
     <Compile Include="BusinessEntities\Task.cs" />
     <Compile Include="BusinessEntities\User.cs" />
     <Compile Include="BusinessEntities\ValidationStrategy.cs" />

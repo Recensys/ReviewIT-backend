@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using RecensysBLL.BusinessEntities;
+using RecensysBLL.BusinessEntities.Study;
 using RecensysBLL.BusinessLogicLayer;
 using RecensysRepository.Factory;
 
@@ -22,11 +22,31 @@ namespace RecensysWebAPI.Controllers
             studyBll = new StudyBLL(factory); 
         }
 
-        // GET: api/values
         [HttpGet]
-        public IEnumerable<StudyOverview> Get()
+        public IActionResult Get()
         {
-            return null;
+            try
+            {
+                return Json(studyBll.Get());
+            }
+            catch (Exception e)
+            {
+                return StatusCode(500, e.Message);
+            }
+        }
+        
+        [HttpGet("new")]
+        public IActionResult NewStudy()
+        {
+            try
+            {
+                return Json(studyBll.NewStudy());
+
+            }
+            catch (Exception e)
+            {
+                return StatusCode(500, e.Message);
+            }
         }
 
         // GET api/values/5
@@ -38,21 +58,48 @@ namespace RecensysWebAPI.Controllers
 
         // POST api/values
         [HttpPost("{id}/start")]
-        public void Post(int id)
+        public IActionResult Post(int id)
         {
-            studyBll.
+            try
+            {
+                int nrOfCreatedTasks = studyBll.StartStudy(id);
+                return Json(new { NrOfCreatedTasks = nrOfCreatedTasks});
+            }
+            catch (Exception e)
+            {
+                return StatusCode(500,e.Message);
+            }
         }
 
         // PUT api/values/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody]string value)
+        public IActionResult Put(int id, [FromBody]Study study)
         {
+            try
+            {
+                studyBll.UpdateStudy(study);
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                return StatusCode(500, e.Message);
+            }
         }
 
         // DELETE api/values/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public IActionResult Delete(int id)
         {
+            try
+            {
+                studyBll.Remove(id);
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                return StatusCode(500,e.Message);
+                
+            }
         }
     }
 }

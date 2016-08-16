@@ -22,12 +22,31 @@ namespace RecensysBLL.BusinessLogicLayer
         public List<Task> GetTasks(int stageId, int userId)
         {
             var tasks = new List<Task>();
-            
+
             // GetOverview tasks
-            List<TaskEntity> taskEntities;
             using (var taskRepo = _factory.GetTaskRepo())
+            using (var dataRepo = _factory.GetDataRepo())
             {
-                taskEntities = taskRepo.GetAll().Where(t => t.User_Id == userId && t.Stage_Id == stageId).ToList();
+                var taskEntities = taskRepo.GetAll().Where(t => t.User_Id == userId && t.Stage_Id == stageId);
+                foreach (var taskEntity in taskEntities)
+                {
+                    var dataEntities = dataRepo.GetAll().Where(d => d.Task_Id == taskEntity.Id);
+                    var data = new List<Data>();
+                    foreach (var dataEntity in dataEntities)
+                    {
+                        data.Add(new Data()
+                        {
+                            Id = dataEntity.Id,
+                            Value = dataEntity.Value
+                        });
+                    }
+                    tasks.Add(new Task()
+                    {
+                        Id = taskEntity.Id,
+                        Data = data,
+                        TaskState = TaskState.New
+                    });
+                }
             }
 
             /*
@@ -151,7 +170,7 @@ namespace RecensysBLL.BusinessLogicLayer
             }
         }
 
-        public void GenerateTasks(int stageId)
+        public int GenerateTasks(int stageId)
         {
             // GetOverview articles
             var articleIds = new List<int>();
@@ -188,8 +207,8 @@ namespace RecensysBLL.BusinessLogicLayer
             }
 
             //TODO create the validation tasks
-            
-
+            // TODO return nr of created tasks
+            return 0;
         }
 
     }

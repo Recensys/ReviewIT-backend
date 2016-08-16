@@ -8,7 +8,7 @@ namespace RecensysRepository.Interfaces
     {
         IEnumerable<StudyEntity> GetAll();
 
-        void Create(StudyEntity study);
+        int Create(StudyEntity study);
 
         StudyEntity Read(int id);
 

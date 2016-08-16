@@ -11,7 +11,9 @@ namespace RecensysRepository.InMemoryImpl
         private List<FieldEntity> _fields = new List<FieldEntity>()
         {
             new FieldEntity() {Id = 0, Name = "Title", Study_Id = 0, DataType_Id = 0},
-            new FieldEntity() {Id = 1, Name = "isGSD?", Study_Id = 0, DataType_Id = 1},
+            new FieldEntity() {Id = 1, Name = "Author", Study_Id = 0, DataType_Id = 0},
+            new FieldEntity() {Id = 2, Name = "Abstract", Study_Id = 0, DataType_Id = 0},
+            new FieldEntity() {Id = 3, Name = "isGSD?", Study_Id = 0, DataType_Id = 1},
         };
 
         public void Dispose()

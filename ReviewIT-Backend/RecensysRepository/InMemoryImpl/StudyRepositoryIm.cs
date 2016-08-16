@@ -20,9 +20,10 @@ namespace RecensysRepository.InMemoryImpl
             return _studies;
         }
 
-        public void Create(StudyEntity study)
+        public int Create(StudyEntity study)
         {
             _studies.Add(study);
+            return _studies.IndexOf(study);
         }
 
         public StudyEntity Read(int id)

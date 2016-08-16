@@ -7,7 +7,12 @@ namespace RecensysRepository.InMemoryImpl
     public class TaskRepositoryIm : ITaskRepository
     {
 
-        private List<TaskEntity> _tasks = new List<TaskEntity>();
+        private List<TaskEntity> _tasks = new List<TaskEntity>()
+        {
+            new TaskEntity() {Id = 0, Article_Id = 0, Stage_Id = 0, User_Id = 0},
+            new TaskEntity() {Id = 1, Article_Id = 1, Stage_Id = 0, User_Id = 0},
+            new TaskEntity() {Id = 2, Article_Id = 2, Stage_Id = 0, User_Id = 0},
+        };
 
         public void Dispose()
         {

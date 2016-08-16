@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using RecensysBLL.BusinessEntities;
+using RecensysBLL.BusinessLogicLayer;
 using RecensysRepository.Entities;
 using RecensysRepository.Factory;
 using RecensysWebAPI.Models;
@@ -23,6 +25,37 @@ namespace RecensysWebAPI.Controllers
         [HttpGet]
         public IActionResult Get()
         {
+            var id = 0;
+            var fields = new List<Field>();
+            using (var stageDescRepo = _factory.GetStageDescriptionRepository())
+            using (var fieldRepo = _factory.GetFieldRepo())
+            {
+                var descs = stageDescRepo.GetAll().Where(s => s.Stage_Id == id);
+                foreach (var desc in descs)
+                {
+                    var entity = fieldRepo.Read(desc.Field_Id);
+                    fields.Add(new Field()
+                    {
+                        Id = entity.Id,
+                        Name = entity.Name,
+                        DataType = (DataType)entity.DataType_Id
+                    });
+                }
+            }
+
+            var stage = new Stage()
+            {
+                Id = id,
+                Name = "Name of Stage",
+                Description = "Description of stage",
+                Tasks = new TaskBLL(_factory).GetTasks(id, 0),
+                Fields = fields
+            };
+
+            return Json(new[]{stage});
+
+
+
             return Json(new[]
             {
                 new Stage
@@ -124,6 +157,38 @@ namespace RecensysWebAPI.Controllers
         [HttpGet("{id}")]
         public ActionResult Get(int id)
         {
+
+            var fields = new List<Field>();
+            using (var stageDescRepo = _factory.GetStageDescriptionRepository())
+            using (var fieldRepo = _factory.GetFieldRepo())
+            {
+                var descs = stageDescRepo.GetAll().Where(s => s.Stage_Id == id);
+                foreach (var desc in descs)
+                {
+                    var entity = fieldRepo.Read(desc.Field_Id);
+                    fields.Add(new Field()
+                    {
+                        Id = entity.Id,
+                        Name = entity.Name,
+                        DataType = (DataType)entity.DataType_Id
+                    });
+                }
+            }
+
+            var stage = new Stage()
+            {
+                Id = id,
+                Name = "Name of Stage",
+                Description = "Description of stage",
+                Tasks = new TaskBLL(_factory).GetTasks(id, 1),
+                Fields = fields
+            };
+
+            return Json(stage);
+
+
+
+
             return Json(new Stage
             {
                 Id = 1,
@@ -182,22 +247,22 @@ namespace RecensysWebAPI.Controllers
             {
                 using (var stageDescRepo = _factory.GetStageDescriptionRepository())
                 {
-                    foreach (var field in model.Requested)
-                    {
-                        stageDescRepo.Update(new StageDescriptionEntity()
-                        {
-                            Stage_Id = id,
-                            Field_Id = field.Id,
-                            FieldType_Id = 1
-                        });
-                    }
                     foreach (var field in model.Visible)
                     {
-                        stageDescRepo.Update(new StageDescriptionEntity()
+                        stageDescRepo.Create(new StageDescriptionEntity()
                         {
                             Stage_Id = id,
                             Field_Id = field.Id,
                             FieldType_Id = 0
+                        });
+                    }
+                    foreach (var field in model.Requested)
+                    {
+                        stageDescRepo.Create(new StageDescriptionEntity()
+                        {
+                            Stage_Id = id,
+                            Field_Id = field.Id,
+                            FieldType_Id = 1
                         });
                     }
 

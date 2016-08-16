@@ -3,6 +3,7 @@ using System.Linq;
 using Microsoft.Win32;
 using RecensysBLL.BusinessEntities;
 using RecensysBLL.BusinessEntities.OverviewEntities;
+using RecensysBLL.BusinessEntities.Study;
 using RecensysRepository.Entities;
 using RecensysRepository.Factory;
 
@@ -19,15 +20,26 @@ namespace RecensysBLL.BusinessLogicLayer
         }
 
 
-        public List<StudyOverview> Get(int uid)
+        public List<StudyOverview> Get()
         {
             var studies = new List<StudyOverview>();
 
             using (var studyRepo = _factory.GetStudyRepo())
             {
-                
+                var studyEntities = studyRepo.GetAll();
+                //TODO check user relation to studies
+                foreach (var studyEntity in studyEntities)
+                {
+                    studies.Add(new StudyOverview()
+                    {
+                        Id = studyEntity.Id,
+                        Name = studyEntity.Title,
+                        Description = studyEntity.Description
+                    });
+                }
             }
-            return null;
+
+            return studies;
         }
 
         public StudyOverview GetOverview(int id)
@@ -61,6 +73,27 @@ namespace RecensysBLL.BusinessLogicLayer
 
         }
 
+        public void UpdateStudy(Study study)
+        {
+            using (var srepo = _factory.GetStudyRepo())
+            {
+                srepo.Update(new StudyEntity()
+                {
+                    Id = study.Id,
+                    Description = study.StudyDetails.Description,
+                    Title = study.StudyDetails.Name
+                });
+            }
+        }
+
+        public int NewStudy()
+        {
+            using (var srepo = _factory.GetStudyRepo())
+            {
+                return srepo.Create(new StudyEntity());
+            }
+        }
+
         public void Remove(int id)
         {
             using (var srepo = _factory.GetStudyRepo())
@@ -69,15 +102,16 @@ namespace RecensysBLL.BusinessLogicLayer
             }
         }
 
-        public void StartStudy(int id)
+        public int StartStudy(int id)
         {
             int firstStageId;
-            using (var stageRepo = _factory.GetStageRepo())
+            using (var studyRepo = _factory.GetStudyRepo())
             {
-                firstStageId = stageRepo.GetAll().Where(s => s.Study_Id == id).Min(s => s.Id);
+                firstStageId = studyRepo.Read(id).First_Stage_Id;
             }
-
-
+           
+            int NrOfCreatedTasks = new TaskBLL(_factory).GenerateTasks(firstStageId);
+            return NrOfCreatedTasks;
         }
         
 
