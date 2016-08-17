@@ -33,9 +33,7 @@ namespace RecensysWebAPI.Controllers
             if (ModelState.IsValid & model != null)
             {
                 var user = userBll.Get(model.Username);
-
-
-
+                
                 ICryptoService cryptoService = new PBKDF2();
 
                 cryptoService.Salt = user.PasswordSalt;
@@ -50,18 +48,13 @@ namespace RecensysWebAPI.Controllers
                     var tokenService = new JWTTokenService();
                     var token = tokenService.GetToken(user.Id);
 
-                    return Json(new { token });
-                }
-                else
-                {
-                    return Forbid();
+                    user.Password = null;
+                    user.PasswordSalt = null;
+                    return Json(new { token, user});
                 }
             }
 
-
-            return Content(JsonConvert.SerializeObject(model));
-
-            //return Json(new {sessionToken = "testToken"});
+            return Forbid();
 
 
         }

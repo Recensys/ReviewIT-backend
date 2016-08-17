@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using RecensysRepository.Entities;
 using RecensysRepository.Interfaces;
 
@@ -23,7 +24,8 @@ namespace RecensysRepository.InMemoryImpl
         public int Create(StudyEntity study)
         {
             _studies.Add(study);
-            return _studies.IndexOf(study);
+            study.Id = _studies.Max(s => s.Id) + 1;
+            return study.Id;
         }
 
         public StudyEntity Read(int id)

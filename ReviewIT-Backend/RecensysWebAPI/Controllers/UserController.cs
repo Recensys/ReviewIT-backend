@@ -39,7 +39,7 @@ namespace RecensysWebAPI.Controllers
 
         // POST api/values
         [HttpPost("Create")]
-        public void Post([FromBody]CredentialsModel model)
+        public IActionResult Post([FromBody]CredentialsModel model)
         {
 
             ICryptoService cryptoService = new PBKDF2();
@@ -48,13 +48,21 @@ namespace RecensysWebAPI.Controllers
             
             string hashedPassword = cryptoService.Compute(model.Password);
 
-            userBll.CreateUser(new User()
+            try
             {
-                Username = model.Username,
-                Password = hashedPassword,
-                PasswordSalt = salt
-            });
-
+                userBll.CreateUser(new User()
+                {
+                    Username = model.Username,
+                    Password = hashedPassword,
+                    PasswordSalt = salt
+                });
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                return StatusCode(500, e.Message);
+            }
+            
             
         }
 
