@@ -80,10 +80,6 @@
       <Project>{3c0aaa0a-8398-4c54-bc77-57558c78e4bd}</Project>
       <Name>RecensysRepository</Name>
     </ProjectReference>
-    <ProjectReference Include="..\ReviewIT-Backend\RecensysWebAPI2.csproj">
-      <Project>{a2f7e4ac-7116-4be7-ae7a-1d50ab5b54f6}</Project>
-      <Name>RecensysWebAPI2</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
