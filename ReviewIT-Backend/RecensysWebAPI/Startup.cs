@@ -1,25 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNet.Builder;
-using Microsoft.AspNet.Hosting;
-using Microsoft.AspNet.Routing;
-using Microsoft.AspNet.Routing.Template;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Cors.Infrastructure;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using RecensysRepository.Factory;
+using RecensysWebAPI.Middleware;
 
-namespace RecensysWebAPI5
+namespace RecensysWebAPI
 {
     public class Startup
     {
         public Startup(IHostingEnvironment env)
         {
-            // Set up configuration sources.
             var builder = new ConfigurationBuilder()
-                .AddJsonFile("appsettings.json");
+                .SetBasePath(env.ContentRootPath)
+                .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
+                .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true);
 
             if (env.IsEnvironment("Development"))
             {
@@ -28,10 +28,10 @@ namespace RecensysWebAPI5
             }
 
             builder.AddEnvironmentVariables();
-            Configuration = builder.Build().ReloadOnChanged("appsettings.json");
+            Configuration = builder.Build();
         }
 
-        public IConfigurationRoot Configuration { get; set; }
+        public IConfigurationRoot Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container
         public void ConfigureServices(IServiceCollection services)
@@ -39,10 +39,18 @@ namespace RecensysWebAPI5
             // Add framework services.
             services.AddApplicationInsightsTelemetry(Configuration);
 
-            // For injecting in memory repository in the controller constructors
+            // Sign-up injection of repository
             services.AddSingleton<IRepositoryFactory, RepositoryFactoryMemory>();
 
             services.AddMvc();
+
+            //Add Cors support to the service
+            var policy = new CorsPolicy();
+            policy.Headers.Add("*");
+            policy.Methods.Add("*");
+            policy.Origins.Add("*");
+            policy.SupportsCredentials = true;
+            services.AddCors(x => x.AddPolicy("corsPolicy", policy));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline
@@ -51,20 +59,16 @@ namespace RecensysWebAPI5
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
 
-            app.UseIISPlatformHandler();
-
             app.UseApplicationInsightsRequestTelemetry();
 
             app.UseApplicationInsightsExceptionTelemetry();
 
-            app.UseStaticFiles();
+            app.UseMiddleware<TokenMiddleware>();
+
+            app.UseCors("corsPolicy");
 
             app.UseMvc();
 
         }
-        
-
-        // Entry point for the application.
-        public static void Main(string[] args) => WebApplication.Run<Startup>(args);
     }
 }

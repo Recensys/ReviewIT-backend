@@ -1,35 +1,35 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNet.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using RecensysBLL.BusinessLogicLayer;
 using RecensysRepository.Factory;
 
-// For more information on enabling Web API for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
-
-namespace RecensysWebAPI5.Controllers
+namespace RecensysWebAPI.Controllers
 {
-    [Route("api/study/{studyId}/[controller]")]
-    public class StageController : Controller
+    [Route("api/[controller]")]
+    public class ValuesController : Controller
     {
 
-        private readonly StageBLL _bll;
-        public StageController(IRepositoryFactory factory)
+        private StudyBLL _bll;
+
+        public ValuesController(IRepositoryFactory factory)
         {
-            _bll = new StageBLL(factory);
+            _bll = new StudyBLL(factory);
         }
 
-        // GET: api/values
+        // GET api/values
         [HttpGet]
         public IEnumerable<string> Get()
         {
-            return new [] { "value1", "value2" };
+            return new string[] { "value1", "value2" };
         }
 
         // GET api/values/5
         [HttpGet("{id}")]
-        public string Get(int studyId, int id) => $"(stage with id {id} in study with id {studyId})";
+        public void Get(int id)
+        {
+        }
 
         // POST api/values
         [HttpPost]
