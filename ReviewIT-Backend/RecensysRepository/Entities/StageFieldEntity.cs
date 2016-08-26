@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace RecensysRepository.Entities
 {
-    public class StageDescriptionEntity
+    public class StageFieldEntity
     {
         public int Stage_Id { get; set; }
         public int Field_Id { get; set; }

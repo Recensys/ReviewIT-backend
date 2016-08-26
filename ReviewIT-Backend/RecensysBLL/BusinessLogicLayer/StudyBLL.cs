@@ -1,9 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Win32;
 using RecensysBLL.BusinessEntities;
 using RecensysBLL.BusinessEntities.OverviewEntities;
-using RecensysBLL.BusinessEntities.Study;
 using RecensysRepository.Entities;
 using RecensysRepository.Factory;
 
@@ -40,6 +40,34 @@ namespace RecensysBLL.BusinessLogicLayer
             }
 
             return studies;
+        }
+
+        public Study Get(int id)
+        {
+            var study = new Study() {Id = id};
+
+            // get study details
+            using (var studyRepo = _factory.GetStudyRepo())
+            {
+                var studyEntity = studyRepo.Read(id);
+                if (studyEntity == null) throw new NullReferenceException("Study not found");
+                study.StudyDetails = new StudyDetails()
+                {
+                    Name = studyEntity.Title,
+                    Description = studyEntity.Description
+                };
+            }
+
+            // get stages
+            study.Stages = new StageBLL(_factory).GetStagesForStudy(id);
+
+            // get researchers
+            study.Researchers = new UserBLL(_factory).GetUsersForStudy(id);
+
+            // get available fields
+            study.AvailableFields = new FieldBLL(_factory).GetFieldsForStudy(id);
+            
+            return study;
         }
 
         public StudyOverview GetOverview(int id)

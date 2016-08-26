@@ -1,13 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using RecensysBLL.BusinessEntities;
-using RecensysBLL.BusinessLogicLayer;
-using Task = RecensysBLL.BusinessEntities.Task;
+﻿using System.Collections.Generic;
 
-namespace RecensysBLL.StrategyLogic
+namespace RecensysBLL.StrategyHandler
 {
     public interface IReviewStrategyHandler
     {

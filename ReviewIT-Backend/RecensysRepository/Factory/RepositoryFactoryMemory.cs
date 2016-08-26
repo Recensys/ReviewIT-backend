@@ -13,11 +13,12 @@ namespace RecensysRepository.Factory
         private DataRepositoryIm _fieldDataRepository;
         private TaskRepositoryIm _taskRepository;
         private ArticleRepositoryIm _articleRepository;
+        private UserStageRelationRepositoryIm _userStageRelationRepository;
         private UserStudyRelationRepositoryIm _userStudyRelationRepository;
         private StudyRoleRepositoryIm _studyRoleRepository;
         private StrategyRepositoryIm _strategyRepository;
         private DataTypeRepositoryIm _dataTypeRepository;
-        private StageDescriptionRepository _stageDescriptionRepository;
+        private StageFieldsRepository _stageFieldsRepository;
 
         public IUserRepository GetUserRepo()
         {
@@ -54,6 +55,11 @@ namespace RecensysRepository.Factory
             return _articleRepository ?? (_articleRepository = new ArticleRepositoryIm());
         }
 
+        public IUserStageRelationRepository GetUserStageRelationRepo()
+        {
+            return _userStageRelationRepository ?? (_userStageRelationRepository = new UserStageRelationRepositoryIm());
+        }
+
         public IUserStudyRelationRepository GetUserStudyRelationRepo()
         {
             return _userStudyRelationRepository ?? (_userStudyRelationRepository = new UserStudyRelationRepositoryIm());
@@ -74,9 +80,9 @@ namespace RecensysRepository.Factory
             return _dataTypeRepository ?? (_dataTypeRepository = new DataTypeRepositoryIm());
         }
 
-        public IStageDescriptionRepository GetStageDescriptionRepository()
+        public IStageFieldsRepository GetStageFieldsRepository()
         {
-            return _stageDescriptionRepository ?? (_stageDescriptionRepository = new StageDescriptionRepository());
+            return _stageFieldsRepository ?? (_stageFieldsRepository = new StageFieldsRepository());
         }
     }
 }

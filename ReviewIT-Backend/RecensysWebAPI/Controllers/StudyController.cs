@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using RecensysBLL.BusinessEntities.Study;
+using RecensysBLL.BusinessEntities;
 using RecensysBLL.BusinessLogicLayer;
 using RecensysRepository.Factory;
 
@@ -51,9 +51,21 @@ namespace RecensysWebAPI.Controllers
 
         // GET api/values/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public IActionResult Get(int id)
         {
-            return "value";
+            if (id == -1)
+            {
+                return Json(new Study());
+            }
+
+            try
+            {
+                return Json(studyBll.Get(id));
+            }
+            catch (Exception e)
+            {
+                return StatusCode(500, e.Message);
+            }
         }
 
         // POST api/values

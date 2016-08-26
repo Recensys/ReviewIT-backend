@@ -11,10 +11,11 @@ namespace RecensysRepository.Factory
         IDataRepository GetDataRepo();
         ITaskRepository GetTaskRepo();
         IArticleRepository GetArticleRepo();
+        IUserStageRelationRepository GetUserStageRelationRepo();
         IUserStudyRelationRepository GetUserStudyRelationRepo();
         IStudyRoleRepository GetStudyRoleRepo();
         IStrategyRepository GetStrategyRepo();
         IDataTypeRepository GetDataTypeRepo();
-        IStageDescriptionRepository GetStageDescriptionRepository();
+        IStageFieldsRepository GetStageFieldsRepository();
     }
 }

@@ -37,19 +37,21 @@
   <ItemGroup>
     <Compile Include="Entities\CriteriaEntity.cs" />
     <Compile Include="Entities\DataTypeEntity.cs" />
-    <Compile Include="Entities\StageDescriptionEntity.cs" />
+    <Compile Include="Entities\StageFieldEntity.cs" />
     <Compile Include="Entities\StageRoleEntity.cs" />
     <Compile Include="Entities\StrategyType.cs" />
     <Compile Include="Entities\Strategy_Field_RelationEntity.cs" />
     <Compile Include="Entities\TaskTypeEntity.cs" />
     <Compile Include="InMemoryImpl\DataTypeRepositoryIm.cs" />
-    <Compile Include="InMemoryImpl\StageDescriptionRepository.cs" />
+    <Compile Include="InMemoryImpl\StageFieldsRepository.cs" />
     <Compile Include="InMemoryImpl\Strategy_Field_RelationRepositoryIm.cs" />
+    <Compile Include="InMemoryImpl\UserStudyRelationRepositoryIm.cs" />
     <Compile Include="Interfaces\ICriteriaRepository.cs" />
     <Compile Include="Interfaces\IDataTypeRepository.cs" />
-    <Compile Include="Interfaces\IStageDescriptionRepository.cs" />
+    <Compile Include="Interfaces\IStageFieldsRepository.cs" />
     <Compile Include="Interfaces\IStageRoleRepository.cs" />
     <Compile Include="Interfaces\IStrategy_Field_RelationRepository.cs" />
+    <Compile Include="Interfaces\IUserStudyRelationRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Entities\ArticleEntity.cs" />
     <Compile Include="Entities\DataEntity.cs" />
@@ -74,7 +76,7 @@
     <Compile Include="InMemoryImpl\StudyRoleRepositoryIm.cs" />
     <Compile Include="InMemoryImpl\TaskRepositoryIm.cs" />
     <Compile Include="InMemoryImpl\UserRepositoryIm.cs" />
-    <Compile Include="InMemoryImpl\UserStudyRelationRepositoryIm.cs" />
+    <Compile Include="InMemoryImpl\UserStageRelationRepositoryIm.cs" />
     <Compile Include="Interfaces\IArticleRepository.cs" />
     <Compile Include="Interfaces\IDataRepository.cs" />
     <Compile Include="Interfaces\IFieldRepository.cs" />
@@ -84,7 +86,7 @@
     <Compile Include="Interfaces\IStudyRoleRepository.cs" />
     <Compile Include="Interfaces\ITaskRepository.cs" />
     <Compile Include="Interfaces\IUserRepository.cs" />
-    <Compile Include="Interfaces\IUserStudyRelationRepository.cs" />
+    <Compile Include="Interfaces\IUserStageRelationRepository.cs" />
     <Compile Include="SQL-Impl\UserRepositoryDb.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -76,11 +76,35 @@ namespace RecensysBLL.BusinessLogicLayer
             };
         }
 
+        public List<User> GetUsersForStudy(int studyId)
+        {
+            var users = new List<User>();
+
+            using (var userRepo = _factory.GetUserRepo())
+            using (var userStudyRepo = _factory.GetUserStudyRelationRepo())
+            {
+                var relations = userStudyRepo.GetAll().Where(r => r.Study_Id == studyId);
+                foreach (var relation in relations)
+                {
+                    var userEntity = userRepo.GetAll().Single(u => u.Id == relation.User_Id);
+                    users.Add(new User()
+                    {
+                        Id = userEntity.Id,
+                        Username = userEntity.Username,
+                        FirstName = userEntity.First_Name,
+                        LastName = userEntity.Last_Name
+                    });
+                }
+            }
+
+            return users;
+        }
+
         public void AssociateUserToStudy(int userId, int studyId, int roleId)
         {
             using (var repo = _factory.GetUserStudyRelationRepo())
             {
-                repo.Create(new User_Stage_RelationEntity()
+                repo.Create(new User_Study_RelationEntity()
                 {
                     User_Id = userId
                 });

@@ -23,95 +23,14 @@ namespace RecensysWebAPI.Controllers
         [HttpGet]
         public IActionResult Get()
         {
-            return Json(new Stage()
-            {
-                Id = 1,
-                Name = "Name of Stage 1",
-                Description = "Description of stage 1",
-                Fields = new List<Field>()
-                {
-                    new Field()
-                    {
-                        Id = 1,
-                        DataType = DataType.String,
-                        Name = "Author",
-                        Input = false
-                    },
-                    new Field()
-                    {
-                        Id = 2,
-                        DataType = DataType.Number,
-                        Name = "Year",
-                        Input = false
-                    }
-                },
-                Tasks = new List<RecensysBLL.BusinessEntities.Task>()
-                {
-                    new RecensysBLL.BusinessEntities.Task()
-                    {
-                        Id = 1,
-                        TaskState = TaskState.InProgress,
-                        Data = new List<Data>()
-                        {
-                            new Data() {Id = 1, Value = "Mathias Pedersen"},
-                            new Data() {Id = 2, Value = "2004"}
-                        }
-                    },
-                    new RecensysBLL.BusinessEntities.Task()
-                    {
-                        Id = 2,
-                        TaskState = TaskState.InProgress,
-                        Data = new List<Data>()
-                        {
-                            new Data() {Id = 1, Value = "Jacob Cholewa"},
-                            new Data() {Id = 2, Value = "2007"}
-                        }
-                    }
-                }
-            });
+            return NoContent();
         }
 
         // GET api/values/5
         [HttpGet("{id}")]
         public IActionResult Get(int id)
         {
-
-
-            return Json(new Stage()
-            {
-                Id = 1,
-                Name = "Name of Stage 1",
-                Description = "Description of stage 1",
-                Fields = new List<Field>()
-                {
-                    new Field()
-                    {
-                        Id = 1,
-                        DataType = DataType.String,
-                        Name = "Author",
-                        Input = false
-                    },
-                    new Field()
-                    {
-                        Id = 2,
-                        DataType = DataType.Number,
-                        Name = "Year",
-                        Input = false
-                    }
-                },
-                Tasks = new List<RecensysBLL.BusinessEntities.Task>()
-                {
-                    new RecensysBLL.BusinessEntities.Task()
-                    {
-                        Id = 1,
-                        TaskState = TaskState.InProgress,
-                        Data = new List<Data>()
-                        {
-                            new Data() {Id = 1, Value = "Mathias Pedersen"},
-                            new Data() {Id = 2, Value = "2004"}
-                        }
-                    }}
-            });
+            return NoContent();
         }
 
         // POST api/values

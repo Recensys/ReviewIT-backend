@@ -6,10 +6,9 @@ using System.Threading.Tasks;
 
 namespace RecensysBLL.BusinessEntities
 {
-    public class ValidationStrategy
+    public class ReviewStrategy
     {
         public int Id { get; set; }
-        public string Name { get; set; }
-
+        public string Value { get; set; }
     }
 }

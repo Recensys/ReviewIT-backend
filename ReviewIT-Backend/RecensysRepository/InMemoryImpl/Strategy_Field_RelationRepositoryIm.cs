@@ -9,7 +9,7 @@ namespace RecensysRepository.InMemoryImpl
 {
     class Strategy_Field_RelationRepositoryIm : IStrategy_Field_RelationRepository
     {
-        private List<Strategy_Field_RelationEntity> _entities;
+        private List<Strategy_Field_RelationEntity> _entities = new List<Strategy_Field_RelationEntity>();
         public void Dispose()
         {
             throw new NotImplementedException();

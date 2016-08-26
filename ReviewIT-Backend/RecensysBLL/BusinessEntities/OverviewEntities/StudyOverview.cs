@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using RecensysBLL.BusinessEntities.OverviewEntities;
+﻿using System.Collections.Generic;
 
-namespace RecensysBLL.BusinessEntities
+namespace RecensysBLL.BusinessEntities.OverviewEntities
 {
     public class StudyOverview
     {

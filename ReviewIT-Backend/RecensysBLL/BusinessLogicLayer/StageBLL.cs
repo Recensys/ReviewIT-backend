@@ -16,6 +16,113 @@ namespace RecensysBLL.BusinessLogicLayer
         }
 
 
+        public Stage GetStage(int id)
+        {
+            var stage = new Stage() {Id = id};
+
+            using (var stageRepo = _factory.GetStageRepo())
+            {
+
+                var stageEntity = stageRepo.Read(id);
+                
+                stage.StageDetails = new StageDetails()
+                {
+                    Name = stageEntity.Name,
+                    Description = stageEntity.Description
+                };
+
+                
+            }
+
+            return stage;
+        }
+
+        public int SaveStage(Stage stage)
+        {
+            int id = UpdateDetails(stage.Id, stage.StageDetails);
+
+            var fieldBll = new FieldBLL(_factory);
+            foreach (var field in stage.StageFields.VisibleFields)
+            {
+                fieldBll.SaveField(field, stage.Id);
+            }
+            foreach (var field in stage.StageFields.RequestedFields)
+            {
+                fieldBll.SaveField(field, stage.Id);
+            }
+
+            return id;
+        }
+
+        public int UpdateDetails(int stageId, StageDetails details)
+        {
+            int id = -1;
+
+            using (var stageRepo = _factory.GetStageRepo())
+            {
+                var entity = stageRepo.Read(stageId);
+                if (entity != null)
+                {
+                    entity.Name = details.Name;
+                    entity.Description = details.Description;
+                    stageRepo.Update(entity);
+                }
+                else
+                {
+                    entity = new StageEntity()
+                    {
+                        Name = details.Name,
+                        Description = details.Description
+                    };
+                    id = stageRepo.Create(entity);
+                }
+            }
+
+            return id;
+        }
+
+        public void UpdateFields(int stageId, List<Field> visibleFields, List<Field> requestedFields)
+        {
+            using (var stageDescRepo = _factory.GetStageFieldsRepository())
+            {
+                foreach (var field in visibleFields)
+                {
+                    stageDescRepo.Create(new StageFieldEntity()
+                    {
+                        Stage_Id = stageId,
+                        Field_Id = field.Id,
+                        FieldType_Id = 0
+                    });
+                }
+                foreach (var field in requestedFields)
+                {
+                    stageDescRepo.Create(new StageFieldEntity()
+                    {
+                        Stage_Id = stageId,
+                        Field_Id = field.Id,
+                        FieldType_Id = 1
+                    });
+                }
+
+            }
+        }
+
+        public List<Stage> GetStagesForStudy(int studyId)
+        {
+            int[] ids;
+            var stages = new List<Stage>();
+            using (var stageRepo = _factory.GetStageRepo())
+            {
+                ids = stageRepo.GetAll().Where(s => s.Study_Id == studyId).Select(s => s.Id).ToArray();
+            }
+            foreach(var id in ids)
+            {
+                stages.Add(GetStage(id));
+            }
+            return stages;
+        }
+
+
         public int AddStage(Stage stage, int studyId)
         {
             var id = -1;
@@ -24,8 +131,8 @@ namespace RecensysBLL.BusinessLogicLayer
                 id = stageRepo.Create(new StageEntity()
                 {
                     Study_Id = studyId,
-                    Name = stage.Name,
-                    Description = stage.Description
+                    Name = stage.StageDetails.Name,
+                    Description = stage.StageDetails.Description
                 });
             }
             return id;
