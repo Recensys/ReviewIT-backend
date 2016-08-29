@@ -23,7 +23,8 @@ namespace RecensysRepository.InMemoryImpl
         public int Create(StageEntity item)
         {
             _stages.Add(item);
-            return _stages.IndexOf(item);
+            item.Id = _stages.IndexOf(item);
+            return item.Id;
         }
 
         public StageEntity Read(int id)

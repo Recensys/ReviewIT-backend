@@ -18,8 +18,17 @@ namespace RecensysBLL.BusinessLogicLayer
             _factory = factory;
         }
 
-        public void SaveField(Field field, int studyId)
+        
+
+        public int SaveField(Field field, int studyId)
         {
+            var id = field.Id;
+
+            if (field.Id == -1)
+            {
+                id = AddField(field, studyId);
+            }
+
             using (var fieldRepo = _factory.GetFieldRepo())
             {
                 fieldRepo.Update(new FieldEntity()
@@ -30,7 +39,10 @@ namespace RecensysBLL.BusinessLogicLayer
                     DataType_Id = (int)field.DataType
                 });
             }
+
+            return id;
         }
+        
 
         public List<Field> GetFieldsForStudy(int studyId)
         {
@@ -48,14 +60,14 @@ namespace RecensysBLL.BusinessLogicLayer
             return fields;
         }
 
-        public List<Field> GetVisibleFields(int stageId)
+        public List<Field> GetStageFields(FieldType ftype, int stageId)
         {
             var fields = new List<Field>();
 
             using (var stageFieldRepo = _factory.GetStageFieldsRepository())
             using (var fieldRepo = _factory.GetFieldRepo())
             {
-                var entities = stageFieldRepo.GetAll().Where(e => e.Stage_Id == stageId && e.FieldType_Id == 0);
+                var entities = stageFieldRepo.GetAll().Where(e => e.Stage_Id == stageId && e.FieldType_Id == (int)ftype);
                 foreach (var entity in entities)
                 {
                     var fieldEntity = fieldRepo.Read(entity.Field_Id);
@@ -64,6 +76,37 @@ namespace RecensysBLL.BusinessLogicLayer
             }
 
             return fields;
+        }
+
+        public void ReferenceField(FieldType ftype, int fieldId, int stageId)
+        {
+
+            using (var stageFieldsRepo = _factory.GetStageFieldsRepository())
+            {
+                stageFieldsRepo.Update(new StageFieldEntity()
+                {
+                    Stage_Id = stageId,
+                    Field_Id = fieldId,
+                    FieldType_Id = (int)ftype
+                });
+            }
+        }
+
+        public int AddField(Field field, int studyId)
+        {
+            int id = -1;
+
+            using (var fieldRepo = _factory.GetFieldRepo())
+            {
+                id = fieldRepo.Create(new FieldEntity()
+                {
+                    DataType_Id = (int)field.DataType,
+                    Name = field.Name,
+                    Study_Id = studyId
+                });
+            }
+
+            return id;
         }
 
         public List<Field> GetRequestedFields(int stageId)

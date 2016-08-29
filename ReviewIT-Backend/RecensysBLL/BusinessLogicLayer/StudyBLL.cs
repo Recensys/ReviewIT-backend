@@ -66,6 +66,8 @@ namespace RecensysBLL.BusinessLogicLayer
 
             // get available fields
             study.AvailableFields = new FieldBLL(_factory).GetFieldsForStudy(id);
+
+            
             
             return study;
         }
@@ -112,6 +114,20 @@ namespace RecensysBLL.BusinessLogicLayer
                     Title = study.StudyDetails.Name
                 });
             }
+
+            foreach (var stage in study.Stages)
+            {
+                if (stage.Id == -1)
+                {
+                    new StageBLL(_factory).AddStage(stage, study.Id);
+                }
+                else
+                {
+                    new StageBLL(_factory).SaveStage(stage);
+                }
+            }
+
+            
         }
 
         public int NewStudy()

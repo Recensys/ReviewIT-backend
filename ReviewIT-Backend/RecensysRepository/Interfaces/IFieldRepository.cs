@@ -8,7 +8,7 @@ namespace RecensysRepository.Interfaces
     {
         IEnumerable<FieldEntity> GetAll();
 
-        void Create(FieldEntity item);
+        int Create(FieldEntity item);
 
         FieldEntity Read(int id);
 

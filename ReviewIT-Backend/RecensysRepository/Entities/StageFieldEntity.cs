@@ -11,4 +11,9 @@ namespace RecensysRepository.Entities
         public int Field_Id { get; set; }
         public int FieldType_Id { get; set; }
     }
+
+    public enum FieldType
+    {
+        Visible, Requested
+    }
 }

@@ -20,9 +20,9 @@ namespace RecensysBLL.BusinessLogicLayer
         {
             var stage = new Stage() {Id = id};
 
+            // get stage details
             using (var stageRepo = _factory.GetStageRepo())
             {
-
                 var stageEntity = stageRepo.Read(id);
                 
                 stage.StageDetails = new StageDetails()
@@ -30,25 +30,32 @@ namespace RecensysBLL.BusinessLogicLayer
                     Name = stageEntity.Name,
                     Description = stageEntity.Description
                 };
-
-                
             }
+
+            stage.StageFields = new StageFields()
+            {
+                RequestedFields = new FieldBLL(_factory).GetStageFields(FieldType.Requested, id),
+                VisibleFields = new FieldBLL(_factory).GetStageFields(FieldType.Visible, id)
+            };
 
             return stage;
         }
 
         public int SaveStage(Stage stage)
         {
+            
+            // save basic details
             int id = UpdateDetails(stage.Id, stage.StageDetails);
 
+            // save fields
             var fieldBll = new FieldBLL(_factory);
             foreach (var field in stage.StageFields.VisibleFields)
             {
-                fieldBll.SaveField(field, stage.Id);
+                fieldBll.ReferenceField(FieldType.Visible, field.Id, stage.Id);
             }
             foreach (var field in stage.StageFields.RequestedFields)
             {
-                fieldBll.SaveField(field, stage.Id);
+                fieldBll.ReferenceField(FieldType.Requested, field.Id, stage.Id);
             }
 
             return id;
@@ -56,7 +63,7 @@ namespace RecensysBLL.BusinessLogicLayer
 
         public int UpdateDetails(int stageId, StageDetails details)
         {
-            int id = -1;
+            int id = stageId;
 
             using (var stageRepo = _factory.GetStageRepo())
             {
