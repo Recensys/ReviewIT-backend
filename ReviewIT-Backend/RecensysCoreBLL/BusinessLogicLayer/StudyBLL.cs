@@ -157,7 +157,6 @@ namespace RecensysBLL.BusinessLogicLayer
             int NrOfCreatedTasks = new TaskBLL(_factory).GenerateTasks(firstStageId);
             return NrOfCreatedTasks;
         }
-
         
 
     }

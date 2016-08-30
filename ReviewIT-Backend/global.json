@@ -1,5 +1,7 @@
 {
   "projects": [
-    "wrap"
+    "wrap",
+    "RecensysCoreRepository",
+    "RecensysCoreBLL"
   ]
 }
