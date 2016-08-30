@@ -18,8 +18,6 @@ Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "RecensysWebAPI5", "Recensys
 EndProject
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "WebApplication2", "WebApplication2\WebApplication2.xproj", "{E455DB93-02CA-457B-B3CD-53DA96E1046C}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "ClassLibrary1", "ClassLibrary1\ClassLibrary1.xproj", "{CACF12B9-1B2B-4D7B-9985-6EB2D36AAA74}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -46,10 +44,6 @@ Global
 		{E455DB93-02CA-457B-B3CD-53DA96E1046C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E455DB93-02CA-457B-B3CD-53DA96E1046C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E455DB93-02CA-457B-B3CD-53DA96E1046C}.Release|Any CPU.Build.0 = Release|Any CPU
-		{CACF12B9-1B2B-4D7B-9985-6EB2D36AAA74}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{CACF12B9-1B2B-4D7B-9985-6EB2D36AAA74}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{CACF12B9-1B2B-4D7B-9985-6EB2D36AAA74}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{CACF12B9-1B2B-4D7B-9985-6EB2D36AAA74}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
