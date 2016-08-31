@@ -1,13 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.InteropServices;
-using RecensysBLL.BusinessEntities;
-using RecensysRepository.Entities;
-using RecensysRepository.Factory;
-using TaskType = RecensysBLL.BusinessEntities.TaskType;
+using RecensysCoreBLL.BusinessEntities;
+using RecensysCoreBLL.BusinessEntities.OverviewEntities;
+using TaskType = RecensysCoreBLL.BusinessEntities.TaskType;
 
-namespace RecensysBLL.BusinessLogicLayer
+namespace RecensysCoreBLL.BusinessLogicLayer
 {
     public class TaskBLL
     {

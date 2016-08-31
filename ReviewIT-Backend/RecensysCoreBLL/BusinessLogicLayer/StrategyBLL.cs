@@ -1,14 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using RecensysBLL.BusinessEntities;
-using RecensysBLL.Exceptions;
-using RecensysBLL.StrategyHandler;
-using RecensysRepository.Factory;
+using RecensysCoreBLL.BusinessEntities;
+using RecensysCoreBLL.StrategyHandler;
 
-namespace RecensysBLL.BusinessLogicLayer
+namespace RecensysCoreBLL.BusinessLogicLayer
 {
     public class StrategyBLL
     {

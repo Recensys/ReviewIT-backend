@@ -1,13 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TypeLite;
-
-namespace RecensysBLL.BusinessEntities
+﻿namespace RecensysCoreBLL.BusinessEntities
 {
-    [TsClass]
     public class StageDetails
     {
         public string Name { get; set; }

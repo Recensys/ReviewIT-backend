@@ -1,8 +1,6 @@
-﻿using TypeLite;
-
-namespace RecensysBLL.BusinessEntities
+﻿
+namespace RecensysCoreBLL.BusinessEntities
 {
-    [TsClass]
     public class StudyDetails
     {
         public string Name { get; set; }

@@ -1,8 +1,5 @@
-﻿using TypeLite;
-
-namespace RecensysBLL.BusinessEntities
+﻿namespace RecensysCoreBLL.BusinessEntities
 {
-    [TsClass]
     public class Stage
     {
         public int Id { get; set; }

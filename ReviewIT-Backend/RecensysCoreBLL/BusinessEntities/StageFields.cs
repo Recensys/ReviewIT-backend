@@ -1,9 +1,7 @@
 ﻿using System.Collections.Generic;
-using TypeLite;
 
-namespace RecensysBLL.BusinessEntities
+namespace RecensysCoreBLL.BusinessEntities
 {
-    [TsClass]
     public class StageFields
     {
         public int Id { get; set; }

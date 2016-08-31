@@ -1,4 +1,4 @@
-﻿namespace RecensysBLL.BusinessEntities
+﻿namespace RecensysCoreBLL.BusinessEntities
 {
 
     public enum DataType

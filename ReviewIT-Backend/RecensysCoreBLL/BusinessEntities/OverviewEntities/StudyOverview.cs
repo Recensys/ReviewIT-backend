@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace RecensysBLL.BusinessEntities.OverviewEntities
+namespace RecensysCoreBLL.BusinessEntities.OverviewEntities
 {
     public class StudyOverview
     {

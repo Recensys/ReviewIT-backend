@@ -1,13 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using Microsoft.Win32;
-using RecensysBLL.BusinessEntities;
-using RecensysBLL.BusinessEntities.OverviewEntities;
-using RecensysRepository.Entities;
-using RecensysRepository.Factory;
+using RecensysCoreBLL.BusinessEntities;
+using RecensysCoreBLL.BusinessEntities.OverviewEntities;
 
-namespace RecensysBLL.BusinessLogicLayer
+namespace RecensysCoreBLL.BusinessLogicLayer
 {
     public class StudyBLL
     {
