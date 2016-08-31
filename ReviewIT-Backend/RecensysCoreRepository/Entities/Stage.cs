@@ -2,7 +2,7 @@
 
 namespace RecensysCoreRepository.Entities
 {
-    public class Stage
+    public class Stage : IEntity
     {
         public int Id { get; set; }
         public string Name { get; set; }

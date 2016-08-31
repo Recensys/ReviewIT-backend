@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace RecensysCoreRepository.Entities
 {
-    public class StageRole
+    public class StageRole : IEntity
     {
         public int Id { get; set; }
         public string Value { get; set; }

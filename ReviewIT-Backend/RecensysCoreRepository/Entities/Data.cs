@@ -1,6 +1,6 @@
 ﻿namespace RecensysCoreRepository.Entities
 {
-    public class Data
+    public class Data : IEntity
     {
         public int Id { get; set; }
         public string Value { get; set; }
