@@ -1,8 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace RecensysCoreRepository
 {
-    public interface IRepository<T>
+    public interface IRepository<T> : IDisposable
     {
         T Read(int id);
         IEnumerable<T> GetAll();
