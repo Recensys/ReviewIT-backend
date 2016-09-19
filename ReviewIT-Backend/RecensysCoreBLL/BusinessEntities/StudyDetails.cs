@@ -2,7 +2,6 @@
 
 namespace RecensysBLL.BusinessEntities
 {
-    [TsClass]
     public class StudyDetails
     {
         public string Name { get; set; }

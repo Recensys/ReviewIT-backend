@@ -2,8 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using RecensysBLL.BusinessEntities;
-using RecensysRepository.Entities;
-using RecensysRepository.Factory;
+using RecensysCoreRepository.Factory;
 
 namespace RecensysBLL.BusinessLogicLayer
 {

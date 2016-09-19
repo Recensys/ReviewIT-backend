@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using RecensysBLL.BusinessEntities;
-using RecensysRepository.Entities;
-using RecensysRepository.Factory;
+using RecensysCoreRepository.Entities;
+using RecensysCoreRepository.Factory;
+using DataType = RecensysBLL.BusinessEntities.DataType;
+using Field = RecensysBLL.BusinessEntities.Field;
 
 namespace RecensysBLL.BusinessLogicLayer
 {

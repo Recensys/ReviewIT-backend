@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using RecensysBLL.BusinessEntities;
 using RecensysBLL.Exceptions;
 using RecensysBLL.StrategyHandler;
-using RecensysRepository.Factory;
+using RecensysCoreRepository.Factory;
 
 namespace RecensysBLL.BusinessLogicLayer
 {

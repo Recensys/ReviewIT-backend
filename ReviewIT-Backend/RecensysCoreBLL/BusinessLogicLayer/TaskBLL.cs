@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
 using RecensysBLL.BusinessEntities;
-using RecensysRepository.Entities;
-using RecensysRepository.Factory;
+using RecensysCoreRepository.Factory;
 using TaskType = RecensysBLL.BusinessEntities.TaskType;
 
 namespace RecensysBLL.BusinessLogicLayer

@@ -1,8 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using RecensysBLL.BusinessEntities;
-using RecensysRepository.Entities;
-using RecensysRepository.Factory;
+using RecensysCoreRepository.Entities;
+using RecensysCoreRepository.Factory;
+using Field = RecensysBLL.BusinessEntities.Field;
+using Stage = RecensysBLL.BusinessEntities.Stage;
 
 namespace RecensysBLL.BusinessLogicLayer
 {
