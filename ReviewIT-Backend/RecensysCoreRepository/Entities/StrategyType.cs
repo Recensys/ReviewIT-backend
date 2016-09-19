@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace RecensysCoreRepository.Entities
 {
-    public class StrategyType
+    public class StrategyType : IEntity
     {
         public int Id { get; set; }
         public string Value { get; set; }

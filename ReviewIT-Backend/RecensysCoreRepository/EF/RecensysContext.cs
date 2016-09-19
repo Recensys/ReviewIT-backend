@@ -1,17 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using RecensysCoreRepository.Entities;
 using Task = RecensysCoreRepository.Entities.Task;
 
-namespace RecensysCoreRepository
+namespace RecensysCoreRepository.EF
 {
     /*
      * https://ef.readthedocs.io/en/latest/platforms/netcore/new-db-sqlite.html
      */
-    public class RecensysContext : DbContext
+    public class RecensysContext : DbContext, IDbContext
     {
         public DbSet<Article> Articles { get; set; }
         public DbSet<Criteria> Criterias { get; set; }
@@ -42,6 +38,11 @@ namespace RecensysCoreRepository
         {
             optionsBuilder.UseSqlite("Filename=./blog.db");
             //optionsBuilder.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=MyDatabase;Trusted_Connection=True;");
+        }
+
+        public new DbSet<T> Set<T>() where T : class, IEntity
+        {
+            return base.Set<T>();
         }
     }
 }

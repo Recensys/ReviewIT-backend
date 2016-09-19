@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using RecensysBLL.BusinessEntities;
-using RecensysCoreRepository.Factory;
+using RecensysCoreBLL.BusinessEntities;
 
-namespace RecensysBLL.BusinessLogicLayer
+namespace RecensysCoreBLL.BusinessLogicLayer
 {
     public class UserBLL
     {

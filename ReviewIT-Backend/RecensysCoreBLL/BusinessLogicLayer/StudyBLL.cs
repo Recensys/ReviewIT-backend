@@ -1,12 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using Microsoft.Win32;
-using RecensysBLL.BusinessEntities;
-using RecensysBLL.BusinessEntities.OverviewEntities;
-using RecensysCoreRepository.Factory;
+using RecensysCoreBLL.BusinessEntities;
+using RecensysCoreBLL.BusinessEntities.OverviewEntities;
 
-namespace RecensysBLL.BusinessLogicLayer
+namespace RecensysCoreBLL.BusinessLogicLayer
 {
     public class StudyBLL
     {
@@ -21,16 +18,19 @@ namespace RecensysBLL.BusinessLogicLayer
 
         public List<StudyOverview> Get()
         {
-            var studies = new List<StudyDetails>();
+            var studies = new List<StudyOverview>();
 
             using (var studyRepo = _factory.GetStudyRepo())
             {
-                var entities = studyRepo.GetAll();
-                foreach (var entity in entities)
+                var studyEntities = studyRepo.GetAll();
+                //TODO check user relation to studies
+                foreach (var studyEntity in studyEntities)
                 {
-                    studies.Add(new StudyDetails()
+                    studies.Add(new StudyOverview()
                     {
-                        
+                        Id = studyEntity.Id,
+                        Name = studyEntity.Title,
+                        Description = studyEntity.Description
                     });
                 }
             }

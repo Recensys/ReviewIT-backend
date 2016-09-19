@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace RecensysCoreRepository.Entities
 {
-    public class Article
+    public class Article : IEntity
     {
         public int Id { get; set; }
         public int StudyId { get; set; }

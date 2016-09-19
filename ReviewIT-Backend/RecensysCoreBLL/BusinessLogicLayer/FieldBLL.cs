@@ -1,14 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using RecensysCoreRepository.Entities;
-using RecensysCoreRepository.Factory;
-using DataType = RecensysBLL.BusinessEntities.DataType;
-using Field = RecensysBLL.BusinessEntities.Field;
+﻿using System.Collections.Generic;
+using RecensysCoreBLL.BusinessEntities;
 
-namespace RecensysBLL.BusinessLogicLayer
+namespace RecensysCoreBLL.BusinessLogicLayer
 {
     class FieldBLL
     {

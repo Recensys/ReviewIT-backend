@@ -1,6 +1,5 @@
-﻿using TypeLite;
-
-namespace RecensysBLL.BusinessEntities
+﻿
+namespace RecensysCoreBLL.BusinessEntities
 {
     public class StudyDetails
     {

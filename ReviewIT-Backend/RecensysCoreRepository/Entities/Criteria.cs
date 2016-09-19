@@ -1,6 +1,6 @@
 ﻿namespace RecensysCoreRepository.Entities
 {
-    public class Criteria
+    public class Criteria : IEntity
     {
         public int Id { get; set; }
         public string Value { get; set; }

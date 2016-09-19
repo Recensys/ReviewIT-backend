@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace RecensysBLL.StrategyHandler
+namespace RecensysCoreBLL.StrategyHandler
 {
     class StubReviewStrategyHandler : IReviewStrategyHandler
     {

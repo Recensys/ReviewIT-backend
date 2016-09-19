@@ -1,12 +1,7 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
-using RecensysBLL.BusinessEntities;
-using RecensysCoreRepository.Entities;
-using RecensysCoreRepository.Factory;
-using Field = RecensysBLL.BusinessEntities.Field;
-using Stage = RecensysBLL.BusinessEntities.Stage;
+using RecensysCoreBLL.BusinessEntities;
 
-namespace RecensysBLL.BusinessLogicLayer
+namespace RecensysCoreBLL.BusinessLogicLayer
 {
     public class StageBLL
     {

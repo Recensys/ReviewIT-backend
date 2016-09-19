@@ -1,9 +1,8 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace RecensysCoreRepository.Entities
 {
-    public class Study
+    public class Study : IEntity
     {
         public int Id { get; set; }
         public string Title { get; set; }

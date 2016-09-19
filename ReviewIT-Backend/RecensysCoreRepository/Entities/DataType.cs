@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace RecensysCoreRepository.Entities
 {
-    public class DataType
+    public class DataType : IEntity
     {
         public int Id { get; set; }
         public string Value { get; set; }
