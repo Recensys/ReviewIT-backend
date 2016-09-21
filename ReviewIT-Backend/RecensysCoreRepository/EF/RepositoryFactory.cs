@@ -7,6 +7,11 @@ namespace RecensysCoreRepository.EF
     {
         private readonly IDbContext _context;
 
+        public RepositoryFactory()
+        {
+            _context = new RecensysContext();
+        }
+
         public RepositoryFactory(IDbContext context)
         {
             _context = context;

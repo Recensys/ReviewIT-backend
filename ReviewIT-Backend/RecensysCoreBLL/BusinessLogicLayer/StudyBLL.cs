@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using RecensysCoreRepository;
 using StudyEntity = RecensysCoreRepository.Entities.Study;
 using RecensysCoreBLL.BusinessEntities;
@@ -30,7 +31,7 @@ namespace RecensysCoreBLL.BusinessLogicLayer
                 {
                     studies.Add(new StudyDetails()
                     {
-                        Id = studyEntity.Id,
+                        StudyId = studyEntity.Id,
                         Name = studyEntity.Title,
                         Description = studyEntity.Description
                     });
@@ -41,13 +42,31 @@ namespace RecensysCoreBLL.BusinessLogicLayer
         }
         
 
-        public int AddStudy()
+        public int Create(Study s)
         {
+
+            var sEntity = EntityMapper.Map(s);
+
+            int id;
+
             using (var srepo = _factory.GetRepo<StudyEntity>())
             {
-                return srepo.Create(new StudyEntity());
+                id = srepo.Create(sEntity);
+            }
+            
+            return id;
+        }
+
+        public void Update(Study s)
+        {
+            var sEntity = EntityMapper.Map(s);
+
+            using (var srepo = _factory.GetRepo<StudyEntity>())
+            {
+                srepo.Update(sEntity);
             }
         }
+
 
         
 

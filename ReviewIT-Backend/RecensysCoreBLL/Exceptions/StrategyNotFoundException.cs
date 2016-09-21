@@ -15,9 +15,6 @@ namespace RecensysCoreBLL.Exceptions
         public StrategyNotFoundException(string message, Exception innerException) : base(message, innerException)
         {
         }
-
-        protected StrategyNotFoundException(SerializationInfo info, StreamingContext context) : base(info, context)
-        {
-        }
+        
     }
 }

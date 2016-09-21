@@ -11,5 +11,6 @@ namespace RecensysCoreBLL.BusinessEntities
         public List<Object> Sources { get; set; }
         public List<User> Researchers { get; set; }
         public List<Field> AvailableFields { get; set; }
+        public List<Criteria> Criteria { get; set; }
     }
 }

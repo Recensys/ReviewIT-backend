@@ -7,7 +7,7 @@ using System.Runtime.InteropServices;
 // associated with an assembly.
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("RecensysCoreBLL")]
+[assembly: AssemblyProduct("RecensysCoreBLL.Tests")]
 [assembly: AssemblyTrademark("")]
 
 // Setting ComVisible to false makes the types in this assembly not visible
@@ -16,6 +16,4 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("51334273-5b9e-4101-91d9-bf55889e0634")]
-
-[assembly: InternalsVisibleTo("RecensysCoreBll.Tests")]
+[assembly: Guid("8cc5c398-47b9-4e10-976b-dd21aae1f765")]
