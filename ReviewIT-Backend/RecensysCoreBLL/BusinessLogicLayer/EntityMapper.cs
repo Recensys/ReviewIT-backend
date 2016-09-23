@@ -94,6 +94,7 @@ namespace RecensysCoreBLL.BusinessLogicLayer
                 Value = c.Value,
                 Field = Map(c.Field)
             };
+            
         }
 
         /***
@@ -206,5 +207,10 @@ namespace RecensysCoreBLL.BusinessLogicLayer
 
             return stageFields;
         }
+        
     }
+
+
+    
 }
+

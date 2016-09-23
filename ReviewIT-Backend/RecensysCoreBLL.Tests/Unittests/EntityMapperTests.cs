@@ -238,11 +238,11 @@ namespace RecensysCoreBLL.Tests.Unittests
         [Fact]
         public void MapStudyEntity_Stages_Fields_Criteria_Mapped_Correctly()
         {
-            var s = new StudyEntity()
+            var s = new StudyEntity
             {
-                Stages = new List<StageEntity>() { new StageEntity(), new StageEntity(), },
-                Fields = new List<FieldEntity>() { new FieldEntity(), new FieldEntity(), new FieldEntity() },
-                Criteria = new List<CriteriaEntity>() { new CriteriaEntity() }
+                Stages = new List<StageEntity> { new StageEntity(), new StageEntity() },
+                Fields = new List<FieldEntity> { new FieldEntity(), new FieldEntity(), new FieldEntity() },
+                Criteria = new List<CriteriaEntity> { new CriteriaEntity() }
             };
 
             var r = EntityMapper.Map(s);

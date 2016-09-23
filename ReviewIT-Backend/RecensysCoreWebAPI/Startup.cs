@@ -9,6 +9,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using RecensysCoreRepository;
 using RecensysCoreRepository.EF;
+using Swashbuckle.Swagger.Model;
 
 namespace RecensysCoreWebAPI
 {
@@ -38,9 +39,18 @@ namespace RecensysCoreWebAPI
         {
             // Add framework services.
             services.AddApplicationInsightsTelemetry(Configuration);
-
-            // setup dependency injection
-            services.AddScoped<IRepositoryFactory, RepositoryFactory>();
+            
+            services.AddSwaggerGen();
+            services.ConfigureSwaggerGen(options =>
+            {
+                options.SingleApiVersion(new Info
+                {
+                    Version = "v1",
+                    Title = "ReviewIT API"
+                });
+                options.IncludeXmlComments("./RecensysCoreWebAPI.xml");
+                options.DescribeAllEnumsAsStrings();
+            });
 
             services.AddMvc();
 
@@ -55,6 +65,9 @@ namespace RecensysCoreWebAPI
             app.UseApplicationInsightsRequestTelemetry();
 
             app.UseApplicationInsightsExceptionTelemetry();
+
+            app.UseSwagger();
+            app.UseSwaggerUi();
 
             app.UseMvc();
         }

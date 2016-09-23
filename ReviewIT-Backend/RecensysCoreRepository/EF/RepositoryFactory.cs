@@ -1,26 +1,28 @@
 ﻿using System;
+using Microsoft.EntityFrameworkCore;
 using RecensysCoreRepository.Entities;
+using RecensysCoreRepository.Repositories;
 
 namespace RecensysCoreRepository.EF
 {
-    public class RepositoryFactory : IRepositoryFactory
+    public class RepositoryFactory : IDisposable
     {
-        private readonly IDbContext _context;
 
-        public RepositoryFactory()
-        {
-            _context = new RecensysContext();
-        }
+        private readonly RecensysContext _context;
 
-        public RepositoryFactory(IDbContext context)
+
+        private StudyDetailsRepository _studyDetailsRepository;
+        public StudyDetailsRepository GetStudyDetailsRepository
+            => _studyDetailsRepository ?? (_studyDetailsRepository = new StudyDetailsRepository(_context));
+
+        
+        
+
+        public RepositoryFactory(RecensysContext context)
         {
             _context = context;
         }
-
-        public IRepository<T> GetRepo<T>() where T : class, IEntity
-        {
-            return new Repository<T>(_context);
-        }
+        
 
         public void Dispose()
         {

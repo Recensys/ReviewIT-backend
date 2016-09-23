@@ -10,24 +10,7 @@ namespace RecensysCoreRepository
         public static void Main(string[] args)
         {
 
-            using (var factory = new RepositoryFactory(new RecensysContext()))
-            {
-                var repo = factory.GetRepo<User>();
-                repo.Create(new User
-                {
-                    FirstName = "Jacob",
-                    LastName = "Cholewa",
-                    Email = "jbec@itu.dk",
-                    Password = "123",
-                    PasswordSalt = "123"
-                });
-
-                foreach (var user in repo.GetAll())
-                {
-                    Console.WriteLine(user.FirstName);
-                }
-                Console.ReadLine();
-            }
+            
         }
     }
 }
