@@ -32,7 +32,7 @@ namespace RecensysCoreBLL.BusinessLogicLayer
                     studies.Add(new StudyDetails()
                     {
                         StudyId = studyEntity.Id,
-                        Name = studyEntity.Title,
+                        Name = studyEntity.Name,
                         Description = studyEntity.Description
                     });
                 }
