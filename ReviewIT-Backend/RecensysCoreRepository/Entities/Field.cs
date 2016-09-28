@@ -9,8 +9,7 @@ namespace RecensysCoreRepository.Entities
         public string Name { get; set; }
         public string Description { get; set; }
 
-        public int DataTypeId { get; set; }
-        public virtual DataType DataType { get; set; }
+        public int DataType { get; set; }
 
         public int StudyId { get; set; }
         public virtual Study Study { get; set; }

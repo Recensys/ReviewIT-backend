@@ -5,7 +5,7 @@ namespace RecensysCoreRepository.Entities
     public class Study : IEntity
     {
         public int Id { get; set; }
-        public string Title { get; set; }
+        public string Name { get; set; }
         public string Description { get; set; }
 
         //public int FirstStageId { get; set; }
@@ -15,5 +15,6 @@ namespace RecensysCoreRepository.Entities
         public virtual ICollection<Criteria> Criteria { get; set; } = new List<Criteria>();
         public virtual ICollection<Field> Fields { get; set; } = new List<Field>();
         public virtual ICollection<Stage> Stages { get; set; } = new List<Stage>();
+        public virtual ICollection<User> Users { get; set; } = new List<User>();
     }
 }

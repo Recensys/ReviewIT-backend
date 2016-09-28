@@ -12,7 +12,6 @@ namespace RecensysCoreRepository.EF
         public DbSet<Article> Articles { get; set; }
         public DbSet<Criteria> Criterias { get; set; }
         public DbSet<Data> Data { get; set; }
-        public DbSet<DataType> DataTypes { get; set; }
         public DbSet<Field> Fields { get; set; }
         public DbSet<Stage> Stages { get; set; }
         public DbSet<StageRole> StageRoles { get; set; }

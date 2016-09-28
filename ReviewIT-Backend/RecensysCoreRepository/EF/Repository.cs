@@ -39,6 +39,9 @@ namespace RecensysCoreRepository.EF
             _context.Set<T>().Attach(item);
             _context.Entry(item).State = EntityState.Modified;
             _context.SaveChanges();
+
+            //_context.Set<T>().Update(item);
+            //_context.SaveChanges();
         }
 
         public void Delete(int id)

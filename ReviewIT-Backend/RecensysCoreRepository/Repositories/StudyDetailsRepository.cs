@@ -20,7 +20,7 @@ namespace RecensysCoreRepository.Repositories
         public IEnumerable<StudyDetailsDTO> GetAll()
         {
             return from s in _context.Studies
-                    select new StudyDetailsDTO {Id = s.Id, Name = s.Title, Description = s.Description};
+                    select new StudyDetailsDTO {Id = s.Id, Name = s.Name, Description = s.Description};
         }
 
 

@@ -11,8 +11,8 @@ namespace RecensysCoreRepository.DTOs
         public int Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
-        public List<FieldDTO> VisibleFields { get; set; }
-        public List<FieldDTO> RequestedFields { get; set; }
+        public ICollection<FieldDTO> VisibleFields { get; set; }
+        public ICollection<FieldDTO> RequestedFields { get; set; }
 
     }
 }
