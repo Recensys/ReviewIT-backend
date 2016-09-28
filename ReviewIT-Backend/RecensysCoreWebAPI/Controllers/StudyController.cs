@@ -48,7 +48,7 @@ namespace RecensysWebAPI.Controllers
             {
                 using (var repo = _factory)
                 {
-                    
+                    return null;
                 }
             }
             catch (Exception e)
