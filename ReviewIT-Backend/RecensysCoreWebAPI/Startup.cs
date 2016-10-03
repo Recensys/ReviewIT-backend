@@ -42,6 +42,8 @@ namespace RecensysCoreWebAPI
 
             services.AddScoped<IRecensysContext, RecensysContext>();
 
+            services.AddCors();
+
             services.AddSwaggerGen();
             services.ConfigureSwaggerGen(options =>
             {
@@ -63,6 +65,9 @@ namespace RecensysCoreWebAPI
         {
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
+
+            // TODO set correct allowed origins for deployment
+            app.UseCors(builder => builder.AllowAnyOrigin());
 
             app.UseApplicationInsightsRequestTelemetry();
 
