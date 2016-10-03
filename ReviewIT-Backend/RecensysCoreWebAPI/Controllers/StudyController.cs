@@ -17,8 +17,12 @@ namespace RecensysWebAPI.Controllers
     public class StudyController : Controller
     {
 
-        private readonly RepositoryFactory _factory = new RepositoryFactory(new RecensysContext());
+        private readonly RepositoryFactory _factory;
 
+        public StudyController(IRecensysContext context)
+        {
+            _factory = new RepositoryFactory(context);
+        }
 
 
         /// <summary>
@@ -41,14 +45,14 @@ namespace RecensysWebAPI.Controllers
             }
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("config/{id}")]
         public IActionResult Get(int id)
         {
             try
             {
-                using (var repo = _factory)
+                using (var repo = _factory.GetStudyConfigRepository)
                 {
-                    return null;
+                    return Json(repo.Read(id));
                 }
             }
             catch (Exception e)

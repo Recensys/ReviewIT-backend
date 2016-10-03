@@ -39,7 +39,9 @@ namespace RecensysCoreWebAPI
         {
             // Add framework services.
             services.AddApplicationInsightsTelemetry(Configuration);
-            
+
+            services.AddScoped<IRecensysContext, RecensysContext>();
+
             services.AddSwaggerGen();
             services.ConfigureSwaggerGen(options =>
             {
