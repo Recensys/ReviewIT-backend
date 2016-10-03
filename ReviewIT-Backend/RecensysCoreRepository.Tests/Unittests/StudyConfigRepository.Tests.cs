@@ -99,11 +99,88 @@ namespace RecensysCoreRepository.Tests.Unittests
 
             using (repo)
             {
-                var dto = new StudyConfigDTO() {Id = 1};
-                repo.Delete(dto);
+                repo.Delete(1);
 
                 Assert.True(context.Studies.Count(s => s.Id == 1)==0);
             }
+        }
+
+        [Fact]
+        public void Update_new_subentity_added()
+        {
+            var options = Helpers.CreateInMemoryOptions();
+            var context = new RecensysContext(options);
+            var repo = new StudyConfigRepository(context);
+            var entity = new Study() { Id = 1, Name = "", Description = "Desc" };
+            context.Studies.Add(entity);
+            context.SaveChanges();
+
+            using (repo)
+            {
+                var dto = new StudyConfigDTO()
+                {
+                    Id = 1,
+                    Stages = new List<StageConfigDTO>()
+                    {
+                        new StageConfigDTO() {Id = -1, Name = "S1"}
+                    }
+                };
+
+                repo.Update(dto);
+
+                Assert.Equal(1, entity.Stages.Count);
+            }
+        }
+
+        [Fact]
+        public void Update_zero_stages_passed_removes_stored_stages()
+        {
+            var options = Helpers.CreateInMemoryOptions();
+            var context = new RecensysContext(options);
+            var repo = new StudyConfigRepository(context);
+            var entity = new Study() { Id = 1, Name = "", Description = "Desc", Stages = new List<Stage>() {new Stage() {Name = "S1"} } };
+            context.Studies.Add(entity);
+            context.SaveChanges();
+
+            using (repo)
+            {
+                var dto = new StudyConfigDTO()
+                {
+                    Id = 1
+                };
+
+                repo.Update(dto);
+
+                Assert.Equal(0, entity.Stages.Count);
+            }
+
+        }
+
+        [Fact]
+        public void Update_passed_one_stage_not_stored_removed_other_stage()
+        {
+            var options = Helpers.CreateInMemoryOptions();
+            var context = new RecensysContext(options);
+            var repo = new StudyConfigRepository(context);
+            var stage = new Stage() {Name = "S1"};
+            var entity = new Study() { Id = 0, Name = "", Description = "Desc", Stages = new List<Stage>() { stage } };
+            context.Studies.Add(entity);
+            context.SaveChanges();
+
+            using (repo)
+            {
+                var dto = new StudyConfigDTO()
+                {
+                    Id = 1,
+                    Stages = new List<StageConfigDTO>() { new StageConfigDTO() { Name = "S2"} }
+                };
+
+                repo.Update(dto);
+
+                Assert.Equal(1, entity.Stages.Count(s => s.Name == "S2"));
+                Assert.Equal(1, entity.Stages.Count);
+            }
+
         }
     }	
 }
