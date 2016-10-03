@@ -4,8 +4,7 @@ using System.Linq;
 using RecensysCoreRepository.DTOs;
 using RecensysCoreRepository.Entities;
 
-
-namespace RecensysCoreBLL.BusinessLogicLayer
+namespace RecensysCoreRepository.Repositories
 {
     internal static class DTOMapper
     {

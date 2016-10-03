@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using RecensysCoreBLL.BusinessLogicLayer;
 using RecensysCoreRepository.DTOs;
 using RecensysCoreRepository.Entities;
+using RecensysCoreRepository.Repositories;
 using Xunit;
 using DataType = RecensysCoreRepository.DTOs.DataType;
 
