@@ -15,6 +15,7 @@ namespace RecensysCoreRepository.Entities
         public virtual ICollection<Criteria> Criteria { get; set; } = new List<Criteria>();
         public virtual ICollection<Field> Fields { get; set; } = new List<Field>();
         public virtual ICollection<Stage> Stages { get; set; } = new List<Stage>();
-        public virtual ICollection<User> Users { get; set; } = new List<User>();
+        public virtual ICollection<UserStudyRelation> UserRelations { get; set; } = new List<UserStudyRelation>();
+
     }
 }

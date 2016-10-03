@@ -59,8 +59,8 @@ namespace RecensysCoreRepository.Repositories
                                                            where rf.FieldType == FieldType.Requested
                                                            select new FieldDTO() { Id = rf.Field.Id, Name = rf.Field.Name, DataType = (DataType)rf.Field.DataType }).ToList(),
                                     }).ToList(),
-                          Researchers = (from r in s.Users
-                                         select new ResearcherDetailsDTO() { Id = r.Id, FirstName = r.FirstName }).ToList()
+                          //Researchers = (from r in s.UserRelations TODO researchers get from userRelations
+                          //               select new ResearcherDetailsDTO() { Id = r.Id, FirstName = r.FirstName }).ToList()
                       };
             return dtos.Single();
         }
@@ -68,15 +68,15 @@ namespace RecensysCoreRepository.Repositories
 
         public bool Update(StudyConfigDTO dto)
         {
-            var entity = _context.Studies.Single(s => s.Id == dto.Id);
+            var entity = _context.Studies.Include(s => s.Stages).Include(s => s.Criteria).Include(s => s.Fields).First(s => s.Id == dto.Id);
             DTOMapper.Map(dto, entity);
             _context.Studies.Update(entity);
             return _context.SaveChanges() > 0;
         }
 
-        public bool Delete(StudyConfigDTO dto)
+        public bool Delete(int id)
         {
-            var entity = _context.Studies.Single(s => s.Id == dto.Id);
+            var entity = _context.Studies.Single(s => s.Id == id);
             _context.Studies.Remove(entity);
             return _context.SaveChanges() > 0;
         }

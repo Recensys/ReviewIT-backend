@@ -11,7 +11,7 @@ namespace RecensysCoreRepository.Repositories
         int Create(StudyConfigDTO dto);
         StudyConfigDTO Read(int id);
         bool Update(StudyConfigDTO dto);
-        bool Delete(StudyConfigDTO dto);
+        bool Delete(int id);
 
     }
 }

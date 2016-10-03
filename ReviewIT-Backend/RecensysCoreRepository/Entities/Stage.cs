@@ -13,8 +13,7 @@ namespace RecensysCoreRepository.Entities
         public int StudyId { get; set; }
         public virtual Study Study { get; set; }
 
-        public int NextStageId { get; set; }
-        public virtual Stage NextStage { get; set; }
+        
 
         public virtual ICollection<StageFieldRelation> StageFields { get; set; } = new List<StageFieldRelation>();
         public virtual ICollection<Task> Tasks { get; set; } = new List<Task>();

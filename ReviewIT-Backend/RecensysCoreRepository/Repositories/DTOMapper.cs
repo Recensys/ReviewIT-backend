@@ -56,15 +56,29 @@ namespace RecensysCoreRepository.Repositories
             }
 
             //Map stages
-            foreach (var fromStages in from.Stages.OrEmptyIfNull())
+            foreach (var toStage in to.Stages.ToList())
             {
-                var s = to.Stages.SingleOrAddedDefault(sta => sta.Id == fromStages.Id);
-                Map(fromStages, s);
+                if (from.Stages.All(fs => fs.Id != toStage.Id))
+                {
+                    to.Stages.Remove(toStage);
+                }
             }
-
-
+            foreach (var fromStage in from.Stages.OrEmptyIfNull())
+            {
+                if (fromStage.Id > 0)
+                {
+                    var s = to.Stages.Single(st => st.Id == fromStage.Id);
+                    Map(fromStage, s);
+                }
+                if (fromStage.Id == 0)
+                {
+                    var s = new Stage();
+                    to.Stages.Add(s);
+                    Map(fromStage, s);
+                }
+            }
+            
         }
-
         
         
 
@@ -196,7 +210,7 @@ namespace RecensysCoreRepository.Repositories
             
         }
 
-
+        
         /// <summary>
         ///     Maps properties from a repo stage to a bll stage
         /// </summary>

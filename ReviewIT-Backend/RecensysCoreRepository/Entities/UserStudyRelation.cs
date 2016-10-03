@@ -1,4 +1,7 @@
-﻿namespace RecensysCoreRepository.Entities
+﻿using System.Collections;
+using System.Collections.Generic;
+
+namespace RecensysCoreRepository.Entities
 {
     public class UserStudyRelation
     {
@@ -9,5 +12,6 @@
         public virtual Study Study { get; set; } 
 
         public bool IsAdmin { get; set; }
+
     }
 }
