@@ -4,7 +4,7 @@
         <name>RecensysCoreWebAPI</name>
     </assembly>
     <members>
-        <member name="M:RecensysWebAPI.Controllers.StudyController.Get">
+        <member name="M:RecensysWebAPI.Controllers.StudyConfigController.Get">
             <summary>
             Gets a list of basic details of studies
             </summary>
