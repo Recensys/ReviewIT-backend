@@ -8,9 +8,9 @@ namespace RecensysCoreRepository.EF
 {
     public class Repository<T> : IRepository<T> where T : class, IEntity
     {
-        private readonly IDbContext _context;
+        private readonly IRecensysContext _context;
 
-        internal Repository(IDbContext context)
+        internal Repository(IRecensysContext context)
         {
             _context = context;
             if(_context.Set<T>() == null)

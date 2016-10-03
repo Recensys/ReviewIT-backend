@@ -9,9 +9,9 @@ namespace RecensysCoreRepository.Repositories
 {
     public class StudyDetailsRepository : IDisposable
     {
-        private readonly RecensysContext _context;
+        private readonly IRecensysContext _context;
 
-        public StudyDetailsRepository(RecensysContext context)
+        public StudyDetailsRepository(IRecensysContext context)
         {
             if (context == null) throw new ArgumentNullException($"{nameof(context)} is null");
             _context = context;

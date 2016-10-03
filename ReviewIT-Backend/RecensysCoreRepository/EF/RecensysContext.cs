@@ -7,8 +7,18 @@ namespace RecensysCoreRepository.EF
     /*
      * https://ef.readthedocs.io/en/latest/platforms/netcore/new-db-sqlite.html
      */
-    public class RecensysContext : DbContext, IDbContext
+    public class RecensysContext : DbContext, IRecensysContext
     {
+
+        public RecensysContext()
+        {
+            
+        }
+        public RecensysContext(DbContextOptions<RecensysContext> options)
+            : base(options)
+        { }
+
+
         public DbSet<Article> Articles { get; set; }
         public DbSet<Criteria> Criterias { get; set; }
         public DbSet<Data> Data { get; set; }
@@ -35,13 +45,18 @@ namespace RecensysCoreRepository.EF
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlite("Filename=./blog.db");
-            //optionsBuilder.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=MyDatabase;Trusted_Connection=True;");
+            if (!optionsBuilder.IsConfigured)
+            {
+                optionsBuilder.UseSqlite("Filename=./blog.db");
+                //optionsBuilder.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=MyDatabase;Trusted_Connection=True;");
+            }
         }
 
         public new DbSet<T> Set<T>() where T : class, IEntity
         {
             return base.Set<T>();
         }
+
+        
     }
 }
