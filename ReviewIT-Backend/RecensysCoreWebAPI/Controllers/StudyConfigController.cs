@@ -1,17 +1,16 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using RecensysCoreBLL.BusinessEntities;
-using RecensysCoreRepository;
+using RecensysCoreBLL.StudySourceParser;
 using RecensysCoreRepository.DTOs;
 using RecensysCoreRepository.EF;
 
 // For more information on enabling Web API for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 
-namespace RecensysWebAPI.Controllers
+namespace RecensysCoreWebAPI.Controllers
 {
     [Route("api/[controller]")]
     public class StudyController : Controller
@@ -106,6 +105,27 @@ namespace RecensysWebAPI.Controllers
             catch (Exception e)
             {
                 return StatusCode(500, e.Message);
+            }
+        }
+
+        [HttpPost]
+        [Route("{id}/config/source")]
+        public async Task<IActionResult> Upload(IFormFile file)
+        {
+            if (file == null) throw new Exception("File is null");
+            if (file.Length == 0) throw new Exception("File is empty");
+
+            
+
+            //return Json(new{articles = 500});
+
+            using (Stream stream = file.OpenReadStream())
+            {
+                using (var reader = new StreamReader(stream))
+                {
+                    var fileContent = reader.ReadToEnd();
+                    var parser = new BibtexParser();
+                }
             }
         }
     }

@@ -2,6 +2,7 @@
   "projects": [
     "wrap",
     "RecensysCoreRepository",
-    "RecensysCoreBLL"
+    "RecensysCoreBLL",
+    "BibliographyParserCore"
   ]
 }

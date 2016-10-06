@@ -5,19 +5,23 @@ using RecensysCoreRepository.Repositories;
 
 namespace RecensysCoreRepository.EF
 {
-    public class RepositoryFactory : IDisposable
+    public class RepositoryFactory : IRepositoryFactory
     {
 
         private readonly IRecensysContext _context;
 
 
-        private StudyDetailsRepository _studyDetailsRepository;
-        public StudyDetailsRepository GetStudyDetailsRepository
+        private IStudyDetailsRepository _studyDetailsRepository;
+        public IStudyDetailsRepository GetStudyDetailsRepository
             => _studyDetailsRepository ?? (_studyDetailsRepository = new StudyDetailsRepository(_context));
 
+        private IStudySourceRepository _studySourceRepository;
+        public IStudySourceRepository GetStudySourceRepository
+            => _studySourceRepository ?? (_studySourceRepository = new StudySourceRepository(_context));
 
-        private StudyConfigRepository _studyConfigRepository;
-        public StudyConfigRepository GetStudyConfigRepository
+
+        private IStudyConfigRepository _studyConfigRepository;
+        public IStudyConfigRepository GetStudyConfigRepository
             => _studyConfigRepository ?? (_studyConfigRepository = new StudyConfigRepository(_context));
 
 
@@ -31,6 +35,11 @@ namespace RecensysCoreRepository.EF
         public void Dispose()
         {
             _context.Dispose();
+        }
+
+        public IRepository<T> GetRepo<T>() where T : class, IEntity
+        {
+            throw new NotImplementedException();
         }
     }
 }

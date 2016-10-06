@@ -66,9 +66,9 @@ namespace RecensysCoreWebAPI
                 options.SerializerSettings.ContractResolver = new Newtonsoft.Json.Serialization.DefaultContractResolver();
             });
 
-            string azureDbPass = Configuration["azureDbPass"];
-            services.AddDbContext<RecensysContext>(options => options.UseSqlServer(@"Server=tcp:recensysdb.database.windows.net,1433;Initial Catalog=recensys;Persist Security Info=False;User ID=mkin;Password="+azureDbPass+@";MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;"));
-
+            //string azureDbPass = Configuration["azureDbPass"];
+            //services.AddDbContext<RecensysContext>(options => options.UseSqlServer(@"Server=tcp:recensysdb.database.windows.net,1433;Initial Catalog=recensys;Persist Security Info=False;User ID=mkin;Password="+azureDbPass+@";MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;"));
+            services.AddDbContext<RecensysContext>(options => options.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=recensysdb;Trusted_Connection=True;"));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline

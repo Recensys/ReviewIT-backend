@@ -1,12 +1,10 @@
 ﻿{
   "version": "1.0.0-*",
-  "buildOptions": {
-    "debugType": "portable"
-  },
+
   "dependencies": {
-    "RecensysCoreRepository": "1.0.0-*",
-    "BibliographyParserCore": "1.0.0-*"
+    "RecensysCoreRepository": "1.0.0-*"
   },
+
   "frameworks": {
     "netcoreapp1.0": {
       "dependencies": {

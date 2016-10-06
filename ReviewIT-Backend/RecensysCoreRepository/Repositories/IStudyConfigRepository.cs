@@ -6,7 +6,7 @@ using RecensysCoreRepository.DTOs;
 
 namespace RecensysCoreRepository.Repositories
 {
-    interface IStudyConfigRepository : IDisposable
+    public interface IStudyConfigRepository : IDisposable
     {
         int Create(StudyConfigDTO dto);
         StudyConfigDTO Read(int id);

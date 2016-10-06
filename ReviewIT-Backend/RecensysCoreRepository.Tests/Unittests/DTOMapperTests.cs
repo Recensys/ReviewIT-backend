@@ -8,7 +8,7 @@ using Xunit;
 using DataType = RecensysCoreRepository.DTOs.DataType;
 
 
-namespace RecensysCoreBLL.Tests.Unittests
+namespace RecensysCoreRepository.Tests.Unittests
 {
     public class DTOMapperTests
     {

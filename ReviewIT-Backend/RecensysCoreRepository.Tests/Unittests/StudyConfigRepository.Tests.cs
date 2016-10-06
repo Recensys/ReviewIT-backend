@@ -157,6 +157,58 @@ namespace RecensysCoreRepository.Tests.Unittests
         }
 
         [Fact]
+        public void Update_one_stage_passed_with_id_0_one_two_stages_stored__stored_stages_removed()
+        {
+            var options = Helpers.CreateInMemoryOptions();
+            var context = new RecensysContext(options);
+            var repo = new StudyConfigRepository(context);
+            var entity = new Study() { Id = 1, Name = "", Description = "Desc", Stages = new List<Stage>() { new Stage() { Name = "S1" }, new Stage() { Name = "S2" } } };
+            context.Studies.Add(entity);
+            context.SaveChanges();
+
+            using (repo)
+            {
+                var dto = new StudyConfigDTO()
+                {
+                    Id = 1,
+                    Stages = new List<StageConfigDTO>() { new StageConfigDTO() { Name = "S3"} }
+                };
+
+                repo.Update(dto);
+
+                Assert.Equal(1, entity.Stages.Count);
+                Assert.True(entity.Stages.Count(s => s.Name == "S3") == 1);
+            }
+
+        }
+
+        [Fact]
+        public void Update_one_stage_passed_with_id_0_zero_stages_stored__passed_stage_stored()
+        {
+            var options = Helpers.CreateInMemoryOptions();
+            var context = new RecensysContext(options);
+            var repo = new StudyConfigRepository(context);
+            var entity = new Study() { Id = 1, Name = "", Description = "Desc" };
+            context.Studies.Add(entity);
+            context.SaveChanges();
+
+            using (repo)
+            {
+                var dto = new StudyConfigDTO()
+                {
+                    Id = 1,
+                    Stages = new List<StageConfigDTO>() { new StageConfigDTO() { Name = "S1" } }
+                };
+
+                repo.Update(dto);
+
+                Assert.Equal(1, entity.Stages.Count);
+                Assert.True(entity.Stages.Count(s => s.Name == "S1") == 1);
+            }
+
+        }
+
+        [Fact]
         public void Update_passed_one_stage_not_stored_removed_other_stage()
         {
             var options = Helpers.CreateInMemoryOptions();

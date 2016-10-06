@@ -17,9 +17,10 @@ namespace RecensysCoreRepository.Entities
 
         public int TaskTypeId { get; set; }
         public virtual TaskType TaskType { get; set; }
+        
 
-        public int? ParentId { get; set; }
-        public virtual Article Parent { get; set; }
+        //public int? ParentId { get; set; }
+        //public virtual Article Parent { get; set; }
 
         public virtual ICollection<Data> Data { get; set; } = new List<Data>();
     }

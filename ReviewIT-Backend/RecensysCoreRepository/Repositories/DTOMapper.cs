@@ -55,14 +55,18 @@ namespace RecensysCoreRepository.Repositories
                 Map(fromCriteria, c);
             }
 
-            //Map stages
-            foreach (var toStage in to.Stages.ToList())
+            /**
+             * MAPS STAGES
+             */
+             // remove stages in storage that are not in incoming dto
+            if (from.Stages != null && to.Stages != null)
             {
-                if (from.Stages.All(fs => fs.Id != toStage.Id))
+                foreach (var toStage in to.Stages.ToList())
                 {
-                    to.Stages.Remove(toStage);
+                    if (from.Stages.All(fs => fs.Id != toStage.Id)) to.Stages.Remove(toStage);
                 }
-            }
+            } else to.Stages = new List<Stage>();
+             // map stages in dto, either to a matching entity in storage, or new entity
             foreach (var fromStage in from.Stages.OrEmptyIfNull())
             {
                 if (fromStage.Id > 0)
@@ -70,7 +74,7 @@ namespace RecensysCoreRepository.Repositories
                     var s = to.Stages.Single(st => st.Id == fromStage.Id);
                     Map(fromStage, s);
                 }
-                if (fromStage.Id == 0)
+                if (fromStage.Id <= 0)
                 {
                     var s = new Stage();
                     to.Stages.Add(s);
@@ -79,7 +83,6 @@ namespace RecensysCoreRepository.Repositories
             }
             
         }
-        
         
 
 

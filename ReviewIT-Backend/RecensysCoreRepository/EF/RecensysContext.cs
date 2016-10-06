@@ -108,11 +108,19 @@ namespace RecensysCoreRepository.EF
                 .WithOne(d => d.Task)
                 .OnDelete(DeleteBehavior.Restrict);
 
+            modelBuilder.Entity<Data>()
+                .HasOne(d => d.Field)
+                .WithMany(f => f.Data)
+                .OnDelete(DeleteBehavior.Restrict);
+
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            
+            if (!optionsBuilder.IsConfigured)
+            {
+                optionsBuilder.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=recensysdb;Trusted_Connection=True;");
+            }
         }
 
         public new DbSet<T> Set<T>() where T : class, IEntity

@@ -7,7 +7,7 @@ using RecensysCoreRepository.EF;
 
 namespace RecensysCoreRepository.Repositories
 {
-    public class StudyDetailsRepository : IDisposable
+    public class StudyDetailsRepository : IStudyDetailsRepository
     {
         private readonly IRecensysContext _context;
 
