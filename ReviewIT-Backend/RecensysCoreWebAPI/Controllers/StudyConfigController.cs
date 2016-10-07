@@ -2,9 +2,10 @@
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using BibliographyParserCore.BibTex;
+using BibliographyParserCore.ItemValidators;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using RecensysCoreBLL.StudySourceParser;
 using RecensysCoreRepository.DTOs;
 using RecensysCoreRepository.EF;
 
@@ -110,23 +111,28 @@ namespace RecensysCoreWebAPI.Controllers
 
         [HttpPost]
         [Route("{id}/config/source")]
-        public async Task<IActionResult> Upload(IFormFile file)
+        public IActionResult Upload(int id, IFormFile file)
         {
             if (file == null) throw new Exception("File is null");
             if (file.Length == 0) throw new Exception("File is empty");
 
+            int amountOfArticles;
             
-
-            //return Json(new{articles = 500});
-
             using (Stream stream = file.OpenReadStream())
             {
                 using (var reader = new StreamReader(stream))
                 {
                     var fileContent = reader.ReadToEnd();
-                    var parser = new BibtexParser();
+                    var list = new BibTexParser(new ItemValidator()).Parse(fileContent);
+                    amountOfArticles = list.Count;
+
+                    using (var repo = _factory.GetStudySourceRepository)
+                    {
+                        repo.Post(id, list);
+                    }
                 }
             }
+            return Ok(amountOfArticles);
         }
     }
 }
