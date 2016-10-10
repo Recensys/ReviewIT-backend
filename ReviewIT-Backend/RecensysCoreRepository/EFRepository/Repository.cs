@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using Microsoft.EntityFrameworkCore;
-using RecensysCoreRepository.Entities;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
+using RecensysCoreRepository.EFRepository.Entities;
 
-namespace RecensysCoreRepository.EF
+namespace RecensysCoreRepository.EFRepository
 {
     public class Repository<T> : IRepository<T> where T : class, IEntity
     {

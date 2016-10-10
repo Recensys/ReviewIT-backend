@@ -1,9 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
-using RecensysCoreRepository.Entities;
-using Task = RecensysCoreRepository.Entities.Task;
+using RecensysCoreRepository.EFRepository.Entities;
+using Task = RecensysCoreRepository.EFRepository.Entities.Task;
 
-namespace RecensysCoreRepository.EF
+namespace RecensysCoreRepository.EFRepository
 {
     /*
      * https://ef.readthedocs.io/en/latest/platforms/netcore/new-db-sqlite.html

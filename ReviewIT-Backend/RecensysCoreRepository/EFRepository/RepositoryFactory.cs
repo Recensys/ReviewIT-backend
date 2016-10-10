@@ -1,9 +1,9 @@
 ﻿using System;
-using Microsoft.EntityFrameworkCore;
-using RecensysCoreRepository.Entities;
+using RecensysCoreRepository.EFRepository.Entities;
+using RecensysCoreRepository.EFRepository.Repositories;
 using RecensysCoreRepository.Repositories;
 
-namespace RecensysCoreRepository.EF
+namespace RecensysCoreRepository.EFRepository
 {
     public class RepositoryFactory : IRepositoryFactory
     {

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using RecensysCoreRepository.DTOs;
-using RecensysCoreRepository.Entities;
+using RecensysCoreRepository.EFRepository.Entities;
 using RecensysCoreRepository.Repositories;
 using Xunit;
 using DataType = RecensysCoreRepository.DTOs.DataType;

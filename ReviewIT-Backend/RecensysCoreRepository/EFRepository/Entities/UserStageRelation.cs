@@ -1,4 +1,4 @@
-﻿namespace RecensysCoreRepository.Entities
+﻿namespace RecensysCoreRepository.EFRepository.Entities
 {
     public class UserStageRelation
     {

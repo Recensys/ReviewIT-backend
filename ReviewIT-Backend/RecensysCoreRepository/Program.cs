@@ -1,6 +1,4 @@
 ﻿using System;
-using RecensysCoreRepository.EF;
-using RecensysCoreRepository.Entities;
 
 namespace RecensysCoreRepository
 {

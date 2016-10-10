@@ -1,9 +1,9 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
-using RecensysCoreRepository.Entities;
+using RecensysCoreRepository.EFRepository.Entities;
 
-namespace RecensysCoreRepository.EF
+namespace RecensysCoreRepository.EFRepository
 {
     public interface IRecensysContext : IDisposable
     {

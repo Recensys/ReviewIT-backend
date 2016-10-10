@@ -5,8 +5,9 @@ using System.Security.Cryptography;
 using System.Threading.Tasks;
 using Moq;
 using RecensysCoreRepository.DTOs;
-using RecensysCoreRepository.EF;
-using RecensysCoreRepository.Entities;
+using RecensysCoreRepository.EFRepository;
+using RecensysCoreRepository.EFRepository.Entities;
+using RecensysCoreRepository.EFRepository.Repositories;
 using RecensysCoreRepository.Repositories;
 using Xunit;
 

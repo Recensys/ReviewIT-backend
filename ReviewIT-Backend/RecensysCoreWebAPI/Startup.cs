@@ -9,7 +9,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using RecensysCoreRepository;
-using RecensysCoreRepository.EF;
+using RecensysCoreRepository.EFRepository;
 using Swashbuckle.Swagger.Model;
 
 namespace RecensysCoreWebAPI

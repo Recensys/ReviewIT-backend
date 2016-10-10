@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace RecensysCoreRepository.Entities
+namespace RecensysCoreRepository.EFRepository.Entities
 {
     public class Study : IEntity
     {

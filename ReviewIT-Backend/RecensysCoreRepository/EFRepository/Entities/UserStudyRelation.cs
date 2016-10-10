@@ -1,7 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-
-namespace RecensysCoreRepository.Entities
+﻿namespace RecensysCoreRepository.EFRepository.Entities
 {
     public class UserStudyRelation
     {

@@ -7,7 +7,7 @@ using BibliographyParserCore.ItemValidators;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using RecensysCoreRepository.DTOs;
-using RecensysCoreRepository.EF;
+using RecensysCoreRepository.EFRepository;
 
 // For more information on enabling Web API for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 

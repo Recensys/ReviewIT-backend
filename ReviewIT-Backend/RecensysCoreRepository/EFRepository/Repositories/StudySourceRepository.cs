@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using RecensysCoreRepository.DTOs;
-using RecensysCoreRepository.EF;
-using RecensysCoreRepository.Entities;
+using RecensysCoreRepository.EFRepository.Entities;
+using RecensysCoreRepository.Repositories;
 
-namespace RecensysCoreRepository.Repositories
+namespace RecensysCoreRepository.EFRepository.Repositories
 {
     public class StudySourceRepository: IStudySourceRepository
     {
