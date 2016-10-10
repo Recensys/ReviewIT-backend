@@ -7,6 +7,7 @@ namespace RecensysCoreRepository.DTOs
 {
     public class DistributionDTO
     {
+        public int StageId { get; set; }
         public bool? IsRandomized { get; set; }
         public Dictionary<ResearcherDetailsDTO, double> Distribution { get; set; }
 
