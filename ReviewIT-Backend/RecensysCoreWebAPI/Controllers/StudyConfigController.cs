@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using RecensysCoreRepository.DTOs;
 using RecensysCoreRepository.EFRepository;
+using RecensysCoreRepository.Repositories;
 
 // For more information on enabling Web API for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -18,10 +19,12 @@ namespace RecensysCoreWebAPI.Controllers
     {
 
         private readonly RepositoryFactory _factory;
+        private readonly IStudyResearcherRepository _studyResearcherRepository;
 
-        public StudyController(IRecensysContext context)
+        public StudyController(IRecensysContext context, IStudyResearcherRepository resRepo)
         {
             _factory = new RepositoryFactory(context);
+            _studyResearcherRepository = resRepo;
         }
 
 
@@ -109,6 +112,8 @@ namespace RecensysCoreWebAPI.Controllers
             }
         }
 
+        
+
         [HttpPost]
         [Route("{id}/config/source")]
         public IActionResult Upload(int id, IFormFile file)
@@ -134,5 +139,6 @@ namespace RecensysCoreWebAPI.Controllers
             }
             return Ok(amountOfArticles);
         }
+
     }
 }

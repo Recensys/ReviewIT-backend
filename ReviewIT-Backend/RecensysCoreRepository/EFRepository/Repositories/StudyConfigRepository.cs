@@ -58,7 +58,7 @@ namespace RecensysCoreRepository.EFRepository.Repositories
                                                            select new FieldDTO() { Id = rf.Field.Id, Name = rf.Field.Name, DataType = (DataType)rf.Field.DataType }).ToList(),
                                     }).ToList(),
                           //Researchers = (from r in s.UserRelations TODO researchers get from userRelations
-                          //               select new ResearcherDetailsDTO() { Id = r.Id, FirstName = r.FirstName }).ToList()
+                          //               select new ResearcherDetailsDTO() { ResearcherId = r.ResearcherId, FirstName = r.FirstName }).ToList()
                       };
             return dtos.Single();
         }

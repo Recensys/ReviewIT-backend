@@ -48,6 +48,9 @@
     <Compile Include="..\RecensysCoreRepository\DTOs\CriteriaDTO.cs">
       <Link>DTOs\CriteriaDTO.cs</Link>
     </Compile>
+    <Compile Include="..\RecensysCoreRepository\DTOs\DistributionDTO.cs">
+      <Link>DTOs\DistributionDTO.cs</Link>
+    </Compile>
     <Compile Include="..\RecensysCoreRepository\DTOs\FieldDTO.cs">
       <Link>DTOs\FieldDTO.cs</Link>
     </Compile>
@@ -63,6 +66,10 @@
     <Compile Include="..\RecensysCoreRepository\DTOs\StudyDetailsDTO.cs">
       <Link>DTOs\StudyDetailsDTO.cs</Link>
     </Compile>
+    <Compile Include="..\RecensysCoreRepository\DTOs\StudySourceItemDTO.cs">
+      <Link>DTOs\StudySourceItemDTO.cs</Link>
+    </Compile>
+    <Compile Include="DTOs\StudyResearcherDTO.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -14,10 +14,19 @@ declare module RecensysCoreRepository.DTOs {
 		Number = 4,
 		Resource = 5
 	}
+	export const enum ResearcherRole {
+		Researcher = 0,
+		ResearchManager = 1
+	}
 	export class CriteriaDTO {
 		Field: FieldDTO;
 		Id: number;
 		Value: string;
+	}
+	export class DistributionDTO {
+		Distribution: System.Collections.Generic.KeyValuePair<ResearcherDetailsDTO, number>[];
+		IsRandomized: boolean;
+		StageId: number;
 	}
 	export class FieldDTO {
 		DataType: DataType;
@@ -48,6 +57,17 @@ declare module RecensysCoreRepository.DTOs {
 		Description: string;
 		Id: number;
 		Name: string;
+	}
+	export class StudyResearcherDTO {
+		FirstName: string;
+		ResearcherId: number;
+		Role: ResearcherRole;
+	}
+}
+declare module System.Collections.Generic {
+	export class KeyValuePair<TKey, TValue> {
+		Key: TKey;
+		Value: TValue;
 	}
 }
 

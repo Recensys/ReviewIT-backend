@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using RecensysCoreRepository;
 using RecensysCoreRepository.DTOs;
 using RecensysCoreRepository.Repositories;
 
@@ -11,25 +10,26 @@ using RecensysCoreRepository.Repositories;
 
 namespace RecensysCoreWebAPI.Controllers
 {
-    [Route("api/Stage/{stageId}/[controller]")]
-    public class DistributionController : Controller
+    [Route("api/study/{studyId}/researchers")]
+    public class StudyResearchersController : Controller
     {
 
-        public IDistributionRepository _repo;
-        public DistributionController(IDistributionRepository repo)
+
+        private readonly IStudyResearcherRepository _studyResearcherRepository;
+
+        public StudyResearchersController(IStudyResearcherRepository studyResearcherRepository)
         {
-            _repo = repo;
+            _studyResearcherRepository = studyResearcherRepository;
         }
 
-        // GET api/values/5
         [HttpGet]
-        public IActionResult Get(int stageId)
+        public IActionResult Get(int studyId)
         {
             try
             {
-                using (_repo)
+                using (_studyResearcherRepository)
                 {
-                    return Json(_repo.Read(stageId));
+                    return Json(_studyResearcherRepository.Get(studyId));
                 }
             }
             catch (Exception e)
@@ -38,15 +38,17 @@ namespace RecensysCoreWebAPI.Controllers
             }
         }
 
-        // POST api/values
+
+
+
         [HttpPost]
-        public IActionResult Post([FromBody]DistributionDTO dto)
+        public IActionResult Post(int studyId, [FromBody]StudyResearcherDTO dto)
         {
             try
             {
-                using (_repo)
+                using (_studyResearcherRepository)
                 {
-                    _repo.Create(dto);
+                    _studyResearcherRepository.Create(studyId, dto);
                     return Ok();
                 }
             }
@@ -56,15 +58,14 @@ namespace RecensysCoreWebAPI.Controllers
             }
         }
 
-        // PUT api/values/5
         [HttpPut]
-        public IActionResult Put([FromBody]DistributionDTO dto)
+        public IActionResult Put(int studyId, [FromBody] StudyResearcherDTO[] dtos)
         {
             try
             {
-                using (_repo)
+                using (_studyResearcherRepository)
                 {
-                    _repo.Update(dto);
+                    _studyResearcherRepository.Update(studyId, dtos);
                     return Ok();
                 }
             }
@@ -73,6 +74,5 @@ namespace RecensysCoreWebAPI.Controllers
                 return StatusCode(500, e.Message);
             }
         }
-        
     }
 }

@@ -10,6 +10,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using RecensysCoreRepository;
 using RecensysCoreRepository.EFRepository;
+using RecensysCoreRepository.EFRepository.Repositories;
+using RecensysCoreRepository.Repositories;
 using Swashbuckle.Swagger.Model;
 
 namespace RecensysCoreWebAPI
@@ -45,6 +47,9 @@ namespace RecensysCoreWebAPI
             services.AddApplicationInsightsTelemetry(Configuration);
 
             services.AddScoped<IRecensysContext, RecensysContext>();
+            services.AddScoped<IDistributionRepository, DistributionRepository>();
+            services.AddScoped<IStudyResearcherRepository, StudyResearcherRepository>();
+            services.AddScoped<IResearcherDetailsRepository, ResearcherDetailsRepository>();
 
             services.AddCors();
 

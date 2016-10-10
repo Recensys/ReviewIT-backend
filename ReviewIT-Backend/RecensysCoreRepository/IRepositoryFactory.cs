@@ -1,5 +1,5 @@
 ﻿using System;
-using RecensysCoreRepository.Entities;
+using RecensysCoreRepository.EFRepository.Entities;
 using RecensysCoreRepository.Repositories;
 
 namespace RecensysCoreRepository

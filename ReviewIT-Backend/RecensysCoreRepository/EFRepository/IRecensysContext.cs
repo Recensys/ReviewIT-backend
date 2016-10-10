@@ -18,6 +18,7 @@ namespace RecensysCoreRepository.EFRepository
         DbSet<Task> Tasks { get; }
         DbSet<TaskType> TaskTypes { get; }
         DbSet<User> Users { get; }
+        DbSet<UserStudyRelation> UserStudyRelations { get; }
 
         int SaveChanges();
         DbSet<T> Set<T>() where T : class, IEntity;

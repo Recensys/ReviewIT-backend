@@ -22,6 +22,13 @@ namespace RecensysCoreRepository.EFRepository.Repositories
                     select new StudyDetailsDTO {Id = s.Id, Name = s.Name, Description = s.Description};
         }
 
+        public IEnumerable<ResearcherDetailsDTO> GetAllResearchers(int studyId)
+        {
+            return from us in _context.UserStudyRelations
+                where us.StudyId == studyId
+                select new ResearcherDetailsDTO {Id = us.UserId, FirstName = us.User.FirstName};
+        }
+
 
         public void Dispose()
         {

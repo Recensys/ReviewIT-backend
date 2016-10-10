@@ -9,6 +9,7 @@ namespace RecensysCoreRepository.Repositories
     public interface IStudyDetailsRepository: IDisposable
     {
         IEnumerable<StudyDetailsDTO> GetAll();
-        
+
+
     }
 }

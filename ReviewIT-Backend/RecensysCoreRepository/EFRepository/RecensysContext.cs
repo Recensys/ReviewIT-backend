@@ -31,6 +31,7 @@ namespace RecensysCoreRepository.EFRepository
         public DbSet<Task> Tasks { get; set; }
         public DbSet<TaskType> TaskTypes { get; set; }
         public DbSet<User> Users {get; set; }
+        public DbSet<UserStudyRelation> UserStudyRelations { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -60,20 +61,8 @@ namespace RecensysCoreRepository.EFRepository
                 .HasForeignKey(pt => pt.StudyId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-
-            modelBuilder.Entity<StrategyFieldRelation>()
-                .HasKey(a => new { a.FieldId, a.StrategyId });
-            modelBuilder.Entity<StrategyFieldRelation>()
-                .HasOne(sf => sf.Field)
-                .WithMany(f => f.StrategyRelations)
-                .HasForeignKey(pt => pt.FieldId)
-                .OnDelete(DeleteBehavior.Restrict);
-            modelBuilder.Entity<StrategyFieldRelation>()
-                .HasOne(s => s.Strategy)
-                .WithMany(st => st.FieldRelations)
-                .HasForeignKey(pt => pt.StrategyId)
-                .OnDelete(DeleteBehavior.Restrict);
-
+            modelBuilder.Entity<Strategy>()
+                .HasKey(s => new {s.Id, s.StrategyType});
 
             modelBuilder.Entity<StageFieldRelation>()
                 .HasKey(a => new {a.FieldId, a.FieldTypeId, a.StageId});

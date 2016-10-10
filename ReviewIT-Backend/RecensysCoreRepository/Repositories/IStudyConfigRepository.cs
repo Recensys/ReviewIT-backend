@@ -13,5 +13,6 @@ namespace RecensysCoreRepository.Repositories
         bool Update(StudyConfigDTO dto);
         bool Delete(int id);
 
+
     }
 }
