@@ -10,9 +10,9 @@ namespace RecensysCoreRepository.EFRepository.Repositories
     public class ResearcherDetailsRepository: IResearcherDetailsRepository
     {
 
-        private IRecensysContext _context;
+        private RecensysContext _context;
 
-        public ResearcherDetailsRepository(IRecensysContext context)
+        public ResearcherDetailsRepository(RecensysContext context)
         {
             _context = context;
         }

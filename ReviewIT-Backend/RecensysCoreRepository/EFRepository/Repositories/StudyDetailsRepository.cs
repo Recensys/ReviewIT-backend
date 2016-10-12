@@ -8,9 +8,9 @@ namespace RecensysCoreRepository.EFRepository.Repositories
 {
     public class StudyDetailsRepository : IStudyDetailsRepository
     {
-        private readonly IRecensysContext _context;
+        private readonly RecensysContext _context;
 
-        public StudyDetailsRepository(IRecensysContext context)
+        public StudyDetailsRepository(RecensysContext context)
         {
             if (context == null) throw new ArgumentNullException($"{nameof(context)} is null");
             _context = context;

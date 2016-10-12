@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 using RecensysCoreRepository.EFRepository.Entities;
 using Task = RecensysCoreRepository.EFRepository.Entities.Task;
@@ -8,13 +9,10 @@ namespace RecensysCoreRepository.EFRepository
     /*
      * https://ef.readthedocs.io/en/latest/platforms/netcore/new-db-sqlite.html
      */
-    public class RecensysContext : DbContext, IRecensysContext
+    public class RecensysContext : DbContext
     {
 
-        public RecensysContext()
-        {
-            
-        }
+        public RecensysContext() {}
         public RecensysContext(DbContextOptions<RecensysContext> options)
             : base(options)
         { }
@@ -32,6 +30,8 @@ namespace RecensysCoreRepository.EFRepository
         public DbSet<TaskType> TaskTypes { get; set; }
         public DbSet<User> Users {get; set; }
         public DbSet<UserStudyRelation> UserStudyRelations { get; set; }
+        public DbSet<StageFieldRelation> StageFieldRelations { get; set; }
+        
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -65,7 +65,7 @@ namespace RecensysCoreRepository.EFRepository
                 .HasKey(s => new {s.Id, s.StrategyType});
 
             modelBuilder.Entity<StageFieldRelation>()
-                .HasKey(a => new {a.FieldId, a.FieldTypeId, a.StageId});
+                .HasKey(a => new {a.FieldId, StageFieldType = a.FieldType, a.StageId});
             modelBuilder.Entity<StageFieldRelation>()
                 .HasOne(s => s.Field)
                 .WithMany(f => f.StageFields)
@@ -101,7 +101,6 @@ namespace RecensysCoreRepository.EFRepository
                 .HasOne(d => d.Field)
                 .WithMany(f => f.Data)
                 .OnDelete(DeleteBehavior.Restrict);
-
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

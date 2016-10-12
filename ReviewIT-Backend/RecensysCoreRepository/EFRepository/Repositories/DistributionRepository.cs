@@ -10,9 +10,9 @@ namespace RecensysCoreRepository.EFRepository.Repositories
     public class DistributionRepository : IDistributionRepository
     {
         
-        private readonly IRecensysContext _context;
+        private readonly RecensysContext _context;
 
-        public DistributionRepository(IRecensysContext context)
+        public DistributionRepository(RecensysContext context)
         {
             if (context == null) throw new ArgumentNullException($"{nameof(context)} is null");
             _context = context;

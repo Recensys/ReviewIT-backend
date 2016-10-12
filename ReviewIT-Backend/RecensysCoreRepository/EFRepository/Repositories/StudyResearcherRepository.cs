@@ -11,9 +11,9 @@ namespace RecensysCoreRepository.EFRepository.Repositories
     public class StudyResearcherRepository : IStudyResearcherRepository
     {
 
-        private IRecensysContext _context;
+        private RecensysContext _context;
 
-        public StudyResearcherRepository(IRecensysContext context)
+        public StudyResearcherRepository(RecensysContext context)
         {
             _context = context;
         }
@@ -39,6 +39,7 @@ namespace RecensysCoreRepository.EFRepository.Repositories
         {
             _context.UserStudyRelations.Add(new UserStudyRelation()
             {
+
                 IsAdmin = dto.Role == ResearcherRole.ResearchManager,
                 StudyId = studyId,
                 UserId = dto.ResearcherId

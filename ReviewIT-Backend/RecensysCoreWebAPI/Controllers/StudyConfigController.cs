@@ -18,13 +18,17 @@ namespace RecensysCoreWebAPI.Controllers
     public class StudyController : Controller
     {
 
-        private readonly RepositoryFactory _factory;
         private readonly IStudyResearcherRepository _studyResearcherRepository;
+        private readonly IStudyDetailsRepository _deRepo;
+        private readonly IStudyConfigRepository _coRepo;
+        private readonly IStudySourceRepository _soRepo;
 
-        public StudyController(IRecensysContext context, IStudyResearcherRepository resRepo)
+        public StudyController(IStudyResearcherRepository resRepo, IStudyDetailsRepository deRepo, IStudyConfigRepository coRepo, IStudySourceRepository soRepo)
         {
-            _factory = new RepositoryFactory(context);
             _studyResearcherRepository = resRepo;
+            _deRepo = deRepo;
+            _coRepo = coRepo;
+            _soRepo = soRepo;
         }
 
 
@@ -37,9 +41,9 @@ namespace RecensysCoreWebAPI.Controllers
         {
             try
             {
-                using (var repo = _factory.GetStudyDetailsRepository)
+                using (_deRepo)
                 {
-                    return Json(repo.GetAll().ToArray());
+                    return Json(_deRepo.GetAll().ToArray());
                 }
             }
             catch (Exception e)
@@ -53,9 +57,9 @@ namespace RecensysCoreWebAPI.Controllers
         {
             try
             {
-                using (var repo = _factory.GetStudyConfigRepository)
+                using (_coRepo)
                 {
-                    return Json(repo.Read(id));
+                    return Json(_coRepo.Read(id));
                 }
             }
             catch (Exception e)
@@ -69,9 +73,9 @@ namespace RecensysCoreWebAPI.Controllers
         {
             try
             {
-                using (var repo = _factory.GetStudyConfigRepository)
+                using (_coRepo)
                 {
-                    return Ok(repo.Create(dto));
+                    return Ok(_coRepo.Create(dto));
                 }
             }
             catch (Exception e)
@@ -85,9 +89,9 @@ namespace RecensysCoreWebAPI.Controllers
         {
             try
             {
-                using (var repo = _factory.GetStudyConfigRepository)
+                using (_coRepo)
                 {
-                    return Ok(repo.Update(dto));
+                    return Ok(_coRepo.Update(dto));
                 }
             }
             catch (Exception e)
@@ -101,9 +105,9 @@ namespace RecensysCoreWebAPI.Controllers
         {
             try
             {
-                using (var repo = _factory.GetStudyConfigRepository)
+                using (_coRepo)
                 {
-                    return Ok(repo.Delete(id));
+                    return Ok(_coRepo.Delete(id));
                 }
             }
             catch (Exception e)
@@ -112,7 +116,7 @@ namespace RecensysCoreWebAPI.Controllers
             }
         }
 
-        
+
 
         [HttpPost]
         [Route("{id}/config/source")]
@@ -122,7 +126,7 @@ namespace RecensysCoreWebAPI.Controllers
             if (file.Length == 0) throw new Exception("File is empty");
 
             int amountOfArticles;
-            
+
             using (Stream stream = file.OpenReadStream())
             {
                 using (var reader = new StreamReader(stream))
@@ -131,14 +135,40 @@ namespace RecensysCoreWebAPI.Controllers
                     var list = new BibTexParser(new ItemValidator()).Parse(fileContent);
                     amountOfArticles = list.Count;
 
-                    using (var repo = _factory.GetStudySourceRepository)
+                    using (_soRepo)
                     {
-                        repo.Post(id, list);
+                        _soRepo.Post(id, list);
                     }
                 }
             }
             return Ok(amountOfArticles);
         }
+
+        [HttpPost("{id}/config/start")]
+        public IActionResult Start(int id)
+        {
+            try
+            {
+                try
+                {
+                    using (_studyResearcherRepository)
+                    {
+                        return Ok();
+                    }
+                }
+                catch (Exception)
+                {
+                    
+                    throw;
+                }
+            }
+            catch (Exception e)
+            {
+                return StatusCode(500, e.Message);
+            }
+        }
+
+        
 
     }
 }

@@ -8,7 +8,7 @@ namespace RecensysCoreRepository.EFRepository
     public class RepositoryFactory : IRepositoryFactory
     {
 
-        private readonly IRecensysContext _context;
+        private readonly RecensysContext _context;
 
 
         private IStudyDetailsRepository _studyDetailsRepository;
@@ -26,7 +26,7 @@ namespace RecensysCoreRepository.EFRepository
 
 
 
-        public RepositoryFactory(IRecensysContext context)
+        public RepositoryFactory(RecensysContext context)
         {
             _context = context;
         }
