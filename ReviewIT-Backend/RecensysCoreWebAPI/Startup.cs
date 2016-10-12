@@ -46,10 +46,14 @@ namespace RecensysCoreWebAPI
             // Add framework services.
             services.AddApplicationInsightsTelemetry(Configuration);
 
-            services.AddScoped<IRecensysContext, RecensysContext>();
             services.AddScoped<IDistributionRepository, DistributionRepository>();
             services.AddScoped<IStudyResearcherRepository, StudyResearcherRepository>();
             services.AddScoped<IResearcherDetailsRepository, ResearcherDetailsRepository>();
+            services.AddScoped<IStudyDetailsRepository, StudyDetailsRepository>();
+            services.AddScoped<IDistributionRepository, DistributionRepository>();
+            services.AddScoped<IStageFieldsRepository, StageFieldsRepository>();
+            services.AddScoped<IStudyConfigRepository, StudyConfigRepository>();
+            services.AddScoped<IStudySourceRepository, StudySourceRepository>();
 
             services.AddCors();
 
