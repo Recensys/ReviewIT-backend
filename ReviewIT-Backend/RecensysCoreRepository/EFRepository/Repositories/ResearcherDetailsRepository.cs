@@ -10,10 +10,11 @@ namespace RecensysCoreRepository.EFRepository.Repositories
     public class ResearcherDetailsRepository: IResearcherDetailsRepository
     {
 
-        private RecensysContext _context;
+        private readonly RecensysContext _context;
 
         public ResearcherDetailsRepository(RecensysContext context)
         {
+            if (context == null) throw new ArgumentNullException($"{nameof(context)} is null");
             _context = context;
         }
 
