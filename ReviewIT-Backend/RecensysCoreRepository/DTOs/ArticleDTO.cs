@@ -2,13 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
-namespace RecensysCoreBLL.BusinessEntities
+namespace RecensysCoreRepository.DTOs
 {
-    public class Criteria
+    public class ArticleDTO
     {
         public int Id { get; set; }
-        public string Value { get; set; }
-        public Field Field { get; set; }
     }
 }
