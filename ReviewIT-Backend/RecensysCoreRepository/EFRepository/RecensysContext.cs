@@ -31,7 +31,8 @@ namespace RecensysCoreRepository.EFRepository
         public DbSet<User> Users {get; set; }
         public DbSet<UserStudyRelation> UserStudyRelations { get; set; }
         public DbSet<StageFieldRelation> StageFieldRelations { get; set; }
-        
+        public DbSet<Inclusion> Inclusion { get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -101,6 +102,9 @@ namespace RecensysCoreRepository.EFRepository
                 .HasOne(d => d.Field)
                 .WithMany(f => f.Data)
                 .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Inclusion>()
+                .HasKey(i => new {i.ArticleId, i.StageId});
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using RecensysCoreRepository.DTOs;
+using RecensysCoreRepository.EFRepository.Entities;
 using RecensysCoreRepository.Repositories;
 
 namespace RecensysCoreRepository.EFRepository.Repositories
@@ -23,11 +24,21 @@ namespace RecensysCoreRepository.EFRepository.Repositories
             _context.Dispose();
         }
 
-        public IEnumerable<RequestedDataDTO> GetAll(int stageId)
+        public IEnumerable<ArticleWithRequestedDataDTO> GetAll(int stageId)
         {
-            return from d in _context.Data
-                where d.Article.StudyId == 0
-                select new RequestedDataDTO() {Id = d.Id, ArticleId = d.ArticleId};
+            var dtos = from i in _context.Inclusion
+                where i.StageId == stageId
+                select new ArticleWithRequestedDataDTO
+                {
+                    ArticleId = i.ArticleId,
+                    DataIds = (from d in i.Article.Data
+                              join sf in _context.StageFieldRelations on d.FieldId equals sf.FieldId
+                              where sf.FieldType == FieldType.Requested
+                              select d.Id).ToList()
+                };
+
+            return dtos;
+
         }
 
 

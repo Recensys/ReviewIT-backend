@@ -5,9 +5,9 @@ using System.Threading.Tasks;
 
 namespace RecensysCoreRepository.DTOs
 {
-    public class RequestedDataDTO
+    public class ArticleWithRequestedDataDTO
     {
-        public int Id { get; set; }
+        public ICollection<int> DataIds { get; set; }
         public int ArticleId { get; set; }
     }
 }
