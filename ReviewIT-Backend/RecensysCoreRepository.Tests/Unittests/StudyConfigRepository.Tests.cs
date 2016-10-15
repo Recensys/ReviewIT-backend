@@ -35,7 +35,7 @@ namespace RecensysCoreRepository.Tests.Unittests
         [Fact]
         public void Create_calls_saveChanges_on_context()
         {
-            var mock = new Mock<IRecensysContext>();
+            var mock = new Mock<RecensysContext>();
             mock.Setup(m => m.Studies.Add(It.IsAny<Study>()));
             var repo = new StudyConfigRepository(mock.Object);
             var dto = new StudyConfigDTO();
