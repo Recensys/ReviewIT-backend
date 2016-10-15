@@ -18,6 +18,10 @@ namespace RecensysCoreRepository.EFRepository.Entities
         public virtual ICollection<StageFieldRelation> StageFields { get; set; } = new List<StageFieldRelation>();
         public virtual ICollection<Task> Tasks { get; set; } = new List<Task>();
         public virtual ICollection<UserStageRelation> UserRelations { get; set; } = new List<UserStageRelation>();
+
+        public virtual ICollection<Strategy> Strategies { get; set; } = new List<Strategy>();
+
+        public virtual ICollection<Inclusion> Inclusions { get; set; } = new List<Inclusion>();
         
     }
 }
