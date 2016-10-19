@@ -2,6 +2,6 @@
 {
     public enum FieldType
     {
-        Visible, Requested
+        Visible, Requested, Available
     }
 }

@@ -1,9 +1,13 @@
-﻿namespace RecensysCoreRepository.DTOs
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+
+namespace RecensysCoreRepository.DTOs
 {
     public class CriteriaDTO
     {
-        public int Id { get; set; }
-        public string Value { get; set; }
-        public FieldDTO Field { get; set; }
+        public ICollection<FieldCriteriaDTO> Inclusions { get; set; }
+        public ICollection<FieldCriteriaDTO> Exclusions { get; set; }
     }
 }

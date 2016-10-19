@@ -39,11 +39,16 @@ namespace RecensysCoreRepository.EFRepository.Repositories
                                  where sf.StageId == stageId && sf.FieldType == FieldType.Requested
                                  select new FieldDTO() { Id = sf.FieldId, Name = sf.Field.Name, DataType = (DataType)sf.Field.DataType }).ToList();
 
+            dto.AvailableFields = (from sf in _context.StageFieldRelations
+                                   where sf.StageId == stageId && sf.FieldType == FieldType.Available
+                                   select new FieldDTO() { Id = sf.FieldId, Name = sf.Field.Name, DataType = (DataType)sf.Field.DataType }).ToList();
+
             return dto;
         }
 
         public async Task<StageFieldsDTO> GetAsync(int stageId)
         {
+            throw new NotImplementedException();
 
             var requested = (from sf in _context.StageFieldRelations
                     where sf.StageId == stageId && sf.FieldType == FieldType.Requested
@@ -75,33 +80,16 @@ namespace RecensysCoreRepository.EFRepository.Repositories
             _context.StageFieldRelations.RemoveRange(stored);
             _context.SaveChanges();
 
-            foreach (var field in dto.VisibleFields)
-            {
-                var entity = new StageFieldRelation()
-                {
-                    StageId = stageId,
-                    FieldId = field.Id,
-                    FieldType = FieldType.Visible
-                };
-                _context.StageFieldRelations.Add(entity);
-            }
-
-            foreach (var field in dto.RequestedFields)
-            {
-                var entity = new StageFieldRelation()
-                {
-                    StageId = stageId,
-                    FieldId = field.Id,
-                    FieldType = FieldType.Requested
-                };
-                _context.StageFieldRelations.Add(entity);
-            }
-
+            if(dto.AvailableFields != null) _context.StageFieldRelations.AddRange(dto.AvailableFields.MapDTO(FieldType.Available, stageId));
+            if (dto.VisibleFields != null) _context.StageFieldRelations.AddRange(dto.VisibleFields.MapDTO(FieldType.Visible, stageId));
+            if (dto.RequestedFields != null) _context.StageFieldRelations.AddRange(dto.RequestedFields.MapDTO(FieldType.Requested, stageId));
+            
             return _context.SaveChanges() > 0;
         }
 
         public async Task<bool> UpdateAsync(int stageId, StageFieldsDTO dto)
         {
+            throw new NotImplementedException();
             var stored = from sf in _context.StageFieldRelations
                          where sf.StageId == stageId
                          select sf;
@@ -132,6 +120,26 @@ namespace RecensysCoreRepository.EFRepository.Repositories
             }
 
             return await _context.SaveChangesAsync() > 0;
+        }
+
+        
+    }
+
+    public static class Extensions
+    {
+        public static ICollection<StageFieldRelation> MapDTO(this ICollection<FieldDTO> dtos, FieldType ftype, int stageId)
+        {
+            var r = new List<StageFieldRelation>();
+            foreach (var dto in dtos)
+            {
+                r.Add(new StageFieldRelation()
+                {
+                    FieldType = ftype,
+                    FieldId = dto.Id,
+                    StageId = stageId
+                });
+            }
+            return r;
         }
     }
 }

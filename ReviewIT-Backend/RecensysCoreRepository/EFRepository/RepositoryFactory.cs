@@ -20,10 +20,6 @@ namespace RecensysCoreRepository.EFRepository
             => _studySourceRepository ?? (_studySourceRepository = new StudySourceRepository(_context));
 
 
-        private IStudyConfigRepository _studyConfigRepository;
-        public IStudyConfigRepository GetStudyConfigRepository
-            => _studyConfigRepository ?? (_studyConfigRepository = new StudyConfigRepository(_context));
-
 
 
         public RepositoryFactory(RecensysContext context)

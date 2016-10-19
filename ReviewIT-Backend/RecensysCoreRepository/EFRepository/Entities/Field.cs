@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using RecensysCoreRepository.DTOs;
 
 namespace RecensysCoreRepository.EFRepository.Entities
 {
@@ -8,7 +9,7 @@ namespace RecensysCoreRepository.EFRepository.Entities
         public string Name { get; set; }
         public string Description { get; set; }
 
-        public int DataType { get; set; }
+        public DataType DataType { get; set; }
 
         public int StudyId { get; set; }
         public virtual Study Study { get; set; }

@@ -6,7 +6,6 @@ namespace RecensysCoreRepository
 {
     public interface IRepositoryFactory : IDisposable
     {
-        IStudyConfigRepository GetStudyConfigRepository { get; }
         IStudyDetailsRepository GetStudyDetailsRepository { get; }
 
         IStudySourceRepository GetStudySourceRepository { get; }

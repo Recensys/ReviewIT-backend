@@ -7,6 +7,7 @@ namespace RecensysCoreRepository.DTOs
 {
     public class StageFieldsDTO
     {
+        public ICollection<FieldDTO> AvailableFields { get; set; }
         public ICollection<FieldDTO> VisibleFields { get; set; }
         public ICollection<FieldDTO> RequestedFields { get; set; }
     }

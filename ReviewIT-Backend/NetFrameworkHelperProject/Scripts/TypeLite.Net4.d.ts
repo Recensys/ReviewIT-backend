@@ -44,6 +44,16 @@ declare module RecensysCoreRepository.DTOs {
 		RequestedFields: FieldDTO[];
 		VisibleFields: FieldDTO[];
 	}
+	export class StageDetailsDTO {
+		Description: string;
+		Id: number;
+		Name: string;
+	}
+	export class StageFieldsDTO {
+		AvailableFields: FieldDTO[];
+		RequestedFields: FieldDTO[];
+		VisibleFields: FieldDTO[];
+	}
 	export class StudyConfigDTO {
 		AvailableFields: FieldDTO[];
 		Criteria: CriteriaDTO[];

@@ -20,24 +20,73 @@ namespace RecensysCoreWebAPI.Controllers
 
         private readonly IStudyResearcherRepository _studyResearcherRepository;
         private readonly IStudyDetailsRepository _deRepo;
-        private readonly IStudyConfigRepository _coRepo;
         private readonly IStudySourceRepository _soRepo;
+        private readonly IStageDetailsRepository _sdRepo;
 
-        public StudyController(IStudyResearcherRepository resRepo, IStudyDetailsRepository deRepo, IStudyConfigRepository coRepo, IStudySourceRepository soRepo)
+        public StudyController(IStudyResearcherRepository resRepo, IStudyDetailsRepository deRepo, IStudySourceRepository soRepo, IStageDetailsRepository sdRepo)
         {
             _studyResearcherRepository = resRepo;
             _deRepo = deRepo;
-            _coRepo = coRepo;
             _soRepo = soRepo;
+            _sdRepo = sdRepo;
         }
 
+        [HttpGet("{id}/stages")]
+        public IActionResult GetStages(int id)
+        {
+            try
+            {
+                using (_sdRepo)
+                {
+                    return Json(_sdRepo.GetAll(id));
+                }
+            }
+            catch (Exception e)
+            {
+                return StatusCode(500, e.Message);
+            }
+        }
+
+        [HttpGet("{id}")]
+        public IActionResult Get(int id)
+        {
+            try
+            {
+                using (_deRepo)
+                {
+                    return Json(_deRepo.Read(id));
+                }
+            }
+            catch (Exception e)
+            {
+                return StatusCode(500, e.Message);
+            }
+        }
+
+        
+
+        [HttpPut("{id}")]
+        public IActionResult Put([FromBody]StudyDetailsDTO dto)
+        {
+            try
+            {
+                using (_deRepo)
+                {
+                    return Json(_deRepo.Update(dto));
+                }
+            }
+            catch (Exception e)
+            {
+                return StatusCode(500, e.Message);
+            }
+        }
 
         /// <summary>
         /// Gets a list of basic details of studies
         /// </summary>
         /// <returns>Json array of study details</returns>
         [HttpGet("list")]
-        public IActionResult Get()
+        public IActionResult GetList()
         {
             try
             {
@@ -52,71 +101,7 @@ namespace RecensysCoreWebAPI.Controllers
             }
         }
 
-        [HttpGet("{id}/config")]
-        public IActionResult Get(int id)
-        {
-            try
-            {
-                using (_coRepo)
-                {
-                    return Json(_coRepo.Read(id));
-                }
-            }
-            catch (Exception e)
-            {
-                return StatusCode(500, e.Message);
-            }
-        }
-
-        [HttpPost("config")]
-        public IActionResult Post([FromBody] StudyConfigDTO dto)
-        {
-            try
-            {
-                using (_coRepo)
-                {
-                    return Ok(_coRepo.Create(dto));
-                }
-            }
-            catch (Exception e)
-            {
-                return StatusCode(500, e.Message);
-            }
-        }
-
-        [HttpPut("{id}/config")]
-        public IActionResult Put([FromBody] StudyConfigDTO dto)
-        {
-            try
-            {
-                using (_coRepo)
-                {
-                    return Ok(_coRepo.Update(dto));
-                }
-            }
-            catch (Exception e)
-            {
-                return StatusCode(500, e.Message);
-            }
-        }
-
-        [HttpDelete("{id}")]
-        public IActionResult Delete(int id)
-        {
-            try
-            {
-                using (_coRepo)
-                {
-                    return Ok(_coRepo.Delete(id));
-                }
-            }
-            catch (Exception e)
-            {
-                return StatusCode(500, e.Message);
-            }
-        }
-
-
+        
 
         [HttpPost]
         [Route("{id}/config/source")]

@@ -45,11 +45,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\RecensysCoreRepository\DTOs\CriteriaDTO.cs">
-      <Link>DTOs\CriteriaDTO.cs</Link>
-    </Compile>
     <Compile Include="..\RecensysCoreRepository\DTOs\DistributionDTO.cs">
       <Link>DTOs\DistributionDTO.cs</Link>
+    </Compile>
+    <Compile Include="..\RecensysCoreRepository\DTOs\FieldCriteriaDTO.cs">
+      <Link>DTOs\FieldCriteriaDTO.cs</Link>
     </Compile>
     <Compile Include="..\RecensysCoreRepository\DTOs\FieldDTO.cs">
       <Link>DTOs\FieldDTO.cs</Link>
@@ -59,6 +59,12 @@
     </Compile>
     <Compile Include="..\RecensysCoreRepository\DTOs\StageConfigDTO.cs">
       <Link>DTOs\StageConfigDTO.cs</Link>
+    </Compile>
+    <Compile Include="..\RecensysCoreRepository\DTOs\StageDetailsDTO.cs">
+      <Link>DTOs\StageDetailsDTO.cs</Link>
+    </Compile>
+    <Compile Include="..\RecensysCoreRepository\DTOs\StageFieldsDTO.cs">
+      <Link>DTOs\StageFieldsDTO.cs</Link>
     </Compile>
     <Compile Include="..\RecensysCoreRepository\DTOs\StudyConfigDTO.cs">
       <Link>DTOs\StudyConfigDTO.cs</Link>
