@@ -55,6 +55,7 @@ namespace RecensysCoreWebAPI
             services.AddScoped<IStageFieldsRepository, StageFieldsRepository>();
             services.AddScoped<IStudySourceRepository, StudySourceRepository>();
             services.AddScoped<IStageDetailsRepository, StageDetailsRepository>();
+            services.AddScoped<IFieldRepository, FieldRepository>();
 
             services.AddCors();
 
