@@ -22,9 +22,10 @@ namespace RecensysCoreWebAPI.Controllers
 
 
         // GET: api/values
-        [HttpGet("study/{studyId}/fields/search/{term}")]
+        [HttpGet("study/{studyId}/fields/search")]
         public IActionResult Get(int studyId, string term)
         {
+            if (term == null) term = "";
             try
             {
                 using (_repo)

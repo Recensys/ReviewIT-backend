@@ -66,7 +66,7 @@ namespace RecensysCoreWebAPI.Controllers
 
 
 
-        [HttpPut("{id}")]
+        [HttpPut]
         public IActionResult Put([FromBody] StudyDetailsDTO dto)
         {
             try
@@ -102,7 +102,7 @@ namespace RecensysCoreWebAPI.Controllers
             }
         }
 
-        [HttpPost("/study")]
+        [HttpPost]
         public IActionResult Post([FromBody] StudyDetailsDTO dto)
         {
             if(!ModelState.IsValid) return BadRequest();
