@@ -11,6 +11,6 @@ namespace RecensysCoreRepository.Repositories
         IEnumerable<StudyDetailsDTO> GetAll();
         StudyDetailsDTO Read(int id);
         bool Update(StudyDetailsDTO dto);
-
+        int Create(StudyDetailsDTO dto);
     }
 }

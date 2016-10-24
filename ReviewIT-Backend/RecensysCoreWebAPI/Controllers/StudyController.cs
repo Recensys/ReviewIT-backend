@@ -23,7 +23,8 @@ namespace RecensysCoreWebAPI.Controllers
         private readonly IStudySourceRepository _soRepo;
         private readonly IStageDetailsRepository _sdRepo;
 
-        public StudyController(IStudyResearcherRepository resRepo, IStudyDetailsRepository deRepo, IStudySourceRepository soRepo, IStageDetailsRepository sdRepo)
+        public StudyController(IStudyResearcherRepository resRepo, IStudyDetailsRepository deRepo,
+            IStudySourceRepository soRepo, IStageDetailsRepository sdRepo)
         {
             _studyResearcherRepository = resRepo;
             _deRepo = deRepo;
@@ -63,10 +64,10 @@ namespace RecensysCoreWebAPI.Controllers
             }
         }
 
-        
+
 
         [HttpPut("{id}")]
-        public IActionResult Put([FromBody]StudyDetailsDTO dto)
+        public IActionResult Put([FromBody] StudyDetailsDTO dto)
         {
             try
             {
@@ -101,6 +102,23 @@ namespace RecensysCoreWebAPI.Controllers
             }
         }
 
+        [HttpPost("/study")]
+        public IActionResult Post([FromBody] StudyDetailsDTO dto)
+        {
+            if(!ModelState.IsValid) return BadRequest();
+
+            try
+            {
+                using (_deRepo)
+                {
+                    return Json(_deRepo.Create(dto));
+                }
+            }
+            catch (Exception e)
+            {
+                return StatusCode(500, e.Message);
+            }
+        }
         
 
         [HttpPost]

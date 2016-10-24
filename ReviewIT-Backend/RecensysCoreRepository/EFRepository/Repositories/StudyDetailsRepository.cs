@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using RecensysCoreRepository.DTOs;
+using RecensysCoreRepository.EFRepository.Entities;
 using RecensysCoreRepository.Repositories;
 
 namespace RecensysCoreRepository.EFRepository.Repositories
@@ -44,6 +45,18 @@ namespace RecensysCoreRepository.EFRepository.Repositories
             e.Description = dto.Description;
 
             return _context.SaveChanges() > 0;
+        }
+
+        public int Create(StudyDetailsDTO dto)
+        {
+            var entity = new Study
+            {
+                Name = dto.Name,
+                Description = dto.Description
+            };
+            _context.Studies.Add(entity);
+            _context.SaveChanges();
+            return entity.Id;
         }
 
         public IEnumerable<ResearcherDetailsDTO> GetAllResearchers(int studyId)
