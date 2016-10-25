@@ -9,5 +9,7 @@ namespace RecensysCoreRepository.Repositories
     public interface IFieldRepository: IDisposable
     {
         IEnumerable<FieldDTO> GetAll(int studyId);
+
+        bool Update(int studyId, FieldDTO[] dtos);
     }
 }
