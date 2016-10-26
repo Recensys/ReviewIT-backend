@@ -202,5 +202,36 @@ namespace RecensysCoreRepository.Tests.Unittests
                 Assert.Equal(0, context.StageFieldRelations.Count(sf => sf.FieldType == FieldType.Requested));
             }
         }
+
+
+        [Fact]
+        public void Get_AvailableFieldStoredForOtherStudy__None()
+        {
+            var options = Helpers.CreateInMemoryOptions();
+            var context = new RecensysContext(options);
+            var repo = new StageFieldsRepository(context);
+            #region model
+
+            var study = new Study
+            {
+                Id = 1,
+                Fields = new List<Field> { new Field() },
+                
+            };
+            var study2 = new Study
+            {
+                Id = 2
+            };
+            #endregion
+            context.Studies.Add(study);
+            context.SaveChanges();
+
+            using (repo)
+            {
+                var r = repo.Get(2);
+
+                Assert.Equal(0, r.AvailableFields.Count);
+            }
+        }
     }
 }

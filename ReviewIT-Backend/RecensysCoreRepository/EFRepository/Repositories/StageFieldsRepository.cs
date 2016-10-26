@@ -41,7 +41,7 @@ namespace RecensysCoreRepository.EFRepository.Repositories
             
             // available fields must be all fields exclusing the ones gathered above
             dto.AvailableFields = (from f in _context.Fields
-                where dto.VisibleFields.All(vf => vf.Id != f.Id) && dto.RequestedFields.All(rf => rf.Id != f.Id)
+                where f.Study.Stages.Any(st => st.Id == stageId) && dto.VisibleFields.All(vf => vf.Id != f.Id) && dto.RequestedFields.All(rf => rf.Id != f.Id)
                 select new FieldDTO {Id = f.Id, Name = f.Name, DataType = f.DataType}).ToList();
 
             return dto;
