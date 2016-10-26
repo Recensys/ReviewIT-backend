@@ -66,9 +66,6 @@
     <Compile Include="..\RecensysCoreRepository\DTOs\StageFieldsDTO.cs">
       <Link>DTOs\StageFieldsDTO.cs</Link>
     </Compile>
-    <Compile Include="..\RecensysCoreRepository\DTOs\StudyConfigDTO.cs">
-      <Link>DTOs\StudyConfigDTO.cs</Link>
-    </Compile>
     <Compile Include="..\RecensysCoreRepository\DTOs\StudyDetailsDTO.cs">
       <Link>DTOs\StudyDetailsDTO.cs</Link>
     </Compile>
