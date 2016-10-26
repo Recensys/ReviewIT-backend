@@ -33,15 +33,16 @@ namespace RecensysCoreRepository.EFRepository.Repositories
 
             dto.VisibleFields = (from sf in _context.StageFieldRelations
                 where sf.StageId == stageId && sf.FieldType == FieldType.Visible
-                select new FieldDTO() {Id = sf.FieldId, Name = sf.Field.Name, DataType = (DataType)sf.Field.DataType}).ToList();
+                select new FieldDTO() {Id = sf.FieldId, Name = sf.Field.Name, DataType = sf.Field.DataType}).ToList();
 
             dto.RequestedFields = (from sf in _context.StageFieldRelations
                                  where sf.StageId == stageId && sf.FieldType == FieldType.Requested
-                                 select new FieldDTO() { Id = sf.FieldId, Name = sf.Field.Name, DataType = (DataType)sf.Field.DataType }).ToList();
-
-            dto.AvailableFields = (from sf in _context.StageFieldRelations
-                                   where sf.StageId == stageId && sf.FieldType == FieldType.Available
-                                   select new FieldDTO() { Id = sf.FieldId, Name = sf.Field.Name, DataType = (DataType)sf.Field.DataType }).ToList();
+                                 select new FieldDTO() { Id = sf.FieldId, Name = sf.Field.Name, DataType = sf.Field.DataType }).ToList();
+            
+            // available fields must be all fields exclusing the ones gathered above
+            dto.AvailableFields = (from f in _context.Fields
+                where dto.VisibleFields.All(vf => vf.Id != f.Id) && dto.RequestedFields.All(rf => rf.Id != f.Id)
+                select new FieldDTO {Id = f.Id, Name = f.Name, DataType = f.DataType}).ToList();
 
             return dto;
         }
@@ -79,8 +80,7 @@ namespace RecensysCoreRepository.EFRepository.Repositories
 
             _context.StageFieldRelations.RemoveRange(stored);
             _context.SaveChanges();
-
-            if(dto.AvailableFields != null) _context.StageFieldRelations.AddRange(dto.AvailableFields.MapDTO(FieldType.Available, stageId));
+            
             if (dto.VisibleFields != null) _context.StageFieldRelations.AddRange(dto.VisibleFields.MapDTO(FieldType.Visible, stageId));
             if (dto.RequestedFields != null) _context.StageFieldRelations.AddRange(dto.RequestedFields.MapDTO(FieldType.Requested, stageId));
             

@@ -23,19 +23,12 @@ namespace RecensysCoreRepository.Tests.Unittests
             var study = new Study
             {
                 Id = 1,
+                Fields = new List<Field> { new Field() },
                 Stages = new List<Stage>
                 {
                     new Stage
                     {
                         Id = 1,
-                        StageFields = new List<StageFieldRelation>
-                        {
-                            new StageFieldRelation
-                            {
-                                FieldType = FieldType.Available,
-                                Field = new Field()
-                            }
-                        }
                     }
                 }
             };

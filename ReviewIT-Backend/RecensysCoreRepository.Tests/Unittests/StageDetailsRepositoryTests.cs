@@ -64,6 +64,38 @@ namespace RecensysCoreRepository.Tests.Unittests
             }
         }
 
+        //[Fact]
+        //public void Create_oneFieldInStudy__fieldSetAsAvailableInNewStage()
+        //{
+        //    var options = Helpers.CreateInMemoryOptions();
+        //    var context = new RecensysContext(options);
+        //    var repo = new StageDetailsRepository(context);
+        //    #region model
+        //    var study = new Study
+        //    {
+        //        Id = 1,
+        //        Fields = new List<Field>
+        //        {
+        //            new Field
+        //            {
+        //                Id = 1
+        //            }
+        //        }
+        //    };
+        //    #endregion
+        //    context.Studies.Add(study);
+        //    context.SaveChanges();
+
+        //    var dto = new StageDetailsDTO();
+
+        //    using (repo)
+        //    {
+        //        var r = repo.Create(1, dto);
+
+        //        Assert.Equal(FieldType.Available, context.Stages.Single(s => s.Id == r).StageFields.Single(sf => sf.FieldId == 1).FieldType);
+        //    }
+        //}
+
         [Fact]
         public void Read_stage_with_Id_2_stored__dto_returned()
         {

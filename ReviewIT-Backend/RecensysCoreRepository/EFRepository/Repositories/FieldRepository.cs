@@ -51,7 +51,7 @@ namespace RecensysCoreRepository.EFRepository.Repositories
             {
                 if (dto.Id == 0)
                 {
-                    var f = new Field {Name = dto.Name, DataType = dto.DataType, StudyId = studyId};
+                    var f = new Field {Name = dto.Name, DataType = dto.DataType, StudyId = studyId };
                     _context.Fields.Add(f);
                 }
                 if (dto.Id > 0)
