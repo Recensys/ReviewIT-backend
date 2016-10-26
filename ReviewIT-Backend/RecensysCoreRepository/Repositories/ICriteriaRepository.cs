@@ -6,7 +6,7 @@ using RecensysCoreRepository.DTOs;
 
 namespace RecensysCoreRepository.EFRepository.Repositories
 {
-    interface ICriteriaRepository: IDisposable
+    public interface ICriteriaRepository: IDisposable
     {
         CriteriaDTO Read(int studyId);
         bool Update(int studyId, CriteriaDTO dto);
