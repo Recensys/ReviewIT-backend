@@ -33,7 +33,7 @@ namespace RecensysCoreRepository.EFRepository.Repositories
                     _context.Fields.FirstOrDefault(f => f.StudyId == studyId && f.Name == fieldType.ToString());
                 if (fieldEntity == null)
                 {
-                    fieldEntity = new Field()
+                    fieldEntity = new Field
                     {
                         StudyId = studyId,
                         Name = fieldType.ToString()
