@@ -70,6 +70,7 @@ namespace RecensysCoreRepository.EFRepository.Repositories
                 foreach (var to in stored) if (dto.Inclusions.All(c => c.Id != to.Id)) _context.Criterias.Remove(to);
             if (dto.Exclusions != null)
                 foreach (var to in stored) if (dto.Exclusions.All(c => c.Id != to.Id)) _context.Criterias.Remove(to);
+            _context.SaveChanges();
 
             if (dto.Inclusions != null)
                 foreach (var inclusion in dto.Inclusions)
@@ -97,7 +98,8 @@ namespace RecensysCoreRepository.EFRepository.Repositories
                     }
                     if (exclusion.Id == 0)
                     {
-                        _context.Criterias.Add(Map(studyId, CriteriaType.Exclusion, exclusion));
+                        var c = Map(studyId, CriteriaType.Exclusion, exclusion);
+                        _context.Criterias.Add(c);
                     }
                 }
             return _context.SaveChanges() > 0;
