@@ -8,8 +8,6 @@ namespace RecensysCoreRepository.EFRepository.Entities
         public string Name { get; set; }
         public string Description { get; set; }
 
-        public int FirstStageId { get; set; }
-
         public virtual ICollection<Article> Articles { get; set; } = new List<Article>();
         public virtual ICollection<Criteria> Criteria { get; set; } = new List<Criteria>();
         public virtual ICollection<Field> Fields { get; set; } = new List<Field>();
