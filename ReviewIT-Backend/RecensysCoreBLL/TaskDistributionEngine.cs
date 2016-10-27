@@ -30,35 +30,40 @@ namespace RecensysCoreBLL
             using (_distRepo)
             using (_tRepo)
             {
-                var work = _rdRepo.GetAll(stageId).ToList();
+                var articles = _rdRepo.GetAll(stageId).ToList();
                 var distDto = _distRepo.Read(stageId);
-                var distribution = distDto.Distribution;
+                var dist = distDto.Dist;
 
-                var taskWeight = 100.0/work.Count;
+                var taskWeight = 100.0 / articles.Count;
+                var articleNr = 1;
 
                 // TODO implment randomization in task distribution
 
-                foreach (var a in work)
+                foreach (var a in articles)
                 {
-                    foreach (var k in distribution.Keys)
+                    var p = (articleNr * taskWeight) - taskWeight;
+                    foreach (var d in dist)
                     {
-                        if (distribution[k] > 0)
+                        if (InRange(p, d.Range[0], d.Range[1]))
                         {
                             _tRepo.Create(stageId, new TaskDTO
                             {
                                 ArticleId = a.ArticleId,
-                                DataIds = a.DataIds,
-                                OwnerId = k.Id
+                                OwnerId = d.Id,
+                                DataIds = a.DataIds
                             });
                             createdTasks++;
-                            distribution[k] -= taskWeight;
-                            break;
                         }
                     }
+                    articleNr++;
                 }
             }
-
             return createdTasks;
+        }
+
+        private bool InRange(double numberToCheck, double bottom, double top)
+        {
+            return numberToCheck >= bottom && numberToCheck < top;
         }
 
         public async Task<int> GenerateAsync(int stageId)
