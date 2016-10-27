@@ -8,7 +8,6 @@ namespace RecensysCoreRepository.Repositories
 {
     public interface IDistributionRepository: IDisposable
     {
-        void Create(DistributionDTO dto);
         DistributionDTO Read(int stageId);
         bool Update(DistributionDTO dto);
     }

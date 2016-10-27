@@ -10,6 +10,6 @@ namespace RecensysCoreRepository.DTOs
         public int StageId { get; set; }
         public bool? IsRandomized { get; set; }
         public Dictionary<UserDetailsDTO, double> Distribution { get; set; }
-
+        public List<UserWorkDTO> Dist { get; set; }
     }
 }

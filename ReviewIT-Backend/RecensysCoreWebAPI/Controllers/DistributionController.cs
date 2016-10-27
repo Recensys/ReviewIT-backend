@@ -38,34 +38,17 @@ namespace RecensysCoreWebAPI.Controllers
             }
         }
 
-        // POST api/values
-        [HttpPost]
-        public IActionResult Post([FromBody]DistributionDTO dto)
-        {
-            try
-            {
-                using (_repo)
-                {
-                    _repo.Create(dto);
-                    return Ok();
-                }
-            }
-            catch (Exception e)
-            {
-                return StatusCode(500, e.Message);
-            }
-        }
-
         // PUT api/values/5
         [HttpPut]
-        public IActionResult Put([FromBody]DistributionDTO dto)
+        public IActionResult Put(int stageId, [FromBody]DistributionDTO dto)
         {
+            if(!ModelState.IsValid) return BadRequest();
+
             try
             {
                 using (_repo)
                 {
-                    _repo.Update(dto);
-                    return Ok();
+                    return Ok(_repo.Update(dto));
                 }
             }
             catch (Exception e)

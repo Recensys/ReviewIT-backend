@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Newtonsoft.Json;
 using RecensysCoreRepository.DTOs;
@@ -17,33 +18,41 @@ namespace RecensysCoreRepository.EFRepository.Repositories
             if (context == null) throw new ArgumentNullException($"{nameof(context)} is null");
             _context = context;
         }
-
-        public void Create(DistributionDTO dto)
-        {
-            var strategy = new Strategy()
-            {
-                StageId = dto.StageId,
-                StrategyType = StrategyType.Distribution,
-                Value = JsonConvert.SerializeObject(dto)
-            };
-
-            _context.Strategies.Add(strategy);
-        }
+        
 
         public DistributionDTO Read(int stageId)
         {
-            var q = from s in _context.Strategies
+            var q = (from s in _context.Strategies
                 where s.StageId == stageId && s.StrategyType == StrategyType.Distribution
-                select JsonConvert.DeserializeObject<DistributionDTO>(s.Value);
-            return q.First();
+                select JsonConvert.DeserializeObject<DistributionDTO>(s.Value)).FirstOrDefault();
+            if (q == null)
+            {
+                q = new DistributionDTO
+                {
+                    StageId = stageId,
+                    Dist = new List<UserWorkDTO>()
+                };
+            }
+            return q;
         }
 
         public bool Update(DistributionDTO dto)
         {
             var strategy = (from s in _context.Strategies
                 where s.StageId == dto.StageId && s.StrategyType == StrategyType.Distribution
-                select s).First();
-            strategy.Value = JsonConvert.SerializeObject(dto.Distribution);
+                select s).FirstOrDefault();
+
+            if (strategy == null)
+            {
+                strategy = new Strategy()
+                {
+                    StageId = dto.StageId,
+                    StrategyType = StrategyType.Distribution,
+                };
+                _context.Strategies.Add(strategy);
+            }
+
+            strategy.Value = JsonConvert.SerializeObject(dto);
             return _context.SaveChanges() > 0;
         }
 
