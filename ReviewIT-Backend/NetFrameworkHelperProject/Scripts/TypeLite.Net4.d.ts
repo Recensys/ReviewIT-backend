@@ -19,14 +19,19 @@ declare module RecensysCoreRepository.DTOs {
 		ResearchManager = 1
 	}
 	export class CriteriaDTO {
-		Field: FieldDTO;
-		Id: number;
-		Value: string;
+		Exclusions: FieldCriteriaDTO[];
+		Inclusions: FieldCriteriaDTO[];
 	}
 	export class DistributionDTO {
 		Distribution: System.Collections.Generic.KeyValuePair<ResearcherDetailsDTO, number>[];
 		IsRandomized: boolean;
 		StageId: number;
+	}
+	export class FieldCriteriaDTO {
+		Field: FieldDTO;
+		Id: number;
+		Operator: string;
+		Value: string;
 	}
 	export class FieldDTO {
 		DataType: DataType;
@@ -37,13 +42,6 @@ declare module RecensysCoreRepository.DTOs {
 		FirstName: string;
 		Id: number;
 	}
-	export class StageConfigDTO {
-		Description: string;
-		Id: number;
-		Name: string;
-		RequestedFields: FieldDTO[];
-		VisibleFields: FieldDTO[];
-	}
 	export class StageDetailsDTO {
 		Description: string;
 		Id: number;
@@ -53,15 +51,6 @@ declare module RecensysCoreRepository.DTOs {
 		AvailableFields: FieldDTO[];
 		RequestedFields: FieldDTO[];
 		VisibleFields: FieldDTO[];
-	}
-	export class StudyConfigDTO {
-		AvailableFields: FieldDTO[];
-		Criteria: CriteriaDTO[];
-		Description: string;
-		Id: number;
-		Name: string;
-		Researchers: ResearcherDetailsDTO[];
-		Stages: StageConfigDTO[];
 	}
 	export class StudyDetailsDTO {
 		Description: string;

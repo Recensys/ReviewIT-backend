@@ -45,6 +45,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\RecensysCoreRepository\DTOs\CriteriaDTO.cs">
+      <Link>DTOs\CriteriaDTO.cs</Link>
+    </Compile>
     <Compile Include="..\RecensysCoreRepository\DTOs\DistributionDTO.cs">
       <Link>DTOs\DistributionDTO.cs</Link>
     </Compile>
