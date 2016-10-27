@@ -57,9 +57,6 @@
     <Compile Include="..\RecensysCoreRepository\DTOs\FieldDTO.cs">
       <Link>DTOs\FieldDTO.cs</Link>
     </Compile>
-    <Compile Include="..\RecensysCoreRepository\DTOs\ResearcherDetailsDTO.cs">
-      <Link>DTOs\ResearcherDetailsDTO.cs</Link>
-    </Compile>
     <Compile Include="..\RecensysCoreRepository\DTOs\StageConfigDTO.cs">
       <Link>DTOs\StageConfigDTO.cs</Link>
     </Compile>
@@ -72,10 +69,15 @@
     <Compile Include="..\RecensysCoreRepository\DTOs\StudyDetailsDTO.cs">
       <Link>DTOs\StudyDetailsDTO.cs</Link>
     </Compile>
+    <Compile Include="..\RecensysCoreRepository\DTOs\StudyMemberDTO.cs">
+      <Link>DTOs\StudyMemberDTO.cs</Link>
+    </Compile>
     <Compile Include="..\RecensysCoreRepository\DTOs\StudySourceItemDTO.cs">
       <Link>DTOs\StudySourceItemDTO.cs</Link>
     </Compile>
-    <Compile Include="DTOs\StudyResearcherDTO.cs" />
+    <Compile Include="..\RecensysCoreRepository\DTOs\UserDetailsDTO.cs">
+      <Link>DTOs\UserDetailsDTO.cs</Link>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

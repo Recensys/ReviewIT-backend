@@ -13,9 +13,9 @@
 <# var ts = TypeScript.Definitions()
 		.For<RecensysCoreRepository.DTOs.CriteriaDTO>()
 		.For<RecensysCoreRepository.DTOs.StudyDetailsDTO>()
-		.For<RecensysCoreRepository.DTOs.StudyResearcherDTO>()
 		.For<RecensysCoreRepository.DTOs.StageFieldsDTO>()
 		.For<RecensysCoreRepository.DTOs.StageDetailsDTO>()
+		.For<RecensysCoreRepository.DTOs.StudyMemberDTO>()
 		.For<RecensysCoreRepository.DTOs.DistributionDTO>();
 #>
 

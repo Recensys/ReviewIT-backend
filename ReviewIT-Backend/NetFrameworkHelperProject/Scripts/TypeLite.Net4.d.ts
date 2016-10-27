@@ -23,7 +23,7 @@ declare module RecensysCoreRepository.DTOs {
 		Inclusions: FieldCriteriaDTO[];
 	}
 	export class DistributionDTO {
-		Distribution: System.Collections.Generic.KeyValuePair<ResearcherDetailsDTO, number>[];
+		Distribution: System.Collections.Generic.KeyValuePair<UserDetailsDTO, number>[];
 		IsRandomized: boolean;
 		StageId: number;
 	}
@@ -37,10 +37,6 @@ declare module RecensysCoreRepository.DTOs {
 		DataType: DataType;
 		Id: number;
 		Name: string;
-	}
-	export class ResearcherDetailsDTO {
-		FirstName: string;
-		Id: number;
 	}
 	export class StageDetailsDTO {
 		Description: string;
@@ -57,10 +53,17 @@ declare module RecensysCoreRepository.DTOs {
 		Id: number;
 		Name: string;
 	}
-	export class StudyResearcherDTO {
+	export class StudyMemberDTO {
 		FirstName: string;
-		ResearcherId: number;
+		Id: number;
+		LastName: string;
 		Role: ResearcherRole;
+	}
+	export class UserDetailsDTO {
+		Email: string;
+		FirstName: string;
+		Id: number;
+		LastName: string;
 	}
 }
 declare module System.Collections.Generic {
