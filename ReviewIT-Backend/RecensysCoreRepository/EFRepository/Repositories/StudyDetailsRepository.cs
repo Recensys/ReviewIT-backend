@@ -59,11 +59,11 @@ namespace RecensysCoreRepository.EFRepository.Repositories
             return entity.Id;
         }
 
-        public IEnumerable<ResearcherDetailsDTO> GetAllResearchers(int studyId)
+        public IEnumerable<UserDetailsDTO> GetAllResearchers(int studyId)
         {
             return from us in _context.UserStudyRelations
                 where us.StudyId == studyId
-                select new ResearcherDetailsDTO {Id = us.UserId, FirstName = us.User.FirstName};
+                select new UserDetailsDTO {Id = us.UserId, FirstName = us.User.FirstName};
         }
 
 

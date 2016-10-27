@@ -8,12 +8,12 @@ using RecensysCoreRepository.Repositories;
 
 namespace RecensysCoreRepository.EFRepository.Repositories
 {
-    public class StudyResearcherRepository : IStudyResearcherRepository
+    public class StudyMemberRepository : IStudyMemberRepository
     {
 
         private RecensysContext _context;
 
-        public StudyResearcherRepository(RecensysContext context)
+        public StudyMemberRepository(RecensysContext context)
         {
             _context = context;
         }
@@ -23,31 +23,21 @@ namespace RecensysCoreRepository.EFRepository.Repositories
             _context.Dispose();
         }
 
-        public ICollection<StudyResearcherDTO> Get(int studyId)
+        public ICollection<StudyMemberDTO> Get(int studyId)
         {
             return (from s in _context.UserStudyRelations
                 where s.StudyId == studyId
-                select new StudyResearcherDTO
+                select new StudyMemberDTO
                 {
-                    ResearcherId = s.UserId,
+                    Id = s.UserId,
                     FirstName = s.User.FirstName,
+                    LastName = s.User.LastName,
                     Role = s.IsAdmin ? ResearcherRole.ResearchManager : ResearcherRole.Researcher
                 }).ToList();
         }
+        
 
-        public bool Create(int studyId, StudyResearcherDTO dto)
-        {
-            _context.UserStudyRelations.Add(new UserStudyRelation()
-            {
-
-                IsAdmin = dto.Role == ResearcherRole.ResearchManager,
-                StudyId = studyId,
-                UserId = dto.ResearcherId
-            });
-            return _context.SaveChanges() > 0;
-        }
-
-        public bool Update(int studyId, StudyResearcherDTO[] dtos)
+        public bool Update(int studyId, StudyMemberDTO[] dtos)
         {
             var stored = (from s in _context.UserStudyRelations
                 where s.StudyId == studyId
@@ -55,18 +45,18 @@ namespace RecensysCoreRepository.EFRepository.Repositories
 
             // remove entries in store that are not passed in dto
             foreach (var re in stored)
-                if (dtos.All(d => d.ResearcherId == re.UserId)) _context.UserStudyRelations.Remove(re);
+                if (dtos.All(d => d.Id == re.UserId)) _context.UserStudyRelations.Remove(re);
 
             // map data
             foreach (var dto in dtos)
             {
-                var r = _context.UserStudyRelations.SingleOrDefault(us => us.UserId == dto.ResearcherId);
+                var r = _context.UserStudyRelations.SingleOrDefault(us => us.UserId == dto.Id);
                 if (r == null)
                 {
                     r = new UserStudyRelation()
                     {
                         IsAdmin = dto.Role == ResearcherRole.ResearchManager,
-                        UserId = dto.ResearcherId,
+                        UserId = dto.Id,
                         StudyId = studyId
                     };
                     _context.UserStudyRelations.Add(r);
@@ -79,12 +69,6 @@ namespace RecensysCoreRepository.EFRepository.Repositories
             }
             return _context.SaveChanges() > 0;
         }
-
-        public bool Delete(int studyId, StudyResearcherDTO dto)
-        {
-            var entity = _context.UserStudyRelations.Single(us => us.StudyId == studyId && us.UserId == dto.ResearcherId);
-            _context.UserStudyRelations.Remove(entity);
-            return _context.SaveChanges() > 0;
-        }
+        
     }
 }

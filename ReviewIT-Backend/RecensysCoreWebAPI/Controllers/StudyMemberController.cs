@@ -10,16 +10,15 @@ using RecensysCoreRepository.Repositories;
 
 namespace RecensysCoreWebAPI.Controllers
 {
-    [Route("api/study/{studyId}/researchers")]
-    public class StudyResearchersController : Controller
+    [Route("api/study/{studyId}/[controller]")]
+    public class StudyMemberController : Controller
     {
 
+        private readonly IStudyMemberRepository _smRepo;
 
-        private readonly IStudyResearcherRepository _studyResearcherRepository;
-
-        public StudyResearchersController(IStudyResearcherRepository studyResearcherRepository)
+        public StudyMemberController(IStudyMemberRepository smRepo)
         {
-            _studyResearcherRepository = studyResearcherRepository;
+            _smRepo = smRepo;
         }
 
         [HttpGet]
@@ -27,9 +26,9 @@ namespace RecensysCoreWebAPI.Controllers
         {
             try
             {
-                using (_studyResearcherRepository)
+                using (_smRepo)
                 {
-                    return Json(_studyResearcherRepository.Get(studyId));
+                    return Json(_smRepo.Get(studyId));
                 }
             }
             catch (Exception e)
@@ -38,18 +37,19 @@ namespace RecensysCoreWebAPI.Controllers
             }
         }
 
-
-
-
-        [HttpPost]
-        public IActionResult Post(int studyId, [FromBody]StudyResearcherDTO dto)
+        [HttpGet("search")]
+        public IActionResult Search(int studyId, string term)
         {
+            if (term == null) term = "";
+
             try
             {
-                using (_studyResearcherRepository)
+                using (_smRepo)
                 {
-                    _studyResearcherRepository.Create(studyId, dto);
-                    return Ok();
+                    var results = from r in _smRepo.Get(studyId)
+                                  where r.FirstName.ToLower().Contains(term.ToLower())
+                                  select r;
+                    return Json(results.ToList());
                 }
             }
             catch (Exception e)
@@ -59,14 +59,16 @@ namespace RecensysCoreWebAPI.Controllers
         }
 
         [HttpPut]
-        public IActionResult Put(int studyId, [FromBody] StudyResearcherDTO[] dtos)
+        public IActionResult Put(int studyId, [FromBody] StudyMemberDTO[] dtos)
         {
+
+            if(!ModelState.IsValid) return BadRequest();
+
             try
             {
-                using (_studyResearcherRepository)
+                using (_smRepo)
                 {
-                    _studyResearcherRepository.Update(studyId, dtos);
-                    return Ok();
+                    return Ok(_smRepo.Update(studyId, dtos));
                 }
             }
             catch (Exception e)
@@ -74,5 +76,6 @@ namespace RecensysCoreWebAPI.Controllers
                 return StatusCode(500, e.Message);
             }
         }
+        
     }
 }

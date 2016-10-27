@@ -9,10 +9,11 @@ namespace RecensysCoreRepository.DTOs
     {
         Researcher, ResearchManager
     }
-    public class StudyResearcherDTO
+    public class StudyMemberDTO
     {
-        public int ResearcherId { get; set; }
+        public int Id { get; set; }
         public string FirstName { get; set; }
+        public string LastName { get; set; }
         public ResearcherRole Role { get; set; }
     }
 }

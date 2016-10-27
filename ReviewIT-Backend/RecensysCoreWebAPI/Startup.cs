@@ -48,8 +48,8 @@ namespace RecensysCoreWebAPI
             services.AddApplicationInsightsTelemetry(Configuration);
 
             services.AddScoped<IDistributionRepository, DistributionRepository>();
-            services.AddScoped<IStudyResearcherRepository, StudyResearcherRepository>();
-            services.AddScoped<IResearcherDetailsRepository, ResearcherDetailsRepository>();
+            services.AddScoped<IStudyMemberRepository, StudyMemberRepository>();
+            services.AddScoped<IUserDetailsRepository, UserDetailsRepository>();
             services.AddScoped<IStudyDetailsRepository, StudyDetailsRepository>();
             services.AddScoped<IDistributionRepository, DistributionRepository>();
             services.AddScoped<IStageFieldsRepository, StageFieldsRepository>();

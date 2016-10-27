@@ -11,25 +11,25 @@ using RecensysCoreRepository.Repositories;
 namespace RecensysCoreWebAPI.Controllers
 {
 
-    [Route("api")]
+    [Route("api/[controller]")]
     public class UserController : Controller
     {
 
-        private IResearcherDetailsRepository _researcherDetailsRepository;
+        private IUserDetailsRepository _rdRepo;
 
-        public UserController(IResearcherDetailsRepository researcherDetailsRepository)
+        public UserController(IUserDetailsRepository rdRepo)
         {
-            _researcherDetailsRepository = researcherDetailsRepository;
+            _rdRepo = rdRepo;
         }
 
-        [HttpGet("users")]
+        [HttpGet]
         public IActionResult Get()
         {
             try
             {
-                using (_researcherDetailsRepository)
+                using (_rdRepo)
                 {
-                    return Json(_researcherDetailsRepository.Get());
+                    return Json(_rdRepo.Get());
                 }
             }
             catch (Exception e)
@@ -38,15 +38,17 @@ namespace RecensysCoreWebAPI.Controllers
             }
         }
 
-        [HttpGet("users/{search}")]
-        public IActionResult Get(string search)
+        [HttpGet("search")]
+        public IActionResult Get(string term)
         {
+            if (term == null) term = "";
+
             try
             {
-                using (_researcherDetailsRepository)
+                using (_rdRepo)
                 {
-                    var results = from r in _researcherDetailsRepository.Get()
-                        where r.FirstName.ToLower().Contains(search.ToLower())
+                    var results = from r in _rdRepo.Get()
+                        where r.FirstName.ToLower().Contains(term.ToLower())
                         select r;
                     return Json(results.ToList());
                 }
@@ -56,6 +58,8 @@ namespace RecensysCoreWebAPI.Controllers
                 return StatusCode(500, e.Message);
             }
         }
+
+        
 
     }
 }

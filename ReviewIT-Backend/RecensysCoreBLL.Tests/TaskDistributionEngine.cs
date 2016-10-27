@@ -19,9 +19,9 @@ namespace RecensysCoreBLL.Tests
             var distMock = new Mock<IDistributionRepository>();
             distMock.Setup(d => d.Read(1)).Returns(new DistributionDTO()
             {
-                Distribution = new Dictionary<ResearcherDetailsDTO, double>()
+                Distribution = new Dictionary<UserDetailsDTO, double>()
                 {
-                    [new ResearcherDetailsDTO() {Id = 1, FirstName = "Mathias"}] = 100
+                    [new UserDetailsDTO() {Id = 1, FirstName = "Mathias"}] = 100
                 }
             });
             var dataMock = new Mock<IRequestedDataRepository>();
@@ -44,9 +44,9 @@ namespace RecensysCoreBLL.Tests
             var distMock = new Mock<IDistributionRepository>();
             distMock.Setup(d => d.Read(1)).Returns(new DistributionDTO()
             {
-                Distribution = new Dictionary<ResearcherDetailsDTO, double>()
+                Distribution = new Dictionary<UserDetailsDTO, double>()
                 {
-                    [new ResearcherDetailsDTO() { Id = 1, FirstName = "Mathias" }] = 100
+                    [new UserDetailsDTO() { Id = 1, FirstName = "Mathias" }] = 100
                 }
             });
             var dataMock = new Mock<IRequestedDataRepository>();
@@ -71,9 +71,9 @@ namespace RecensysCoreBLL.Tests
             var distMock = new Mock<IDistributionRepository>();
             distMock.Setup(d => d.Read(1)).Returns(new DistributionDTO()
             {
-                Distribution = new Dictionary<ResearcherDetailsDTO, double>()
+                Distribution = new Dictionary<UserDetailsDTO, double>()
                 {
-                    [new ResearcherDetailsDTO() { Id = 1, FirstName = "Mathias" }] = 100
+                    [new UserDetailsDTO() { Id = 1, FirstName = "Mathias" }] = 100
                 }
             });
             var dataMock = new Mock<IRequestedDataRepository>();
@@ -97,10 +97,10 @@ namespace RecensysCoreBLL.Tests
             var distMock = new Mock<IDistributionRepository>();
             distMock.Setup(d => d.Read(1)).Returns(new DistributionDTO()
             {
-                Distribution = new Dictionary<ResearcherDetailsDTO, double>()
+                Distribution = new Dictionary<UserDetailsDTO, double>()
                 {
-                    [new ResearcherDetailsDTO() { Id = 1, FirstName = "Mathias" }] = 50,
-                    [new ResearcherDetailsDTO() { Id = 2, FirstName = "Paolo" }] = 50
+                    [new UserDetailsDTO() { Id = 1, FirstName = "Mathias" }] = 50,
+                    [new UserDetailsDTO() { Id = 2, FirstName = "Paolo" }] = 50
                 }
             });
             var dataMock = new Mock<IRequestedDataRepository>();
@@ -125,11 +125,11 @@ namespace RecensysCoreBLL.Tests
             var distMock = new Mock<IDistributionRepository>();
             distMock.Setup(d => d.Read(1)).Returns(new DistributionDTO()
             {
-                Distribution = new Dictionary<ResearcherDetailsDTO, double>()
+                Distribution = new Dictionary<UserDetailsDTO, double>()
                 {
-                    [new ResearcherDetailsDTO() { Id = 1, FirstName = "Mathias" }] = 33,
-                    [new ResearcherDetailsDTO() { Id = 3, FirstName = "Jacob" }] = 33,
-                    [new ResearcherDetailsDTO() { Id = 2, FirstName = "Paolo" }] = 33
+                    [new UserDetailsDTO() { Id = 1, FirstName = "Mathias" }] = 33,
+                    [new UserDetailsDTO() { Id = 3, FirstName = "Jacob" }] = 33,
+                    [new UserDetailsDTO() { Id = 2, FirstName = "Paolo" }] = 33
                 }
             });
             var dataMock = new Mock<IRequestedDataRepository>();

@@ -18,15 +18,15 @@ namespace RecensysCoreWebAPI.Controllers
     public class StudyController : Controller
     {
 
-        private readonly IStudyResearcherRepository _studyResearcherRepository;
+        private readonly IStudyMemberRepository _studyMemberRepository;
         private readonly IStudyDetailsRepository _deRepo;
         private readonly IStudySourceRepository _soRepo;
         private readonly IStageDetailsRepository _sdRepo;
 
-        public StudyController(IStudyResearcherRepository resRepo, IStudyDetailsRepository deRepo,
+        public StudyController(IStudyMemberRepository resRepo, IStudyDetailsRepository deRepo,
             IStudySourceRepository soRepo, IStageDetailsRepository sdRepo)
         {
-            _studyResearcherRepository = resRepo;
+            _studyMemberRepository = resRepo;
             _deRepo = deRepo;
             _soRepo = soRepo;
             _sdRepo = sdRepo;
@@ -154,7 +154,7 @@ namespace RecensysCoreWebAPI.Controllers
             {
                 try
                 {
-                    using (_studyResearcherRepository)
+                    using (_studyMemberRepository)
                     {
                         return Ok();
                     }
