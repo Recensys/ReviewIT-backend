@@ -39,7 +39,7 @@ namespace RecensysCoreWebAPI.Controllers
         }
 
         // POST api/values
-        [HttpPost]
+        [HttpPut]
         public IActionResult Update(int studyId, [FromBody]CriteriaDTO dto)
         {
 
