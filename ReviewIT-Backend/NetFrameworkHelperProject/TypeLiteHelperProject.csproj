@@ -78,6 +78,9 @@
     <Compile Include="..\RecensysCoreRepository\DTOs\UserDetailsDTO.cs">
       <Link>DTOs\UserDetailsDTO.cs</Link>
     </Compile>
+    <Compile Include="..\RecensysCoreRepository\DTOs\UserWorkDTO.cs">
+      <Link>DTOs\UserWorkDTO.cs</Link>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

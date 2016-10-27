@@ -23,6 +23,7 @@ declare module RecensysCoreRepository.DTOs {
 		Inclusions: FieldCriteriaDTO[];
 	}
 	export class DistributionDTO {
+		Dist: UserWorkDTO[];
 		Distribution: System.Collections.Generic.KeyValuePair<UserDetailsDTO, number>[];
 		IsRandomized: boolean;
 		StageId: number;
@@ -64,6 +65,11 @@ declare module RecensysCoreRepository.DTOs {
 		FirstName: string;
 		Id: number;
 		LastName: string;
+	}
+	export class UserWorkDTO {
+		FirstName: string;
+		Id: number;
+		Range: number[];
 	}
 }
 declare module System.Collections.Generic {
