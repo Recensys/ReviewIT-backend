@@ -13,48 +13,38 @@ namespace RecensysCoreRepository.Tests.Unittests
     {
         
         [Fact]
-        public void GetAll_stage_with_requested_data__returns_dataId()
+        public void GetAll_stageWith1RequestedField__1RequestedField()
         {
             var options = Helpers.CreateInMemoryOptions();
             var context = new RecensysContext(options);
             var repo = new RequestedDataRepository(context);
             #region model
-
             var study = new Study
             {
-                Id = 1,
                 Stages = new List<Stage>
                 {
                     new Stage
                     {
                         Id = 1,
-                        Strategies = new List<Strategy>
+                        StageFields = new List<StageFieldRelation>
                         {
-                            new Strategy
+                            new StageFieldRelation
                             {
-                                StrategyType = StrategyType.Distribution,
-                                Value = ""
-                            }
-                        },
-                        Inclusions = new List<Inclusion>
-                        {
-                            new Inclusion
-                            {
-                                Article = new Article
+                                FieldType = FieldType.Requested,
+                                Field = new Field
                                 {
                                     Data = new List<Data>
                                     {
                                         new Data
                                         {
-                                            Field = new Field
+                                            Id = 1,
+                                            Article = new Article
                                             {
-                                                Id = 1,
-                                                Name = "isGSD?",
-                                                StageFields = new List<StageFieldRelation>
+                                                StageArticleRelations = new List<StageArticleRelation>
                                                 {
-                                                    new StageFieldRelation
+                                                    new StageArticleRelation
                                                     {
-                                                        FieldType = FieldType.Requested
+                                                        StageId = 1,
                                                     }
                                                 }
                                             }
@@ -73,13 +63,12 @@ namespace RecensysCoreRepository.Tests.Unittests
             using (repo)
             {
                 var r = repo.GetAll(1);
-
-                Assert.Equal(1, r.Single().DataIds.Single());
+                Assert.Equal(1, r.First().FieldIds.Count);
             }
         }
 
         [Fact]
-        public void GetAll_stage_only_with_visible_data__no_data()
+        public void GetAll_stageWith1VisibleField__0RequestedField()
         {
             var options = Helpers.CreateInMemoryOptions();
             var context = new RecensysContext(options);
@@ -87,39 +76,30 @@ namespace RecensysCoreRepository.Tests.Unittests
             #region model
             var study = new Study
             {
-                Id = 1,
                 Stages = new List<Stage>
                 {
                     new Stage
                     {
                         Id = 1,
-                        Strategies = new List<Strategy>
+                        StageFields = new List<StageFieldRelation>
                         {
-                            new Strategy
+                            new StageFieldRelation
                             {
-                                StrategyType = StrategyType.Distribution,
-                                Value = ""
-                            }
-                        },
-                        Inclusions = new List<Inclusion>
-                        {
-                            new Inclusion
-                            {
-                                Article = new Article
+                                FieldType = FieldType.Visible,
+                                Field = new Field
                                 {
                                     Data = new List<Data>
                                     {
                                         new Data
                                         {
-                                            Field = new Field
+                                            Id = 1,
+                                            Article = new Article
                                             {
-                                                Id = 1,
-                                                Name = "isGSD?",
-                                                StageFields = new List<StageFieldRelation>
+                                                StageArticleRelations = new List<StageArticleRelation>
                                                 {
-                                                    new StageFieldRelation
+                                                    new StageArticleRelation
                                                     {
-                                                        FieldType = FieldType.Visible
+                                                        StageId = 1,
                                                     }
                                                 }
                                             }
@@ -138,10 +118,10 @@ namespace RecensysCoreRepository.Tests.Unittests
             using (repo)
             {
                 var r = repo.GetAll(1);
-
-                Assert.Equal(0, r.First().DataIds.Count);
+                Assert.Equal(0, r.First().FieldIds.Count);
             }
         }
+        
 
 
     }
