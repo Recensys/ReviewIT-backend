@@ -7,6 +7,7 @@ namespace RecensysCoreRepository.DTOs
     {
         public ICollection<FieldDTO> Fields { get; set; }
         public ICollection<ReviewTaskDTO> Tasks { get; set; }
+
     }
 
 }

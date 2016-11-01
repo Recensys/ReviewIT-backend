@@ -25,44 +25,37 @@ namespace RecensysCoreRepository.EFRepository.Repositories
 
         public ReviewTaskListDTO GetListDto(int stageId, int userId)
         {
-            var taskList = new ReviewTaskListDTO();
+
+            var taskList = new ReviewTaskListDTO {};
 
             var fields = (from sf in _context.StageFieldRelations
                 where sf.StageId == stageId
-                select new FieldDTO
-                {
-                    Id = sf.Field.Id,
-                    Name = sf.Field.Name,
-                    DataType = sf.Field.DataType
-                }).ToList();
-            var tasksNoData = (from t in _context.Tasks
+                orderby sf.FieldId
+                select new { Field = new FieldDTO {Id = sf.Field.Id, Name = sf.Field.Name, DataType = sf.Field.DataType}, sf.FieldType }).ToList();
+
+            var taskDtos = (from t in _context.Tasks
                               where t.StageId == stageId && t.UserId == userId
                               select new ReviewTaskDTO
                               {
                                   Id = t.Id,
                                   TaskState = 0,
-                                  Data = new List<DataDTO>()
+                                  Data = (from d in t.Data
+                                         join f in fields on d.FieldId equals f.Field.Id
+                                         orderby f.Field.Id
+                                         select new DataDTO
+                                         {
+                                             Id = d.Id,
+                                             Value = d.Value
+                                         }).ToList()
                               }).ToList();
 
-            foreach (var fieldDto in fields)
+            var result = new ReviewTaskListDTO
             {
-                foreach (var reviewTaskDto in tasksNoData)
-                {
-                    var data = from d in _context.Data
-                        where d.FieldId == fieldDto.Id && d.TaskId == reviewTaskDto.Id
-                        select new DataDTO
-                        {
-                            Id = d.Id,
-                            Value = d.Value
-                        };
-                    reviewTaskDto.Data.Add(data.First());
-                }
-            }
+                Fields = fields.Select(f => f.Field).ToList(),
+                Tasks = taskDtos
+            };
 
-            taskList.Fields = fields;
-            taskList.Tasks = tasksNoData;
-
-            return taskList;
+            return result;
         }
     }
 }
