@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 using RecensysCoreRepository.DTOs;
 using RecensysCoreRepository.EFRepository;
 using RecensysCoreRepository.Repositories;
+using RecensysCoreBLL;
 
 // For more information on enabling Web API for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -17,19 +18,22 @@ namespace RecensysCoreWebAPI.Controllers
     [Route("api/[controller]")]
     public class StudyController : Controller
     {
-
-        private readonly IStudyMemberRepository _studyMemberRepository;
         private readonly IStudyDetailsRepository _deRepo;
         private readonly IStudySourceRepository _soRepo;
         private readonly IStageDetailsRepository _sdRepo;
+        private readonly ITaskDistributionEngine _tdEngine;
+        private readonly IArticleRepository _aRepo;
+        private readonly IStudyStartEngine _ssEngine;
 
         public StudyController(IStudyMemberRepository resRepo, IStudyDetailsRepository deRepo,
-            IStudySourceRepository soRepo, IStageDetailsRepository sdRepo)
+            IStudySourceRepository soRepo, IStageDetailsRepository sdRepo, ITaskDistributionEngine tdEngine, IArticleRepository aRepo, IStudyStartEngine ssEngine)
         {
-            _studyMemberRepository = resRepo;
             _deRepo = deRepo;
             _soRepo = soRepo;
             _sdRepo = sdRepo;
+            _tdEngine = tdEngine;
+            _aRepo = aRepo;
+            _ssEngine = ssEngine;
         }
 
         [HttpGet("{id}/stages")]
@@ -147,23 +151,13 @@ namespace RecensysCoreWebAPI.Controllers
             return Ok(amountOfArticles);
         }
 
-        [HttpPost("{id}/config/start")]
+        [HttpGet("{id}/start")]
         public IActionResult Start(int id)
         {
             try
             {
-                try
-                {
-                    using (_studyMemberRepository)
-                    {
-                        return Ok();
-                    }
-                }
-                catch (Exception)
-                {
-                    
-                    throw;
-                }
+                var tasksCreated = _ssEngine.StartStudy(id);
+                return Json(tasksCreated);
             }
             catch (Exception e)
             {
