@@ -8,12 +8,12 @@ using RecensysCoreRepository.Repositories;
 
 namespace RecensysCoreRepository.EFRepository.Repositories
 {
-    public class TaskRepository: ITaskRepository
+    public class TaskConfigRepository: ITaskConfigRepository
     {
 
         private readonly RecensysContext _context;
 
-        public TaskRepository(RecensysContext context)
+        public TaskConfigRepository(RecensysContext context)
         {
             if (context == null) throw new ArgumentNullException($"{nameof(context)} is null");
             _context = context;
@@ -23,23 +23,23 @@ namespace RecensysCoreRepository.EFRepository.Repositories
         {
             _context.Dispose();
         }
-        public int Create(int stageId, TaskDTO dto)
+        public int Create(int stageId, ReviewTaskConfigDTO configDto)
         {
-            var task = new Entities.Task()
+            var task = new Entities.Task
             {
-                ArticleId = dto.ArticleId,
+                ArticleId = configDto.ArticleId,
                 StageId = stageId,
-                UserId = dto.OwnerId,
-                Data = new List<Data>()
+                UserId = configDto.OwnerId,
+                TaskType = TaskType.Review,
+                Data = (from fid in configDto.RequestedFieldIds
+                       select new Data
+                       {
+                           ArticleId = configDto.ArticleId,
+                           FieldId = fid,
+                       }).ToList()
             };
-            foreach (var id in dto.DataIds)
-            {
-                var entity = _context.Data.Single(data => data.Id == id);
-                task.Data.Add(entity);
-            }
 
             _context.Tasks.Add(task);
-
             _context.SaveChanges();
             return task.Id;
         }

@@ -8,7 +8,7 @@ namespace RecensysCoreRepository.Repositories
 {
     public interface IRequestedDataRepository: IDisposable
     {
-        IEnumerable<ArticleWithRequestedDataDTO> GetAll(int stageId);
+        IEnumerable<ArticleWithRequestedFieldsDTO> GetAll(int stageId);
 
     }
 }

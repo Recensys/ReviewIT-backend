@@ -2,6 +2,12 @@
 
 namespace RecensysCoreRepository.EFRepository.Entities
 {
+
+    public enum TaskType
+    {
+        Unknown, Review, Conflict
+    }
+
     public class Task : IEntity
     {
         public int Id { get; set; }
@@ -15,9 +21,7 @@ namespace RecensysCoreRepository.EFRepository.Entities
         public int UserId { get; set; }
         public virtual User User { get; set; }
 
-        public int TaskTypeId { get; set; }
-        public virtual TaskType TaskType { get; set; }
-        
+        public TaskType TaskType { get; set; }
 
         //public int? ParentId { get; set; }
         //public virtual Article Parent { get; set; }

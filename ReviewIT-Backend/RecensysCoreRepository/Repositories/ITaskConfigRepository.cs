@@ -6,8 +6,8 @@ using RecensysCoreRepository.DTOs;
 
 namespace RecensysCoreRepository.Repositories
 {
-    public interface ITaskRepository: IDisposable
+    public interface ITaskConfigRepository: IDisposable
     {
-        int Create(int stageId, TaskDTO dto);
+        int Create(int stageId, ReviewTaskConfigDTO configDto);
     }
 }

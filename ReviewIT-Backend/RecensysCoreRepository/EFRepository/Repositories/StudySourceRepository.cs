@@ -7,9 +7,8 @@ using RecensysCoreRepository.Repositories;
 
 namespace RecensysCoreRepository.EFRepository.Repositories
 {
-    public class StudySourceRepository: IStudySourceRepository
+    public class StudySourceRepository : IStudySourceRepository
     {
-
         private readonly RecensysContext _context;
 
         public StudySourceRepository(RecensysContext context)
@@ -30,16 +29,14 @@ namespace RecensysCoreRepository.EFRepository.Repositories
             {
                 // if datastore does not already contains a field
                 var fieldEntity =
-                    _context.Fields.FirstOrDefault(f => f.StudyId == studyId && f.Name == fieldType.ToString());
+                    _context.Fields.FirstOrDefault(f => (f.StudyId == studyId) && (f.Name == fieldType.ToString()));
                 if (fieldEntity == null)
-                {
                     fieldEntity = new Field
                     {
                         StudyId = studyId,
                         Name = fieldType.ToString()
                     };
-                }
-                entityDictionary.Add((StudySourceItemDTO.FieldType)fieldType, fieldEntity);
+                entityDictionary.Add((StudySourceItemDTO.FieldType) fieldType, fieldEntity);
             }
 
             // Add articles with data related to fields
@@ -57,8 +54,8 @@ namespace RecensysCoreRepository.EFRepository.Repositories
                         Value = fieldDto.Value,
                         Field = entityDictionary[fieldDto.Key]
                     };
-                    
-                    article.Data.Add(d); 
+
+                    article.Data.Add(d);
                 }
                 _context.Articles.Add(article);
             }

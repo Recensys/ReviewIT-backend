@@ -24,25 +24,19 @@ namespace RecensysCoreRepository.EFRepository.Repositories
             _context.Dispose();
         }
 
-        public IEnumerable<ArticleWithRequestedDataDTO> GetAll(int stageId)
+        public IEnumerable<ArticleWithRequestedFieldsDTO> GetAll(int stageId)
         {
-            var dtos = from i in _context.Inclusion
+            var dtos = from i in _context.StageArticleRelations
                 where i.StageId == stageId
-                select new ArticleWithRequestedDataDTO
+                select new ArticleWithRequestedFieldsDTO
                 {
                     ArticleId = i.ArticleId,
-                    DataIds = (from d in i.Article.Data
-                              join sf in _context.StageFieldRelations on d.FieldId equals sf.FieldId
-                              where sf.FieldType == FieldType.Requested
-                              select d.Id).ToList()
+                    FieldIds = (from sf in _context.StageFieldRelations
+                               where sf.StageId == stageId && sf.FieldType == FieldType.Requested
+                               select sf.FieldId).ToList()
                 };
 
             return dtos;
-
         }
-
-
-
-
     }
 }

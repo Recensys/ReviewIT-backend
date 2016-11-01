@@ -21,7 +21,7 @@ namespace RecensysCoreRepository.EFRepository.Entities
 
         public virtual ICollection<Strategy> Strategies { get; set; } = new List<Strategy>();
 
-        public virtual ICollection<Inclusion> Inclusions { get; set; } = new List<Inclusion>();
+        public virtual ICollection<StageArticleRelation> StageArticleRelations { get; set; } = new List<StageArticleRelation>();
         
     }
 }

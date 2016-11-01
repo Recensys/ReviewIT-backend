@@ -11,6 +11,6 @@ namespace RecensysCoreRepository.EFRepository.Entities
         //public virtual ICollection<TaskEntity> Tasks { get; set; } = new List<TaskEntity>();
         public virtual ICollection<Data> Data { get; set; } = new List<Data>();
 
-        public virtual ICollection<Inclusion> Inclusions { get; set; } = new List<Inclusion>();
+        public virtual ICollection<StageArticleRelation> StageArticleRelations { get; set; } = new List<StageArticleRelation>();
     }
 }

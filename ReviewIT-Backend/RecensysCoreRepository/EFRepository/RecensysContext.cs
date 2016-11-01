@@ -27,11 +27,10 @@ namespace RecensysCoreRepository.EFRepository
         public DbSet<Strategy> Strategies { get; set; }
         public DbSet<Study> Studies { get; set; }
         public DbSet<Task> Tasks { get; set; }
-        public DbSet<TaskType> TaskTypes { get; set; }
         public DbSet<User> Users {get; set; }
         public DbSet<UserStudyRelation> UserStudyRelations { get; set; }
         public DbSet<StageFieldRelation> StageFieldRelations { get; set; }
-        public DbSet<Inclusion> Inclusion { get; set; }
+        public DbSet<StageArticleRelation> StageArticleRelations { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -63,7 +62,7 @@ namespace RecensysCoreRepository.EFRepository
                 .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<Strategy>()
-                .HasKey(s => new {s.Id, s.StrategyType});
+                .HasKey(s => new {s.Id, s.StrategyType, s.StageId});
 
             modelBuilder.Entity<StageFieldRelation>()
                 .HasKey(a => new {a.FieldId, StageFieldType = a.FieldType, a.StageId});
@@ -103,7 +102,7 @@ namespace RecensysCoreRepository.EFRepository
                 .WithMany(f => f.Data)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            modelBuilder.Entity<Inclusion>()
+            modelBuilder.Entity<StageArticleRelation>()
                 .HasKey(i => new {i.ArticleId, i.StageId});
         }
 

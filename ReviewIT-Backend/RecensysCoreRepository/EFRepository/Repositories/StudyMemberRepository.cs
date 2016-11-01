@@ -50,7 +50,7 @@ namespace RecensysCoreRepository.EFRepository.Repositories
             // map data
             foreach (var dto in dtos)
             {
-                var r = _context.UserStudyRelations.SingleOrDefault(us => us.UserId == dto.Id);
+                var r = _context.UserStudyRelations.SingleOrDefault(us => us.UserId == dto.Id && us.StudyId == studyId);
                 if (r == null)
                 {
                     r = new UserStudyRelation()
