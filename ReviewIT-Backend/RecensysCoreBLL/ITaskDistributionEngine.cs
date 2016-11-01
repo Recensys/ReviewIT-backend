@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace RecensysCoreBLL
 {
-    interface ITaskDistributionEngine
+    public interface ITaskDistributionEngine
     {
         int Generate(int stageId);
         Task<int> GenerateAsync(int stageId);

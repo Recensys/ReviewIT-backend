@@ -10,11 +10,11 @@ namespace RecensysCoreBLL
     {
         private readonly IDistributionRepository _distRepo;
         private readonly IRequestedDataRepository _rdRepo;
-        private readonly ITaskRepository _tRepo;
+        private readonly ITaskConfigRepository _tRepo;
 
 
         public TaskDistributionEngine(IDistributionRepository distRepo, IRequestedDataRepository rdRepo,
-            ITaskRepository tRepo)
+            ITaskConfigRepository tRepo)
         {
             _distRepo = distRepo;
             _rdRepo = rdRepo;
@@ -46,11 +46,11 @@ namespace RecensysCoreBLL
                     {
                         if (InRange(p, d.Range[0], d.Range[1]))
                         {
-                            _tRepo.Create(stageId, new TaskDTO
+                            _tRepo.Create(stageId, new ReviewTaskConfigDTO
                             {
                                 ArticleId = a.ArticleId,
                                 OwnerId = d.Id,
-                                DataIds = a.DataIds
+                                RequestedFieldIds = a.FieldIds
                             });
                             createdTasks++;
                         }
