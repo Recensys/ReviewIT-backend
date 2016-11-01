@@ -25,12 +25,12 @@ namespace RecensysCoreBLL.Tests
                 }
             });
             var dataMock = new Mock<IRequestedDataRepository>();
-            dataMock.Setup(d => d.GetAll(1)).Returns(new List<ArticleWithRequestedDataDTO>
+            dataMock.Setup(d => d.GetAll(1)).Returns(new List<ArticleWithRequestedFieldsDTO>
             {
-                new ArticleWithRequestedDataDTO {ArticleId = 1, DataIds = new List<int> {1}},
-                new ArticleWithRequestedDataDTO {ArticleId = 2, DataIds = new List<int> {2}}
+                new ArticleWithRequestedFieldsDTO {ArticleId = 1, FieldIds = new List<int> {1}},
+                new ArticleWithRequestedFieldsDTO {ArticleId = 2, FieldIds = new List<int> {2}}
             });
-            var taskMock = new Mock<ITaskRepository>();
+            var taskMock = new Mock<ITaskConfigRepository>();
             
             var engine = new RecensysCoreBLL.TaskDistributionEngine(distMock.Object, dataMock.Object, taskMock.Object);
             var r = engine.Generate(1);
@@ -50,18 +50,18 @@ namespace RecensysCoreBLL.Tests
                 }
             });
             var dataMock = new Mock<IRequestedDataRepository>();
-            dataMock.Setup(d => d.GetAll(1)).Returns(new List<ArticleWithRequestedDataDTO>
+            dataMock.Setup(d => d.GetAll(1)).Returns(new List<ArticleWithRequestedFieldsDTO>
             {
-                new ArticleWithRequestedDataDTO {ArticleId = 1, DataIds = new List<int> {1}},
-                new ArticleWithRequestedDataDTO {ArticleId = 2, DataIds = new List<int> {2}}
+                new ArticleWithRequestedFieldsDTO {ArticleId = 1, FieldIds = new List<int> {1}},
+                new ArticleWithRequestedFieldsDTO {ArticleId = 2, FieldIds = new List<int> {2}}
             });
-            var taskMock = new Mock<ITaskRepository>();
+            var taskMock = new Mock<ITaskConfigRepository>();
 
 
             var engine = new RecensysCoreBLL.TaskDistributionEngine(distMock.Object, dataMock.Object, taskMock.Object);
             var r = engine.Generate(1);
 
-            taskMock.Verify(t => t.Create(It.IsAny<int>(), It.IsAny<TaskDTO>()), Times.Exactly(2));
+            taskMock.Verify(t => t.Create(It.IsAny<int>(), It.IsAny<ReviewTaskConfigDTO>()), Times.Exactly(2));
         }
 
 
@@ -77,18 +77,18 @@ namespace RecensysCoreBLL.Tests
                 }
             });
             var dataMock = new Mock<IRequestedDataRepository>();
-            dataMock.Setup(d => d.GetAll(1)).Returns(new List<ArticleWithRequestedDataDTO>
+            dataMock.Setup(d => d.GetAll(1)).Returns(new List<ArticleWithRequestedFieldsDTO>
             {
-                new ArticleWithRequestedDataDTO {ArticleId = 1, DataIds = new List<int> {1}},
-                new ArticleWithRequestedDataDTO {ArticleId = 2, DataIds = new List<int> {2}}
+                new ArticleWithRequestedFieldsDTO {ArticleId = 1, FieldIds = new List<int> {1}},
+                new ArticleWithRequestedFieldsDTO {ArticleId = 2, FieldIds = new List<int> {2}}
             });
-            var taskMock = new Mock<ITaskRepository>();
+            var taskMock = new Mock<ITaskConfigRepository>();
 
 
             var engine = new RecensysCoreBLL.TaskDistributionEngine(distMock.Object, dataMock.Object, taskMock.Object);
             var r = engine.Generate(1);
 
-            taskMock.Verify(t => t.Create(It.IsAny<int>(), It.Is<TaskDTO>(dto => dto.OwnerId == 1)), Times.Exactly(2));
+            taskMock.Verify(t => t.Create(It.IsAny<int>(), It.Is<ReviewTaskConfigDTO>(dto => dto.OwnerId == 1)), Times.Exactly(2));
         }
 
         [Fact]
@@ -104,19 +104,19 @@ namespace RecensysCoreBLL.Tests
                 }
             });
             var dataMock = new Mock<IRequestedDataRepository>();
-            dataMock.Setup(d => d.GetAll(1)).Returns(new List<ArticleWithRequestedDataDTO>
+            dataMock.Setup(d => d.GetAll(1)).Returns(new List<ArticleWithRequestedFieldsDTO>
             {
-                new ArticleWithRequestedDataDTO {ArticleId = 1, DataIds = new List<int> {1}},
-                new ArticleWithRequestedDataDTO {ArticleId = 2, DataIds = new List<int> {2}}
+                new ArticleWithRequestedFieldsDTO {ArticleId = 1, FieldIds = new List<int> {1}},
+                new ArticleWithRequestedFieldsDTO {ArticleId = 2, FieldIds = new List<int> {2}}
             });
-            var taskMock = new Mock<ITaskRepository>();
+            var taskMock = new Mock<ITaskConfigRepository>();
 
 
             var engine = new RecensysCoreBLL.TaskDistributionEngine(distMock.Object, dataMock.Object, taskMock.Object);
             var r = engine.Generate(1);
 
-            taskMock.Verify(t => t.Create(It.IsAny<int>(), It.Is<TaskDTO>(dto => dto.OwnerId == 1)), Times.Exactly(1));
-            taskMock.Verify(t => t.Create(It.IsAny<int>(), It.Is<TaskDTO>(dto => dto.OwnerId == 2)), Times.Exactly(1));
+            taskMock.Verify(t => t.Create(It.IsAny<int>(), It.Is<ReviewTaskConfigDTO>(dto => dto.OwnerId == 1)), Times.Exactly(1));
+            taskMock.Verify(t => t.Create(It.IsAny<int>(), It.Is<ReviewTaskConfigDTO>(dto => dto.OwnerId == 2)), Times.Exactly(1));
         }
 
         [Fact]
@@ -133,21 +133,21 @@ namespace RecensysCoreBLL.Tests
                 }
             });
             var dataMock = new Mock<IRequestedDataRepository>();
-            dataMock.Setup(d => d.GetAll(1)).Returns(new List<ArticleWithRequestedDataDTO>
+            dataMock.Setup(d => d.GetAll(1)).Returns(new List<ArticleWithRequestedFieldsDTO>
             {
-                new ArticleWithRequestedDataDTO {ArticleId = 1, DataIds = new List<int> {1}},
-                new ArticleWithRequestedDataDTO {ArticleId = 3, DataIds = new List<int> {3}},
-                new ArticleWithRequestedDataDTO {ArticleId = 2, DataIds = new List<int> {2}}
+                new ArticleWithRequestedFieldsDTO {ArticleId = 1, FieldIds = new List<int> {1}},
+                new ArticleWithRequestedFieldsDTO {ArticleId = 3, FieldIds = new List<int> {3}},
+                new ArticleWithRequestedFieldsDTO {ArticleId = 2, FieldIds = new List<int> {2}}
             });
-            var taskMock = new Mock<ITaskRepository>();
+            var taskMock = new Mock<ITaskConfigRepository>();
 
 
             var engine = new RecensysCoreBLL.TaskDistributionEngine(distMock.Object, dataMock.Object, taskMock.Object);
             var r = engine.Generate(1);
 
-            taskMock.Verify(t => t.Create(It.IsAny<int>(), It.Is<TaskDTO>(dto => dto.OwnerId == 1)), Times.Exactly(1));
-            taskMock.Verify(t => t.Create(It.IsAny<int>(), It.Is<TaskDTO>(dto => dto.OwnerId == 2)), Times.Exactly(1));
-            taskMock.Verify(t => t.Create(It.IsAny<int>(), It.Is<TaskDTO>(dto => dto.OwnerId == 3)), Times.Exactly(1));
+            taskMock.Verify(t => t.Create(It.IsAny<int>(), It.Is<ReviewTaskConfigDTO>(dto => dto.OwnerId == 1)), Times.Exactly(1));
+            taskMock.Verify(t => t.Create(It.IsAny<int>(), It.Is<ReviewTaskConfigDTO>(dto => dto.OwnerId == 2)), Times.Exactly(1));
+            taskMock.Verify(t => t.Create(It.IsAny<int>(), It.Is<ReviewTaskConfigDTO>(dto => dto.OwnerId == 3)), Times.Exactly(1));
         }
 
         [Fact]
@@ -163,19 +163,19 @@ namespace RecensysCoreBLL.Tests
                 }
             });
             var dataMock = new Mock<IRequestedDataRepository>();
-            dataMock.Setup(d => d.GetAll(1)).Returns(new List<ArticleWithRequestedDataDTO>
+            dataMock.Setup(d => d.GetAll(1)).Returns(new List<ArticleWithRequestedFieldsDTO>
             {
-                new ArticleWithRequestedDataDTO {ArticleId = 1, DataIds = new List<int> {1}},
-                new ArticleWithRequestedDataDTO {ArticleId = 2, DataIds = new List<int> {3}},
+                new ArticleWithRequestedFieldsDTO {ArticleId = 1, FieldIds = new List<int> {1}},
+                new ArticleWithRequestedFieldsDTO {ArticleId = 2, FieldIds = new List<int> {3}},
             });
-            var taskMock = new Mock<ITaskRepository>();
+            var taskMock = new Mock<ITaskConfigRepository>();
 
 
             var engine = new RecensysCoreBLL.TaskDistributionEngine(distMock.Object, dataMock.Object, taskMock.Object);
             var r = engine.Generate(1);
 
-            taskMock.Verify(t => t.Create(It.IsAny<int>(), It.Is<TaskDTO>(dto => dto.OwnerId == 1)), Times.Exactly(2));
-            taskMock.Verify(t => t.Create(It.IsAny<int>(), It.Is<TaskDTO>(dto => dto.OwnerId == 2)), Times.Exactly(2));
+            taskMock.Verify(t => t.Create(It.IsAny<int>(), It.Is<ReviewTaskConfigDTO>(dto => dto.OwnerId == 1)), Times.Exactly(2));
+            taskMock.Verify(t => t.Create(It.IsAny<int>(), It.Is<ReviewTaskConfigDTO>(dto => dto.OwnerId == 2)), Times.Exactly(2));
         }
 
 
@@ -192,20 +192,20 @@ namespace RecensysCoreBLL.Tests
                 }
             });
             var dataMock = new Mock<IRequestedDataRepository>();
-            dataMock.Setup(d => d.GetAll(1)).Returns(new List<ArticleWithRequestedDataDTO>
+            dataMock.Setup(d => d.GetAll(1)).Returns(new List<ArticleWithRequestedFieldsDTO>
             {
-                new ArticleWithRequestedDataDTO {ArticleId = 1, DataIds = new List<int> {1}},
-                new ArticleWithRequestedDataDTO {ArticleId = 2, DataIds = new List<int> {3}},
-                new ArticleWithRequestedDataDTO {ArticleId = 2, DataIds = new List<int> {3}},
+                new ArticleWithRequestedFieldsDTO {ArticleId = 1, FieldIds = new List<int> {1}},
+                new ArticleWithRequestedFieldsDTO {ArticleId = 2, FieldIds = new List<int> {3}},
+                new ArticleWithRequestedFieldsDTO {ArticleId = 2, FieldIds = new List<int> {3}},
             });
-            var taskMock = new Mock<ITaskRepository>();
+            var taskMock = new Mock<ITaskConfigRepository>();
 
 
             var engine = new RecensysCoreBLL.TaskDistributionEngine(distMock.Object, dataMock.Object, taskMock.Object);
             var r = engine.Generate(1);
 
-            taskMock.Verify(t => t.Create(It.IsAny<int>(), It.Is<TaskDTO>(dto => dto.OwnerId == 1)), Times.Exactly(2));
-            taskMock.Verify(t => t.Create(It.IsAny<int>(), It.Is<TaskDTO>(dto => dto.OwnerId == 2)), Times.Exactly(1));
+            taskMock.Verify(t => t.Create(It.IsAny<int>(), It.Is<ReviewTaskConfigDTO>(dto => dto.OwnerId == 1)), Times.Exactly(2));
+            taskMock.Verify(t => t.Create(It.IsAny<int>(), It.Is<ReviewTaskConfigDTO>(dto => dto.OwnerId == 2)), Times.Exactly(1));
         }
 
         [Fact]
@@ -220,19 +220,19 @@ namespace RecensysCoreBLL.Tests
                 }
             });
             var dataMock = new Mock<IRequestedDataRepository>();
-            dataMock.Setup(d => d.GetAll(1)).Returns(new List<ArticleWithRequestedDataDTO>
+            dataMock.Setup(d => d.GetAll(1)).Returns(new List<ArticleWithRequestedFieldsDTO>
             {
-                new ArticleWithRequestedDataDTO {ArticleId = 1, DataIds = new List<int> {1}},
-                new ArticleWithRequestedDataDTO {ArticleId = 2, DataIds = new List<int> {3}},
+                new ArticleWithRequestedFieldsDTO {ArticleId = 1, FieldIds = new List<int> {1}},
+                new ArticleWithRequestedFieldsDTO {ArticleId = 2, FieldIds = new List<int> {3}},
             });
-            var taskMock = new Mock<ITaskRepository>();
+            var taskMock = new Mock<ITaskConfigRepository>();
 
 
             var engine = new RecensysCoreBLL.TaskDistributionEngine(distMock.Object, dataMock.Object, taskMock.Object);
             var r = engine.Generate(1);
 
-            taskMock.Verify(t => t.Create(It.IsAny<int>(), It.Is<TaskDTO>(dto => dto.OwnerId == 1)), Times.Exactly(1));
-            taskMock.Verify(t => t.Create(It.IsAny<int>(), It.Is<TaskDTO>(dto => dto.OwnerId == 2)), Times.Exactly(0));
+            taskMock.Verify(t => t.Create(It.IsAny<int>(), It.Is<ReviewTaskConfigDTO>(dto => dto.OwnerId == 1)), Times.Exactly(1));
+            taskMock.Verify(t => t.Create(It.IsAny<int>(), It.Is<ReviewTaskConfigDTO>(dto => dto.OwnerId == 2)), Times.Exactly(0));
         }
 
 
@@ -249,119 +249,119 @@ namespace RecensysCoreBLL.Tests
                 }
             });
             var dataMock = new Mock<IRequestedDataRepository>();
-            dataMock.Setup(d => d.GetAll(1)).Returns(new List<ArticleWithRequestedDataDTO>
+            dataMock.Setup(d => d.GetAll(1)).Returns(new List<ArticleWithRequestedFieldsDTO>
             {
                 #region model
-                new ArticleWithRequestedDataDTO {ArticleId = 1, DataIds = new List<int> {1}},
-                new ArticleWithRequestedDataDTO {ArticleId = 1, DataIds = new List<int> {1}},
-                new ArticleWithRequestedDataDTO {ArticleId = 1, DataIds = new List<int> {1}},
-                new ArticleWithRequestedDataDTO {ArticleId = 1, DataIds = new List<int> {1}},
-                new ArticleWithRequestedDataDTO {ArticleId = 1, DataIds = new List<int> {1}},
-                new ArticleWithRequestedDataDTO {ArticleId = 1, DataIds = new List<int> {1}},
-                new ArticleWithRequestedDataDTO {ArticleId = 1, DataIds = new List<int> {1}},
-                new ArticleWithRequestedDataDTO {ArticleId = 1, DataIds = new List<int> {1}},
-                new ArticleWithRequestedDataDTO {ArticleId = 1, DataIds = new List<int> {1}},
-                new ArticleWithRequestedDataDTO {ArticleId = 1, DataIds = new List<int> {1}},
-                new ArticleWithRequestedDataDTO {ArticleId = 1, DataIds = new List<int> {1}},
-                new ArticleWithRequestedDataDTO {ArticleId = 1, DataIds = new List<int> {1}},
-                new ArticleWithRequestedDataDTO {ArticleId = 1, DataIds = new List<int> {1}},
-                new ArticleWithRequestedDataDTO {ArticleId = 1, DataIds = new List<int> {1}},
-                new ArticleWithRequestedDataDTO {ArticleId = 1, DataIds = new List<int> {1}},
-                new ArticleWithRequestedDataDTO {ArticleId = 1, DataIds = new List<int> {1}},
-                new ArticleWithRequestedDataDTO {ArticleId = 1, DataIds = new List<int> {1}},
-                new ArticleWithRequestedDataDTO {ArticleId = 1, DataIds = new List<int> {1}},
-                new ArticleWithRequestedDataDTO {ArticleId = 1, DataIds = new List<int> {1}},
-                new ArticleWithRequestedDataDTO {ArticleId = 1, DataIds = new List<int> {1}},
-                new ArticleWithRequestedDataDTO {ArticleId = 1, DataIds = new List<int> {1}},
-                new ArticleWithRequestedDataDTO {ArticleId = 1, DataIds = new List<int> {1}},
-                new ArticleWithRequestedDataDTO {ArticleId = 1, DataIds = new List<int> {1}},
-                new ArticleWithRequestedDataDTO {ArticleId = 1, DataIds = new List<int> {1}},
-                new ArticleWithRequestedDataDTO {ArticleId = 1, DataIds = new List<int> {1}},
-                new ArticleWithRequestedDataDTO {ArticleId = 1, DataIds = new List<int> {1}},
-                new ArticleWithRequestedDataDTO {ArticleId = 1, DataIds = new List<int> {1}},
-                new ArticleWithRequestedDataDTO {ArticleId = 1, DataIds = new List<int> {1}},
-                new ArticleWithRequestedDataDTO {ArticleId = 1, DataIds = new List<int> {1}},
-                new ArticleWithRequestedDataDTO {ArticleId = 1, DataIds = new List<int> {1}},
-                new ArticleWithRequestedDataDTO {ArticleId = 1, DataIds = new List<int> {1}},
-                new ArticleWithRequestedDataDTO {ArticleId = 1, DataIds = new List<int> {1}},
-                new ArticleWithRequestedDataDTO {ArticleId = 1, DataIds = new List<int> {1}},
-                new ArticleWithRequestedDataDTO {ArticleId = 1, DataIds = new List<int> {1}},
-                new ArticleWithRequestedDataDTO {ArticleId = 1, DataIds = new List<int> {1}},
-                new ArticleWithRequestedDataDTO {ArticleId = 1, DataIds = new List<int> {1}},
-                new ArticleWithRequestedDataDTO {ArticleId = 1, DataIds = new List<int> {1}},
-                new ArticleWithRequestedDataDTO {ArticleId = 1, DataIds = new List<int> {1}},
-                new ArticleWithRequestedDataDTO {ArticleId = 1, DataIds = new List<int> {1}},
-                new ArticleWithRequestedDataDTO {ArticleId = 1, DataIds = new List<int> {1}},
-                new ArticleWithRequestedDataDTO {ArticleId = 1, DataIds = new List<int> {1}},
-                new ArticleWithRequestedDataDTO {ArticleId = 1, DataIds = new List<int> {1}},
-                new ArticleWithRequestedDataDTO {ArticleId = 1, DataIds = new List<int> {1}},
-                new ArticleWithRequestedDataDTO {ArticleId = 1, DataIds = new List<int> {1}},
-                new ArticleWithRequestedDataDTO {ArticleId = 1, DataIds = new List<int> {1}},
-                new ArticleWithRequestedDataDTO {ArticleId = 1, DataIds = new List<int> {1}},
-                new ArticleWithRequestedDataDTO {ArticleId = 1, DataIds = new List<int> {1}},
-                new ArticleWithRequestedDataDTO {ArticleId = 1, DataIds = new List<int> {1}},
-                new ArticleWithRequestedDataDTO {ArticleId = 1, DataIds = new List<int> {1}},
-                new ArticleWithRequestedDataDTO {ArticleId = 1, DataIds = new List<int> {1}},
-                new ArticleWithRequestedDataDTO {ArticleId = 1, DataIds = new List<int> {1}},
-                new ArticleWithRequestedDataDTO {ArticleId = 1, DataIds = new List<int> {1}},
-                new ArticleWithRequestedDataDTO {ArticleId = 1, DataIds = new List<int> {1}},
-                new ArticleWithRequestedDataDTO {ArticleId = 1, DataIds = new List<int> {1}},
-                new ArticleWithRequestedDataDTO {ArticleId = 1, DataIds = new List<int> {1}},
-                new ArticleWithRequestedDataDTO {ArticleId = 1, DataIds = new List<int> {1}},
-                new ArticleWithRequestedDataDTO {ArticleId = 1, DataIds = new List<int> {1}},
-                new ArticleWithRequestedDataDTO {ArticleId = 1, DataIds = new List<int> {1}},
-                new ArticleWithRequestedDataDTO {ArticleId = 1, DataIds = new List<int> {1}},
-                new ArticleWithRequestedDataDTO {ArticleId = 1, DataIds = new List<int> {1}},
-                new ArticleWithRequestedDataDTO {ArticleId = 1, DataIds = new List<int> {1}},
-                new ArticleWithRequestedDataDTO {ArticleId = 1, DataIds = new List<int> {1}},
-                new ArticleWithRequestedDataDTO {ArticleId = 1, DataIds = new List<int> {1}},
-                new ArticleWithRequestedDataDTO {ArticleId = 1, DataIds = new List<int> {1}},
-                new ArticleWithRequestedDataDTO {ArticleId = 1, DataIds = new List<int> {1}},
-                new ArticleWithRequestedDataDTO {ArticleId = 1, DataIds = new List<int> {1}},
-                new ArticleWithRequestedDataDTO {ArticleId = 1, DataIds = new List<int> {1}},
-                new ArticleWithRequestedDataDTO {ArticleId = 1, DataIds = new List<int> {1}},
-                new ArticleWithRequestedDataDTO {ArticleId = 1, DataIds = new List<int> {1}},
-                new ArticleWithRequestedDataDTO {ArticleId = 1, DataIds = new List<int> {1}},
-                new ArticleWithRequestedDataDTO {ArticleId = 1, DataIds = new List<int> {1}},
-                new ArticleWithRequestedDataDTO {ArticleId = 1, DataIds = new List<int> {1}},
-                new ArticleWithRequestedDataDTO {ArticleId = 1, DataIds = new List<int> {1}},
-                new ArticleWithRequestedDataDTO {ArticleId = 1, DataIds = new List<int> {1}},
-                new ArticleWithRequestedDataDTO {ArticleId = 1, DataIds = new List<int> {1}},
-                new ArticleWithRequestedDataDTO {ArticleId = 1, DataIds = new List<int> {1}},
-                new ArticleWithRequestedDataDTO {ArticleId = 1, DataIds = new List<int> {1}},
-                new ArticleWithRequestedDataDTO {ArticleId = 1, DataIds = new List<int> {1}},
-                new ArticleWithRequestedDataDTO {ArticleId = 1, DataIds = new List<int> {1}},
-                new ArticleWithRequestedDataDTO {ArticleId = 1, DataIds = new List<int> {1}},
-                new ArticleWithRequestedDataDTO {ArticleId = 1, DataIds = new List<int> {1}},
-                new ArticleWithRequestedDataDTO {ArticleId = 1, DataIds = new List<int> {1}},
-                new ArticleWithRequestedDataDTO {ArticleId = 1, DataIds = new List<int> {1}},
-                new ArticleWithRequestedDataDTO {ArticleId = 1, DataIds = new List<int> {1}},
-                new ArticleWithRequestedDataDTO {ArticleId = 1, DataIds = new List<int> {1}},
-                new ArticleWithRequestedDataDTO {ArticleId = 1, DataIds = new List<int> {1}},
-                new ArticleWithRequestedDataDTO {ArticleId = 1, DataIds = new List<int> {1}},
-                new ArticleWithRequestedDataDTO {ArticleId = 1, DataIds = new List<int> {1}},
-                new ArticleWithRequestedDataDTO {ArticleId = 1, DataIds = new List<int> {1}},
-                new ArticleWithRequestedDataDTO {ArticleId = 1, DataIds = new List<int> {1}},
-                new ArticleWithRequestedDataDTO {ArticleId = 1, DataIds = new List<int> {1}},
-                new ArticleWithRequestedDataDTO {ArticleId = 1, DataIds = new List<int> {1}},
-                new ArticleWithRequestedDataDTO {ArticleId = 1, DataIds = new List<int> {1}},
-                new ArticleWithRequestedDataDTO {ArticleId = 1, DataIds = new List<int> {1}},
-                new ArticleWithRequestedDataDTO {ArticleId = 1, DataIds = new List<int> {1}},
-                new ArticleWithRequestedDataDTO {ArticleId = 1, DataIds = new List<int> {1}},
-                new ArticleWithRequestedDataDTO {ArticleId = 1, DataIds = new List<int> {1}},
-                new ArticleWithRequestedDataDTO {ArticleId = 1, DataIds = new List<int> {1}},
-                new ArticleWithRequestedDataDTO {ArticleId = 1, DataIds = new List<int> {1}},
-                new ArticleWithRequestedDataDTO {ArticleId = 1, DataIds = new List<int> {1}},
+                new ArticleWithRequestedFieldsDTO {ArticleId = 1, FieldIds = new List<int> {1}},
+                new ArticleWithRequestedFieldsDTO {ArticleId = 1, FieldIds = new List<int> {1}},
+                new ArticleWithRequestedFieldsDTO {ArticleId = 1, FieldIds = new List<int> {1}},
+                new ArticleWithRequestedFieldsDTO {ArticleId = 1, FieldIds = new List<int> {1}},
+                new ArticleWithRequestedFieldsDTO {ArticleId = 1, FieldIds = new List<int> {1}},
+                new ArticleWithRequestedFieldsDTO {ArticleId = 1, FieldIds = new List<int> {1}},
+                new ArticleWithRequestedFieldsDTO {ArticleId = 1, FieldIds = new List<int> {1}},
+                new ArticleWithRequestedFieldsDTO {ArticleId = 1, FieldIds = new List<int> {1}},
+                new ArticleWithRequestedFieldsDTO {ArticleId = 1, FieldIds = new List<int> {1}},
+                new ArticleWithRequestedFieldsDTO {ArticleId = 1, FieldIds = new List<int> {1}},
+                new ArticleWithRequestedFieldsDTO {ArticleId = 1, FieldIds = new List<int> {1}},
+                new ArticleWithRequestedFieldsDTO {ArticleId = 1, FieldIds = new List<int> {1}},
+                new ArticleWithRequestedFieldsDTO {ArticleId = 1, FieldIds = new List<int> {1}},
+                new ArticleWithRequestedFieldsDTO {ArticleId = 1, FieldIds = new List<int> {1}},
+                new ArticleWithRequestedFieldsDTO {ArticleId = 1, FieldIds = new List<int> {1}},
+                new ArticleWithRequestedFieldsDTO {ArticleId = 1, FieldIds = new List<int> {1}},
+                new ArticleWithRequestedFieldsDTO {ArticleId = 1, FieldIds = new List<int> {1}},
+                new ArticleWithRequestedFieldsDTO {ArticleId = 1, FieldIds = new List<int> {1}},
+                new ArticleWithRequestedFieldsDTO {ArticleId = 1, FieldIds = new List<int> {1}},
+                new ArticleWithRequestedFieldsDTO {ArticleId = 1, FieldIds = new List<int> {1}},
+                new ArticleWithRequestedFieldsDTO {ArticleId = 1, FieldIds = new List<int> {1}},
+                new ArticleWithRequestedFieldsDTO {ArticleId = 1, FieldIds = new List<int> {1}},
+                new ArticleWithRequestedFieldsDTO {ArticleId = 1, FieldIds = new List<int> {1}},
+                new ArticleWithRequestedFieldsDTO {ArticleId = 1, FieldIds = new List<int> {1}},
+                new ArticleWithRequestedFieldsDTO {ArticleId = 1, FieldIds = new List<int> {1}},
+                new ArticleWithRequestedFieldsDTO {ArticleId = 1, FieldIds = new List<int> {1}},
+                new ArticleWithRequestedFieldsDTO {ArticleId = 1, FieldIds = new List<int> {1}},
+                new ArticleWithRequestedFieldsDTO {ArticleId = 1, FieldIds = new List<int> {1}},
+                new ArticleWithRequestedFieldsDTO {ArticleId = 1, FieldIds = new List<int> {1}},
+                new ArticleWithRequestedFieldsDTO {ArticleId = 1, FieldIds = new List<int> {1}},
+                new ArticleWithRequestedFieldsDTO {ArticleId = 1, FieldIds = new List<int> {1}},
+                new ArticleWithRequestedFieldsDTO {ArticleId = 1, FieldIds = new List<int> {1}},
+                new ArticleWithRequestedFieldsDTO {ArticleId = 1, FieldIds = new List<int> {1}},
+                new ArticleWithRequestedFieldsDTO {ArticleId = 1, FieldIds = new List<int> {1}},
+                new ArticleWithRequestedFieldsDTO {ArticleId = 1, FieldIds = new List<int> {1}},
+                new ArticleWithRequestedFieldsDTO {ArticleId = 1, FieldIds = new List<int> {1}},
+                new ArticleWithRequestedFieldsDTO {ArticleId = 1, FieldIds = new List<int> {1}},
+                new ArticleWithRequestedFieldsDTO {ArticleId = 1, FieldIds = new List<int> {1}},
+                new ArticleWithRequestedFieldsDTO {ArticleId = 1, FieldIds = new List<int> {1}},
+                new ArticleWithRequestedFieldsDTO {ArticleId = 1, FieldIds = new List<int> {1}},
+                new ArticleWithRequestedFieldsDTO {ArticleId = 1, FieldIds = new List<int> {1}},
+                new ArticleWithRequestedFieldsDTO {ArticleId = 1, FieldIds = new List<int> {1}},
+                new ArticleWithRequestedFieldsDTO {ArticleId = 1, FieldIds = new List<int> {1}},
+                new ArticleWithRequestedFieldsDTO {ArticleId = 1, FieldIds = new List<int> {1}},
+                new ArticleWithRequestedFieldsDTO {ArticleId = 1, FieldIds = new List<int> {1}},
+                new ArticleWithRequestedFieldsDTO {ArticleId = 1, FieldIds = new List<int> {1}},
+                new ArticleWithRequestedFieldsDTO {ArticleId = 1, FieldIds = new List<int> {1}},
+                new ArticleWithRequestedFieldsDTO {ArticleId = 1, FieldIds = new List<int> {1}},
+                new ArticleWithRequestedFieldsDTO {ArticleId = 1, FieldIds = new List<int> {1}},
+                new ArticleWithRequestedFieldsDTO {ArticleId = 1, FieldIds = new List<int> {1}},
+                new ArticleWithRequestedFieldsDTO {ArticleId = 1, FieldIds = new List<int> {1}},
+                new ArticleWithRequestedFieldsDTO {ArticleId = 1, FieldIds = new List<int> {1}},
+                new ArticleWithRequestedFieldsDTO {ArticleId = 1, FieldIds = new List<int> {1}},
+                new ArticleWithRequestedFieldsDTO {ArticleId = 1, FieldIds = new List<int> {1}},
+                new ArticleWithRequestedFieldsDTO {ArticleId = 1, FieldIds = new List<int> {1}},
+                new ArticleWithRequestedFieldsDTO {ArticleId = 1, FieldIds = new List<int> {1}},
+                new ArticleWithRequestedFieldsDTO {ArticleId = 1, FieldIds = new List<int> {1}},
+                new ArticleWithRequestedFieldsDTO {ArticleId = 1, FieldIds = new List<int> {1}},
+                new ArticleWithRequestedFieldsDTO {ArticleId = 1, FieldIds = new List<int> {1}},
+                new ArticleWithRequestedFieldsDTO {ArticleId = 1, FieldIds = new List<int> {1}},
+                new ArticleWithRequestedFieldsDTO {ArticleId = 1, FieldIds = new List<int> {1}},
+                new ArticleWithRequestedFieldsDTO {ArticleId = 1, FieldIds = new List<int> {1}},
+                new ArticleWithRequestedFieldsDTO {ArticleId = 1, FieldIds = new List<int> {1}},
+                new ArticleWithRequestedFieldsDTO {ArticleId = 1, FieldIds = new List<int> {1}},
+                new ArticleWithRequestedFieldsDTO {ArticleId = 1, FieldIds = new List<int> {1}},
+                new ArticleWithRequestedFieldsDTO {ArticleId = 1, FieldIds = new List<int> {1}},
+                new ArticleWithRequestedFieldsDTO {ArticleId = 1, FieldIds = new List<int> {1}},
+                new ArticleWithRequestedFieldsDTO {ArticleId = 1, FieldIds = new List<int> {1}},
+                new ArticleWithRequestedFieldsDTO {ArticleId = 1, FieldIds = new List<int> {1}},
+                new ArticleWithRequestedFieldsDTO {ArticleId = 1, FieldIds = new List<int> {1}},
+                new ArticleWithRequestedFieldsDTO {ArticleId = 1, FieldIds = new List<int> {1}},
+                new ArticleWithRequestedFieldsDTO {ArticleId = 1, FieldIds = new List<int> {1}},
+                new ArticleWithRequestedFieldsDTO {ArticleId = 1, FieldIds = new List<int> {1}},
+                new ArticleWithRequestedFieldsDTO {ArticleId = 1, FieldIds = new List<int> {1}},
+                new ArticleWithRequestedFieldsDTO {ArticleId = 1, FieldIds = new List<int> {1}},
+                new ArticleWithRequestedFieldsDTO {ArticleId = 1, FieldIds = new List<int> {1}},
+                new ArticleWithRequestedFieldsDTO {ArticleId = 1, FieldIds = new List<int> {1}},
+                new ArticleWithRequestedFieldsDTO {ArticleId = 1, FieldIds = new List<int> {1}},
+                new ArticleWithRequestedFieldsDTO {ArticleId = 1, FieldIds = new List<int> {1}},
+                new ArticleWithRequestedFieldsDTO {ArticleId = 1, FieldIds = new List<int> {1}},
+                new ArticleWithRequestedFieldsDTO {ArticleId = 1, FieldIds = new List<int> {1}},
+                new ArticleWithRequestedFieldsDTO {ArticleId = 1, FieldIds = new List<int> {1}},
+                new ArticleWithRequestedFieldsDTO {ArticleId = 1, FieldIds = new List<int> {1}},
+                new ArticleWithRequestedFieldsDTO {ArticleId = 1, FieldIds = new List<int> {1}},
+                new ArticleWithRequestedFieldsDTO {ArticleId = 1, FieldIds = new List<int> {1}},
+                new ArticleWithRequestedFieldsDTO {ArticleId = 1, FieldIds = new List<int> {1}},
+                new ArticleWithRequestedFieldsDTO {ArticleId = 1, FieldIds = new List<int> {1}},
+                new ArticleWithRequestedFieldsDTO {ArticleId = 1, FieldIds = new List<int> {1}},
+                new ArticleWithRequestedFieldsDTO {ArticleId = 1, FieldIds = new List<int> {1}},
+                new ArticleWithRequestedFieldsDTO {ArticleId = 1, FieldIds = new List<int> {1}},
+                new ArticleWithRequestedFieldsDTO {ArticleId = 1, FieldIds = new List<int> {1}},
+                new ArticleWithRequestedFieldsDTO {ArticleId = 1, FieldIds = new List<int> {1}},
+                new ArticleWithRequestedFieldsDTO {ArticleId = 1, FieldIds = new List<int> {1}},
+                new ArticleWithRequestedFieldsDTO {ArticleId = 1, FieldIds = new List<int> {1}},
+                new ArticleWithRequestedFieldsDTO {ArticleId = 1, FieldIds = new List<int> {1}},
+                new ArticleWithRequestedFieldsDTO {ArticleId = 1, FieldIds = new List<int> {1}},
+                new ArticleWithRequestedFieldsDTO {ArticleId = 1, FieldIds = new List<int> {1}},
+                new ArticleWithRequestedFieldsDTO {ArticleId = 1, FieldIds = new List<int> {1}},
+                new ArticleWithRequestedFieldsDTO {ArticleId = 1, FieldIds = new List<int> {1}},
+                new ArticleWithRequestedFieldsDTO {ArticleId = 1, FieldIds = new List<int> {1}},
     #endregion model 
             });
-            var taskMock = new Mock<ITaskRepository>();
+            var taskMock = new Mock<ITaskConfigRepository>();
 
 
             var engine = new RecensysCoreBLL.TaskDistributionEngine(distMock.Object, dataMock.Object, taskMock.Object);
             var r = engine.Generate(1);
 
-            taskMock.Verify(t => t.Create(It.IsAny<int>(), It.Is<TaskDTO>(dto => dto.OwnerId == 1)), Times.Exactly(50));
-            taskMock.Verify(t => t.Create(It.IsAny<int>(), It.Is<TaskDTO>(dto => dto.OwnerId == 2)), Times.Exactly(50));
+            taskMock.Verify(t => t.Create(It.IsAny<int>(), It.Is<ReviewTaskConfigDTO>(dto => dto.OwnerId == 1)), Times.Exactly(50));
+            taskMock.Verify(t => t.Create(It.IsAny<int>(), It.Is<ReviewTaskConfigDTO>(dto => dto.OwnerId == 2)), Times.Exactly(50));
         }
 
         [Fact]
@@ -378,120 +378,120 @@ namespace RecensysCoreBLL.Tests
                 }
             });
             var dataMock = new Mock<IRequestedDataRepository>();
-            dataMock.Setup(d => d.GetAll(1)).Returns(new List<ArticleWithRequestedDataDTO>
+            dataMock.Setup(d => d.GetAll(1)).Returns(new List<ArticleWithRequestedFieldsDTO>
             {
                 #region model
-                new ArticleWithRequestedDataDTO {ArticleId = 1, DataIds = new List<int> {1}},
-                new ArticleWithRequestedDataDTO {ArticleId = 1, DataIds = new List<int> {1}},
-                new ArticleWithRequestedDataDTO {ArticleId = 1, DataIds = new List<int> {1}},
-                new ArticleWithRequestedDataDTO {ArticleId = 1, DataIds = new List<int> {1}},
-                new ArticleWithRequestedDataDTO {ArticleId = 1, DataIds = new List<int> {1}},
-                new ArticleWithRequestedDataDTO {ArticleId = 1, DataIds = new List<int> {1}},
-                new ArticleWithRequestedDataDTO {ArticleId = 1, DataIds = new List<int> {1}},
-                new ArticleWithRequestedDataDTO {ArticleId = 1, DataIds = new List<int> {1}},
-                new ArticleWithRequestedDataDTO {ArticleId = 1, DataIds = new List<int> {1}},
-                new ArticleWithRequestedDataDTO {ArticleId = 1, DataIds = new List<int> {1}},
-                new ArticleWithRequestedDataDTO {ArticleId = 1, DataIds = new List<int> {1}},
-                new ArticleWithRequestedDataDTO {ArticleId = 1, DataIds = new List<int> {1}},
-                new ArticleWithRequestedDataDTO {ArticleId = 1, DataIds = new List<int> {1}},
-                new ArticleWithRequestedDataDTO {ArticleId = 1, DataIds = new List<int> {1}},
-                new ArticleWithRequestedDataDTO {ArticleId = 1, DataIds = new List<int> {1}},
-                new ArticleWithRequestedDataDTO {ArticleId = 1, DataIds = new List<int> {1}},
-                new ArticleWithRequestedDataDTO {ArticleId = 1, DataIds = new List<int> {1}},
-                new ArticleWithRequestedDataDTO {ArticleId = 1, DataIds = new List<int> {1}},
-                new ArticleWithRequestedDataDTO {ArticleId = 1, DataIds = new List<int> {1}},
-                new ArticleWithRequestedDataDTO {ArticleId = 1, DataIds = new List<int> {1}},
-                new ArticleWithRequestedDataDTO {ArticleId = 1, DataIds = new List<int> {1}},
-                new ArticleWithRequestedDataDTO {ArticleId = 1, DataIds = new List<int> {1}},
-                new ArticleWithRequestedDataDTO {ArticleId = 1, DataIds = new List<int> {1}},
-                new ArticleWithRequestedDataDTO {ArticleId = 1, DataIds = new List<int> {1}},
-                new ArticleWithRequestedDataDTO {ArticleId = 1, DataIds = new List<int> {1}},
-                new ArticleWithRequestedDataDTO {ArticleId = 1, DataIds = new List<int> {1}},
-                new ArticleWithRequestedDataDTO {ArticleId = 1, DataIds = new List<int> {1}},
-                new ArticleWithRequestedDataDTO {ArticleId = 1, DataIds = new List<int> {1}},
-                new ArticleWithRequestedDataDTO {ArticleId = 1, DataIds = new List<int> {1}},
-                new ArticleWithRequestedDataDTO {ArticleId = 1, DataIds = new List<int> {1}},
-                new ArticleWithRequestedDataDTO {ArticleId = 1, DataIds = new List<int> {1}},
-                new ArticleWithRequestedDataDTO {ArticleId = 1, DataIds = new List<int> {1}},
-                new ArticleWithRequestedDataDTO {ArticleId = 1, DataIds = new List<int> {1}},
-                new ArticleWithRequestedDataDTO {ArticleId = 1, DataIds = new List<int> {1}},
-                new ArticleWithRequestedDataDTO {ArticleId = 1, DataIds = new List<int> {1}},
-                new ArticleWithRequestedDataDTO {ArticleId = 1, DataIds = new List<int> {1}},
-                new ArticleWithRequestedDataDTO {ArticleId = 1, DataIds = new List<int> {1}},
-                new ArticleWithRequestedDataDTO {ArticleId = 1, DataIds = new List<int> {1}},
-                new ArticleWithRequestedDataDTO {ArticleId = 1, DataIds = new List<int> {1}},
-                new ArticleWithRequestedDataDTO {ArticleId = 1, DataIds = new List<int> {1}},
-                new ArticleWithRequestedDataDTO {ArticleId = 1, DataIds = new List<int> {1}},
-                new ArticleWithRequestedDataDTO {ArticleId = 1, DataIds = new List<int> {1}},
-                new ArticleWithRequestedDataDTO {ArticleId = 1, DataIds = new List<int> {1}},
-                new ArticleWithRequestedDataDTO {ArticleId = 1, DataIds = new List<int> {1}},
-                new ArticleWithRequestedDataDTO {ArticleId = 1, DataIds = new List<int> {1}},
-                new ArticleWithRequestedDataDTO {ArticleId = 1, DataIds = new List<int> {1}},
-                new ArticleWithRequestedDataDTO {ArticleId = 1, DataIds = new List<int> {1}},
-                new ArticleWithRequestedDataDTO {ArticleId = 1, DataIds = new List<int> {1}},
-                new ArticleWithRequestedDataDTO {ArticleId = 1, DataIds = new List<int> {1}},
-                new ArticleWithRequestedDataDTO {ArticleId = 1, DataIds = new List<int> {1}},
-                new ArticleWithRequestedDataDTO {ArticleId = 1, DataIds = new List<int> {1}},
-                new ArticleWithRequestedDataDTO {ArticleId = 1, DataIds = new List<int> {1}},
-                new ArticleWithRequestedDataDTO {ArticleId = 1, DataIds = new List<int> {1}},
-                new ArticleWithRequestedDataDTO {ArticleId = 1, DataIds = new List<int> {1}},
-                new ArticleWithRequestedDataDTO {ArticleId = 1, DataIds = new List<int> {1}},
-                new ArticleWithRequestedDataDTO {ArticleId = 1, DataIds = new List<int> {1}},
-                new ArticleWithRequestedDataDTO {ArticleId = 1, DataIds = new List<int> {1}},
-                new ArticleWithRequestedDataDTO {ArticleId = 1, DataIds = new List<int> {1}},
-                new ArticleWithRequestedDataDTO {ArticleId = 1, DataIds = new List<int> {1}},
-                new ArticleWithRequestedDataDTO {ArticleId = 1, DataIds = new List<int> {1}},
-                new ArticleWithRequestedDataDTO {ArticleId = 1, DataIds = new List<int> {1}},
-                new ArticleWithRequestedDataDTO {ArticleId = 1, DataIds = new List<int> {1}},
-                new ArticleWithRequestedDataDTO {ArticleId = 1, DataIds = new List<int> {1}},
-                new ArticleWithRequestedDataDTO {ArticleId = 1, DataIds = new List<int> {1}},
-                new ArticleWithRequestedDataDTO {ArticleId = 1, DataIds = new List<int> {1}},
-                new ArticleWithRequestedDataDTO {ArticleId = 1, DataIds = new List<int> {1}},
-                new ArticleWithRequestedDataDTO {ArticleId = 1, DataIds = new List<int> {1}},
-                new ArticleWithRequestedDataDTO {ArticleId = 1, DataIds = new List<int> {1}},
-                new ArticleWithRequestedDataDTO {ArticleId = 1, DataIds = new List<int> {1}},
-                new ArticleWithRequestedDataDTO {ArticleId = 1, DataIds = new List<int> {1}},
-                new ArticleWithRequestedDataDTO {ArticleId = 1, DataIds = new List<int> {1}},
-                new ArticleWithRequestedDataDTO {ArticleId = 1, DataIds = new List<int> {1}},
-                new ArticleWithRequestedDataDTO {ArticleId = 1, DataIds = new List<int> {1}},
-                new ArticleWithRequestedDataDTO {ArticleId = 1, DataIds = new List<int> {1}},
-                new ArticleWithRequestedDataDTO {ArticleId = 1, DataIds = new List<int> {1}},
-                new ArticleWithRequestedDataDTO {ArticleId = 1, DataIds = new List<int> {1}},
-                new ArticleWithRequestedDataDTO {ArticleId = 1, DataIds = new List<int> {1}},
-                new ArticleWithRequestedDataDTO {ArticleId = 1, DataIds = new List<int> {1}},
-                new ArticleWithRequestedDataDTO {ArticleId = 1, DataIds = new List<int> {1}},
-                new ArticleWithRequestedDataDTO {ArticleId = 1, DataIds = new List<int> {1}},
-                new ArticleWithRequestedDataDTO {ArticleId = 1, DataIds = new List<int> {1}},
-                new ArticleWithRequestedDataDTO {ArticleId = 1, DataIds = new List<int> {1}},
-                new ArticleWithRequestedDataDTO {ArticleId = 1, DataIds = new List<int> {1}},
-                new ArticleWithRequestedDataDTO {ArticleId = 1, DataIds = new List<int> {1}},
-                new ArticleWithRequestedDataDTO {ArticleId = 1, DataIds = new List<int> {1}},
-                new ArticleWithRequestedDataDTO {ArticleId = 1, DataIds = new List<int> {1}},
-                new ArticleWithRequestedDataDTO {ArticleId = 1, DataIds = new List<int> {1}},
-                new ArticleWithRequestedDataDTO {ArticleId = 1, DataIds = new List<int> {1}},
-                new ArticleWithRequestedDataDTO {ArticleId = 1, DataIds = new List<int> {1}},
-                new ArticleWithRequestedDataDTO {ArticleId = 1, DataIds = new List<int> {1}},
-                new ArticleWithRequestedDataDTO {ArticleId = 1, DataIds = new List<int> {1}},
-                new ArticleWithRequestedDataDTO {ArticleId = 1, DataIds = new List<int> {1}},
-                new ArticleWithRequestedDataDTO {ArticleId = 1, DataIds = new List<int> {1}},
-                new ArticleWithRequestedDataDTO {ArticleId = 1, DataIds = new List<int> {1}},
-                new ArticleWithRequestedDataDTO {ArticleId = 1, DataIds = new List<int> {1}},
-                new ArticleWithRequestedDataDTO {ArticleId = 1, DataIds = new List<int> {1}},
-                new ArticleWithRequestedDataDTO {ArticleId = 1, DataIds = new List<int> {1}},
-                new ArticleWithRequestedDataDTO {ArticleId = 1, DataIds = new List<int> {1}},
-                new ArticleWithRequestedDataDTO {ArticleId = 1, DataIds = new List<int> {1}},
-                new ArticleWithRequestedDataDTO {ArticleId = 1, DataIds = new List<int> {1}},
+                new ArticleWithRequestedFieldsDTO {ArticleId = 1, FieldIds = new List<int> {1}},
+                new ArticleWithRequestedFieldsDTO {ArticleId = 1, FieldIds = new List<int> {1}},
+                new ArticleWithRequestedFieldsDTO {ArticleId = 1, FieldIds = new List<int> {1}},
+                new ArticleWithRequestedFieldsDTO {ArticleId = 1, FieldIds = new List<int> {1}},
+                new ArticleWithRequestedFieldsDTO {ArticleId = 1, FieldIds = new List<int> {1}},
+                new ArticleWithRequestedFieldsDTO {ArticleId = 1, FieldIds = new List<int> {1}},
+                new ArticleWithRequestedFieldsDTO {ArticleId = 1, FieldIds = new List<int> {1}},
+                new ArticleWithRequestedFieldsDTO {ArticleId = 1, FieldIds = new List<int> {1}},
+                new ArticleWithRequestedFieldsDTO {ArticleId = 1, FieldIds = new List<int> {1}},
+                new ArticleWithRequestedFieldsDTO {ArticleId = 1, FieldIds = new List<int> {1}},
+                new ArticleWithRequestedFieldsDTO {ArticleId = 1, FieldIds = new List<int> {1}},
+                new ArticleWithRequestedFieldsDTO {ArticleId = 1, FieldIds = new List<int> {1}},
+                new ArticleWithRequestedFieldsDTO {ArticleId = 1, FieldIds = new List<int> {1}},
+                new ArticleWithRequestedFieldsDTO {ArticleId = 1, FieldIds = new List<int> {1}},
+                new ArticleWithRequestedFieldsDTO {ArticleId = 1, FieldIds = new List<int> {1}},
+                new ArticleWithRequestedFieldsDTO {ArticleId = 1, FieldIds = new List<int> {1}},
+                new ArticleWithRequestedFieldsDTO {ArticleId = 1, FieldIds = new List<int> {1}},
+                new ArticleWithRequestedFieldsDTO {ArticleId = 1, FieldIds = new List<int> {1}},
+                new ArticleWithRequestedFieldsDTO {ArticleId = 1, FieldIds = new List<int> {1}},
+                new ArticleWithRequestedFieldsDTO {ArticleId = 1, FieldIds = new List<int> {1}},
+                new ArticleWithRequestedFieldsDTO {ArticleId = 1, FieldIds = new List<int> {1}},
+                new ArticleWithRequestedFieldsDTO {ArticleId = 1, FieldIds = new List<int> {1}},
+                new ArticleWithRequestedFieldsDTO {ArticleId = 1, FieldIds = new List<int> {1}},
+                new ArticleWithRequestedFieldsDTO {ArticleId = 1, FieldIds = new List<int> {1}},
+                new ArticleWithRequestedFieldsDTO {ArticleId = 1, FieldIds = new List<int> {1}},
+                new ArticleWithRequestedFieldsDTO {ArticleId = 1, FieldIds = new List<int> {1}},
+                new ArticleWithRequestedFieldsDTO {ArticleId = 1, FieldIds = new List<int> {1}},
+                new ArticleWithRequestedFieldsDTO {ArticleId = 1, FieldIds = new List<int> {1}},
+                new ArticleWithRequestedFieldsDTO {ArticleId = 1, FieldIds = new List<int> {1}},
+                new ArticleWithRequestedFieldsDTO {ArticleId = 1, FieldIds = new List<int> {1}},
+                new ArticleWithRequestedFieldsDTO {ArticleId = 1, FieldIds = new List<int> {1}},
+                new ArticleWithRequestedFieldsDTO {ArticleId = 1, FieldIds = new List<int> {1}},
+                new ArticleWithRequestedFieldsDTO {ArticleId = 1, FieldIds = new List<int> {1}},
+                new ArticleWithRequestedFieldsDTO {ArticleId = 1, FieldIds = new List<int> {1}},
+                new ArticleWithRequestedFieldsDTO {ArticleId = 1, FieldIds = new List<int> {1}},
+                new ArticleWithRequestedFieldsDTO {ArticleId = 1, FieldIds = new List<int> {1}},
+                new ArticleWithRequestedFieldsDTO {ArticleId = 1, FieldIds = new List<int> {1}},
+                new ArticleWithRequestedFieldsDTO {ArticleId = 1, FieldIds = new List<int> {1}},
+                new ArticleWithRequestedFieldsDTO {ArticleId = 1, FieldIds = new List<int> {1}},
+                new ArticleWithRequestedFieldsDTO {ArticleId = 1, FieldIds = new List<int> {1}},
+                new ArticleWithRequestedFieldsDTO {ArticleId = 1, FieldIds = new List<int> {1}},
+                new ArticleWithRequestedFieldsDTO {ArticleId = 1, FieldIds = new List<int> {1}},
+                new ArticleWithRequestedFieldsDTO {ArticleId = 1, FieldIds = new List<int> {1}},
+                new ArticleWithRequestedFieldsDTO {ArticleId = 1, FieldIds = new List<int> {1}},
+                new ArticleWithRequestedFieldsDTO {ArticleId = 1, FieldIds = new List<int> {1}},
+                new ArticleWithRequestedFieldsDTO {ArticleId = 1, FieldIds = new List<int> {1}},
+                new ArticleWithRequestedFieldsDTO {ArticleId = 1, FieldIds = new List<int> {1}},
+                new ArticleWithRequestedFieldsDTO {ArticleId = 1, FieldIds = new List<int> {1}},
+                new ArticleWithRequestedFieldsDTO {ArticleId = 1, FieldIds = new List<int> {1}},
+                new ArticleWithRequestedFieldsDTO {ArticleId = 1, FieldIds = new List<int> {1}},
+                new ArticleWithRequestedFieldsDTO {ArticleId = 1, FieldIds = new List<int> {1}},
+                new ArticleWithRequestedFieldsDTO {ArticleId = 1, FieldIds = new List<int> {1}},
+                new ArticleWithRequestedFieldsDTO {ArticleId = 1, FieldIds = new List<int> {1}},
+                new ArticleWithRequestedFieldsDTO {ArticleId = 1, FieldIds = new List<int> {1}},
+                new ArticleWithRequestedFieldsDTO {ArticleId = 1, FieldIds = new List<int> {1}},
+                new ArticleWithRequestedFieldsDTO {ArticleId = 1, FieldIds = new List<int> {1}},
+                new ArticleWithRequestedFieldsDTO {ArticleId = 1, FieldIds = new List<int> {1}},
+                new ArticleWithRequestedFieldsDTO {ArticleId = 1, FieldIds = new List<int> {1}},
+                new ArticleWithRequestedFieldsDTO {ArticleId = 1, FieldIds = new List<int> {1}},
+                new ArticleWithRequestedFieldsDTO {ArticleId = 1, FieldIds = new List<int> {1}},
+                new ArticleWithRequestedFieldsDTO {ArticleId = 1, FieldIds = new List<int> {1}},
+                new ArticleWithRequestedFieldsDTO {ArticleId = 1, FieldIds = new List<int> {1}},
+                new ArticleWithRequestedFieldsDTO {ArticleId = 1, FieldIds = new List<int> {1}},
+                new ArticleWithRequestedFieldsDTO {ArticleId = 1, FieldIds = new List<int> {1}},
+                new ArticleWithRequestedFieldsDTO {ArticleId = 1, FieldIds = new List<int> {1}},
+                new ArticleWithRequestedFieldsDTO {ArticleId = 1, FieldIds = new List<int> {1}},
+                new ArticleWithRequestedFieldsDTO {ArticleId = 1, FieldIds = new List<int> {1}},
+                new ArticleWithRequestedFieldsDTO {ArticleId = 1, FieldIds = new List<int> {1}},
+                new ArticleWithRequestedFieldsDTO {ArticleId = 1, FieldIds = new List<int> {1}},
+                new ArticleWithRequestedFieldsDTO {ArticleId = 1, FieldIds = new List<int> {1}},
+                new ArticleWithRequestedFieldsDTO {ArticleId = 1, FieldIds = new List<int> {1}},
+                new ArticleWithRequestedFieldsDTO {ArticleId = 1, FieldIds = new List<int> {1}},
+                new ArticleWithRequestedFieldsDTO {ArticleId = 1, FieldIds = new List<int> {1}},
+                new ArticleWithRequestedFieldsDTO {ArticleId = 1, FieldIds = new List<int> {1}},
+                new ArticleWithRequestedFieldsDTO {ArticleId = 1, FieldIds = new List<int> {1}},
+                new ArticleWithRequestedFieldsDTO {ArticleId = 1, FieldIds = new List<int> {1}},
+                new ArticleWithRequestedFieldsDTO {ArticleId = 1, FieldIds = new List<int> {1}},
+                new ArticleWithRequestedFieldsDTO {ArticleId = 1, FieldIds = new List<int> {1}},
+                new ArticleWithRequestedFieldsDTO {ArticleId = 1, FieldIds = new List<int> {1}},
+                new ArticleWithRequestedFieldsDTO {ArticleId = 1, FieldIds = new List<int> {1}},
+                new ArticleWithRequestedFieldsDTO {ArticleId = 1, FieldIds = new List<int> {1}},
+                new ArticleWithRequestedFieldsDTO {ArticleId = 1, FieldIds = new List<int> {1}},
+                new ArticleWithRequestedFieldsDTO {ArticleId = 1, FieldIds = new List<int> {1}},
+                new ArticleWithRequestedFieldsDTO {ArticleId = 1, FieldIds = new List<int> {1}},
+                new ArticleWithRequestedFieldsDTO {ArticleId = 1, FieldIds = new List<int> {1}},
+                new ArticleWithRequestedFieldsDTO {ArticleId = 1, FieldIds = new List<int> {1}},
+                new ArticleWithRequestedFieldsDTO {ArticleId = 1, FieldIds = new List<int> {1}},
+                new ArticleWithRequestedFieldsDTO {ArticleId = 1, FieldIds = new List<int> {1}},
+                new ArticleWithRequestedFieldsDTO {ArticleId = 1, FieldIds = new List<int> {1}},
+                new ArticleWithRequestedFieldsDTO {ArticleId = 1, FieldIds = new List<int> {1}},
+                new ArticleWithRequestedFieldsDTO {ArticleId = 1, FieldIds = new List<int> {1}},
+                new ArticleWithRequestedFieldsDTO {ArticleId = 1, FieldIds = new List<int> {1}},
+                new ArticleWithRequestedFieldsDTO {ArticleId = 1, FieldIds = new List<int> {1}},
+                new ArticleWithRequestedFieldsDTO {ArticleId = 1, FieldIds = new List<int> {1}},
+                new ArticleWithRequestedFieldsDTO {ArticleId = 1, FieldIds = new List<int> {1}},
+                new ArticleWithRequestedFieldsDTO {ArticleId = 1, FieldIds = new List<int> {1}},
+                new ArticleWithRequestedFieldsDTO {ArticleId = 1, FieldIds = new List<int> {1}},
+                new ArticleWithRequestedFieldsDTO {ArticleId = 1, FieldIds = new List<int> {1}},
+                new ArticleWithRequestedFieldsDTO {ArticleId = 1, FieldIds = new List<int> {1}},
+                new ArticleWithRequestedFieldsDTO {ArticleId = 1, FieldIds = new List<int> {1}},
     #endregion model 
             });
-            var taskMock = new Mock<ITaskRepository>();
+            var taskMock = new Mock<ITaskConfigRepository>();
 
 
             var engine = new RecensysCoreBLL.TaskDistributionEngine(distMock.Object, dataMock.Object, taskMock.Object);
             var r = engine.Generate(1);
 
-            taskMock.Verify(t => t.Create(It.IsAny<int>(), It.Is<TaskDTO>(dto => dto.OwnerId == 1)), Times.Exactly(33));
-            taskMock.Verify(t => t.Create(It.IsAny<int>(), It.Is<TaskDTO>(dto => dto.OwnerId == 2)), Times.Exactly(33));
-            taskMock.Verify(t => t.Create(It.IsAny<int>(), It.Is<TaskDTO>(dto => dto.OwnerId == 3)), Times.Exactly(34));
+            taskMock.Verify(t => t.Create(It.IsAny<int>(), It.Is<ReviewTaskConfigDTO>(dto => dto.OwnerId == 1)), Times.Exactly(33));
+            taskMock.Verify(t => t.Create(It.IsAny<int>(), It.Is<ReviewTaskConfigDTO>(dto => dto.OwnerId == 2)), Times.Exactly(33));
+            taskMock.Verify(t => t.Create(It.IsAny<int>(), It.Is<ReviewTaskConfigDTO>(dto => dto.OwnerId == 3)), Times.Exactly(34));
         }
 
     }
