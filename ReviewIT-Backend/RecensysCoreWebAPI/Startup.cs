@@ -14,6 +14,7 @@ using RecensysCoreRepository.EFRepository;
 using RecensysCoreRepository.EFRepository.Repositories;
 using RecensysCoreRepository.Repositories;
 using Swashbuckle.Swagger.Model;
+using RecensysCoreBLL;
 
 namespace RecensysCoreWebAPI
 {
@@ -57,6 +58,13 @@ namespace RecensysCoreWebAPI
             services.AddScoped<IStageDetailsRepository, StageDetailsRepository>();
             services.AddScoped<IFieldRepository, FieldRepository>();
             services.AddScoped<ICriteriaRepository, EFCriteriaRepository>();
+            services.AddScoped<ITaskDistributionEngine, TaskDistributionEngine>();
+            services.AddScoped<IRequestedDataRepository, RequestedDataRepository>();
+            services.AddScoped<ITaskConfigRepository, TaskConfigRepository>();
+            services.AddScoped<IArticleRepository, EFArticleRepository>();
+            services.AddScoped<IStudyStartEngine, StudyStartEngine>();
+            services.AddScoped<ICriteriaEngine, CriteriaEngine>();
+            services.AddScoped<IReviewTaskRepository, ReviewTaskRepository>();
 
             services.AddCors();
 
