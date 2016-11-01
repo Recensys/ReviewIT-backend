@@ -45,8 +45,17 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\RecensysCoreRepository\DTOs\ArticleDTO.cs">
+      <Link>DTOs\ArticleDTO.cs</Link>
+    </Compile>
+    <Compile Include="..\RecensysCoreRepository\DTOs\ArticleWithRequestedFieldsDTO.cs">
+      <Link>DTOs\ArticleWithRequestedFieldsDTO.cs</Link>
+    </Compile>
     <Compile Include="..\RecensysCoreRepository\DTOs\CriteriaDTO.cs">
       <Link>DTOs\CriteriaDTO.cs</Link>
+    </Compile>
+    <Compile Include="..\RecensysCoreRepository\DTOs\DataDTO.cs">
+      <Link>DTOs\DataDTO.cs</Link>
     </Compile>
     <Compile Include="..\RecensysCoreRepository\DTOs\DistributionDTO.cs">
       <Link>DTOs\DistributionDTO.cs</Link>
@@ -56,6 +65,15 @@
     </Compile>
     <Compile Include="..\RecensysCoreRepository\DTOs\FieldDTO.cs">
       <Link>DTOs\FieldDTO.cs</Link>
+    </Compile>
+    <Compile Include="..\RecensysCoreRepository\DTOs\ReviewTaskConfigDTO.cs">
+      <Link>DTOs\ReviewTaskConfigDTO.cs</Link>
+    </Compile>
+    <Compile Include="..\RecensysCoreRepository\DTOs\ReviewTaskDTO.cs">
+      <Link>DTOs\ReviewTaskDTO.cs</Link>
+    </Compile>
+    <Compile Include="..\RecensysCoreRepository\DTOs\ReviewTaskListDTO.cs">
+      <Link>DTOs\ReviewTaskListDTO.cs</Link>
     </Compile>
     <Compile Include="..\RecensysCoreRepository\DTOs\StageConfigDTO.cs">
       <Link>DTOs\StageConfigDTO.cs</Link>

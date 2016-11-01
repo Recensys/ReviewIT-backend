@@ -16,6 +16,7 @@
 		.For<RecensysCoreRepository.DTOs.StageFieldsDTO>()
 		.For<RecensysCoreRepository.DTOs.StageDetailsDTO>()
 		.For<RecensysCoreRepository.DTOs.StudyMemberDTO>()
+		.For<RecensysCoreRepository.DTOs.ReviewTaskListDTO>()
 		.For<RecensysCoreRepository.DTOs.DistributionDTO>();
 #>
 
