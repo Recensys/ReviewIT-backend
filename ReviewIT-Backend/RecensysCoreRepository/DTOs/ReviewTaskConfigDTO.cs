@@ -8,7 +8,7 @@ namespace RecensysCoreRepository.DTOs
     public class ReviewTaskConfigDTO
     {
         public int ArticleId { get; set; }
-        public ICollection<int> RequestedFieldIds { get; set; }
+        public ICollection<int> RequestedDataIds { get; set; }
         public int OwnerId { get; set; }
     }
 }

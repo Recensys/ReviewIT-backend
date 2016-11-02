@@ -31,9 +31,10 @@ namespace RecensysCoreRepository.EFRepository.Repositories
                 select new ArticleWithRequestedFieldsDTO
                 {
                     ArticleId = i.ArticleId,
-                    FieldIds = (from sf in _context.StageFieldRelations
-                               where sf.StageId == stageId && sf.FieldType == FieldType.Requested
-                               select sf.FieldId).ToList()
+                    DataIds = (from d in i.Article.Data
+                               join sf in _context.StageFieldRelations on d.FieldId equals sf.FieldId
+                               where sf.FieldType == FieldType.Requested
+                               select d.Id).ToList()
                 };
 
             return dtos;

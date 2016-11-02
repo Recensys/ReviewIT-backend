@@ -63,7 +63,7 @@ namespace RecensysCoreRepository.Tests.Unittests
             using (repo)
             {
                 var r = repo.GetAll(1);
-                Assert.Equal(1, r.First().FieldIds.Count);
+                Assert.Equal(1, r.First().DataIds.Count);
             }
         }
 
@@ -118,7 +118,7 @@ namespace RecensysCoreRepository.Tests.Unittests
             using (repo)
             {
                 var r = repo.GetAll(1);
-                Assert.Equal(0, r.First().FieldIds.Count);
+                Assert.Equal(0, r.First().DataIds.Count);
             }
         }
         

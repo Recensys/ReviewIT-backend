@@ -50,7 +50,7 @@ namespace RecensysCoreBLL
                             {
                                 ArticleId = a.ArticleId,
                                 OwnerId = d.Id,
-                                RequestedFieldIds = a.FieldIds
+                                RequestedDataIds = a.DataIds 
                             });
                             createdTasks++;
                         }

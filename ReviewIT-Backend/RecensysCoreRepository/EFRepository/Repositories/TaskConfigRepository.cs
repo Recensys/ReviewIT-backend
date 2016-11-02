@@ -31,12 +31,9 @@ namespace RecensysCoreRepository.EFRepository.Repositories
                 StageId = stageId,
                 UserId = configDto.OwnerId,
                 TaskType = TaskType.Review,
-                Data = (from fid in configDto.RequestedFieldIds
-                       select new Data
-                       {
-                           ArticleId = configDto.ArticleId,
-                           FieldId = fid,
-                       }).ToList()
+                Data = (from d in _context.Data
+                       where configDto.RequestedDataIds.Contains(d.Id)
+                       select d).ToList()
             };
 
             _context.Tasks.Add(task);

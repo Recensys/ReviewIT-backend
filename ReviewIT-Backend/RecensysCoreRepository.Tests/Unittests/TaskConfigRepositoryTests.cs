@@ -12,7 +12,7 @@ namespace RecensysCoreRepository.Tests.Unittests
     {
 
         [Fact]
-        public void Create_1ArticleWith2Fields__2Data()
+        public void Create_1ArticleWith1Field__1task()
         {
             var options = Helpers.CreateInMemoryOptions();
             var context = new RecensysContext(options);
@@ -34,30 +34,19 @@ namespace RecensysCoreRepository.Tests.Unittests
                                 {
                                     Id = 1,
                                     DataType = DataType.Boolean,
+                                    Data = new List<Data>
+                                    {
+                                        new Data
+                                        {
+                                            Id = 1,
+                                            Value = "d1",
+                                            Article = new Article
+                                            {
+                                                Id = 2,
+                                            }
+                                        }
+                                    }
                                 }
-                            },
-                            new StageFieldRelation
-                            {
-                                FieldType = FieldType.Requested,
-                                Field = new Field
-                                {
-                                    Id = 3,
-                                    DataType = DataType.String,
-                                }
-                            }
-                        }
-                    }
-                },
-                Articles = new List<Article>
-                {
-                    new Article
-                    {
-                        Id = 2,
-                        StageArticleRelations = new List<StageArticleRelation>
-                        {
-                            new StageArticleRelation
-                            {
-                                StageId = 1
                             }
                         }
                     }
@@ -77,7 +66,7 @@ namespace RecensysCoreRepository.Tests.Unittests
             var dto = new ReviewTaskConfigDTO
             {
                 ArticleId = 2,
-                RequestedFieldIds = new List<int>() {1, 3},
+                RequestedDataIds = new List<int>() { 1 },
                 OwnerId = 1
             };
 
@@ -85,14 +74,14 @@ namespace RecensysCoreRepository.Tests.Unittests
             {
                 var r = repo.Create(1, dto);
 
-                Assert.Equal(2, context.Data.Count());
+                Assert.Equal(1, context.Tasks.Count());
             }
 
         }
 
 
         [Fact]
-        public void Create_1ArticleWith2FieldsAnd2Data__4DataTotal()
+        public void Create_1ArticleWith2Field__1task()
         {
             var options = Helpers.CreateInMemoryOptions();
             var context = new RecensysContext(options);
@@ -114,6 +103,18 @@ namespace RecensysCoreRepository.Tests.Unittests
                                 {
                                     Id = 1,
                                     DataType = DataType.Boolean,
+                                    Data = new List<Data>
+                                    {
+                                        new Data
+                                        {
+                                            Id = 1,
+                                            Value = "d1",
+                                            Article = new Article
+                                            {
+                                                Id = 2,
+                                            }
+                                        }
+                                    }
                                 }
                             },
                             new StageFieldRelation
@@ -121,28 +122,18 @@ namespace RecensysCoreRepository.Tests.Unittests
                                 FieldType = FieldType.Requested,
                                 Field = new Field
                                 {
-                                    Id = 3,
+                                    Id = 2,
                                     DataType = DataType.String,
+                                    Data = new List<Data>
+                                    {
+                                        new Data
+                                        {
+                                            Id = 2,
+                                            Value = "d2",
+                                            ArticleId = 2
+                                        }
+                                    }
                                 }
-                            }
-                        }
-                    }
-                },
-                Articles = new List<Article>
-                {
-                    new Article
-                    {
-                        Id = 2,
-                        Data = new List<Data>
-                        {
-                            new Data {FieldId = 1},
-                            new Data {FieldId = 1},
-                        },
-                        StageArticleRelations = new List<StageArticleRelation>
-                        {
-                            new StageArticleRelation
-                            {
-                                StageId = 1
                             }
                         }
                     }
@@ -162,7 +153,7 @@ namespace RecensysCoreRepository.Tests.Unittests
             var dto = new ReviewTaskConfigDTO
             {
                 ArticleId = 2,
-                RequestedFieldIds = new List<int>() { 1, 3 },
+                RequestedDataIds = new List<int>() { 1, 2 },
                 OwnerId = 1
             };
 
@@ -170,13 +161,14 @@ namespace RecensysCoreRepository.Tests.Unittests
             {
                 var r = repo.Create(1, dto);
 
-                Assert.Equal(4, context.Data.Count());
+                Assert.Equal(1, context.Tasks.Count());
             }
 
         }
 
+
         [Fact]
-        public void Create_1ArticleWith2Fields__4DataForParticularArticle()
+        public void Create_1ArticleWith2Fields__1TaskWith2Data()
         {
             var options = Helpers.CreateInMemoryOptions();
             var context = new RecensysContext(options);
@@ -198,6 +190,18 @@ namespace RecensysCoreRepository.Tests.Unittests
                                 {
                                     Id = 1,
                                     DataType = DataType.Boolean,
+                                    Data = new List<Data>
+                                    {
+                                        new Data
+                                        {
+                                            Id = 1,
+                                            Value = "d1",
+                                            Article = new Article
+                                            {
+                                                Id = 2,
+                                            }
+                                        }
+                                    }
                                 }
                             },
                             new StageFieldRelation
@@ -205,22 +209,20 @@ namespace RecensysCoreRepository.Tests.Unittests
                                 FieldType = FieldType.Requested,
                                 Field = new Field
                                 {
-                                    Id = 3,
+                                    Id = 2,
                                     DataType = DataType.String,
-                                }
-                            }
-                        },
-                        StageArticleRelations = new List<StageArticleRelation>
-                        {
-                            new StageArticleRelation
-                            {
-                                Article = new Article
-                                {
-                                    Id = 6,
+                                    Data = new List<Data>
+                                    {
+                                        new Data
+                                        {
+                                            Id = 2,
+                                            Value = "d2",
+                                            ArticleId = 2
+                                        }
+                                    }
                                 }
                             }
                         }
-                        
                     }
                 },
                 UserRelations = new List<UserStudyRelation>
@@ -237,8 +239,8 @@ namespace RecensysCoreRepository.Tests.Unittests
 
             var dto = new ReviewTaskConfigDTO
             {
-                ArticleId = 6,
-                RequestedFieldIds = new List<int>() { 1, 3 },
+                ArticleId = 2,
+                RequestedDataIds = new List<int>() { 1, 2 },
                 OwnerId = 1
             };
 
@@ -246,9 +248,10 @@ namespace RecensysCoreRepository.Tests.Unittests
             {
                 var r = repo.Create(1, dto);
 
-                var a = context.Articles.Single(ar => ar.Id == 6);
+                var t = context.Tasks.Single(ta => ta.Id == r);
 
-                Assert.Equal(2, a.Data.Count);
+                Assert.Equal("d1", t.Data.Single(d1 => d1.Id == 1).Value);
+                Assert.Equal("d2", t.Data.Single(d1 => d1.Id == 2).Value);
             }
 
         }
