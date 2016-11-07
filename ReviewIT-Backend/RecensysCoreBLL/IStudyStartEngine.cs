@@ -2,6 +2,6 @@
 {
     public interface IStudyStartEngine
     {
-        int StartStudy(int id);
+        int StartStudy(int studyId);
     }
 }

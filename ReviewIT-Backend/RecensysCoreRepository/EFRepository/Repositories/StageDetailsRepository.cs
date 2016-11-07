@@ -65,6 +65,7 @@ namespace RecensysCoreRepository.EFRepository.Repositories
         {
             return (from s in _context.Stages
                 where s.StudyId == studyId
+                orderby s.Id
                 select new StageDetailsDTO
                 {
                     Id = s.Id,

@@ -8,6 +8,6 @@ namespace RecensysCoreRepository.Repositories
 {
     public interface ITaskConfigRepository: IDisposable
     {
-        int Create(int stageId, ReviewTaskConfigDTO configDto);
+        int Create(int stageId, int articleId, int ownerId, int[] requestedFields);
     }
 }

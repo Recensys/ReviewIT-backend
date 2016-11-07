@@ -7,5 +7,7 @@ namespace RecensysCoreRepository.Repositories
     {
         bool AddToStage(int stageId, int articleId);
         IEnumerable<int> GetAllIdsForStudy(int studyId);
+
+        IEnumerable<int> GetAllIncludedFromPreviousStage(int currentStage);
     }
 }

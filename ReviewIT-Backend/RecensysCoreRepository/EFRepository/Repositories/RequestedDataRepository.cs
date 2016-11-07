@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using RecensysCoreRepository.DTOs;
 using RecensysCoreRepository.EFRepository.Entities;
 using RecensysCoreRepository.Repositories;
+using FieldType = RecensysCoreRepository.EFRepository.Entities.FieldType;
 
 namespace RecensysCoreRepository.EFRepository.Repositories
 {
@@ -26,18 +27,23 @@ namespace RecensysCoreRepository.EFRepository.Repositories
 
         public IEnumerable<ArticleWithRequestedFieldsDTO> GetAll(int stageId)
         {
+
             var dtos = from i in _context.StageArticleRelations
                 where i.StageId == stageId
                 select new ArticleWithRequestedFieldsDTO
                 {
                     ArticleId = i.ArticleId,
-                    DataIds = (from d in i.Article.Data
-                               join sf in _context.StageFieldRelations on d.FieldId equals sf.FieldId
-                               where sf.FieldType == FieldType.Requested
-                               select d.Id).ToList()
+                    FieldIds = (from sf in _context.StageFieldRelations
+                               where sf.StageId == stageId && sf.FieldType == FieldType.Requested
+                               select sf.FieldId).ToArray()
                 };
 
             return dtos;
+        }
+
+        public ArticleWithRequestedFieldsDTO Read(int articleId)
+        {
+            throw new NotImplementedException();
         }
     }
 }

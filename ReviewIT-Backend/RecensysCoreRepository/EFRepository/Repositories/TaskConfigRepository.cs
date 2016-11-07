@@ -23,21 +23,39 @@ namespace RecensysCoreRepository.EFRepository.Repositories
         {
             _context.Dispose();
         }
-        public int Create(int stageId, ReviewTaskConfigDTO configDto)
+        public int Create(int stageId, int articleId, int ownerId, int[] requestedFields)
         {
+            // add the task
             var task = new Entities.Task
             {
-                ArticleId = configDto.ArticleId,
+                ArticleId = articleId,
                 StageId = stageId,
-                UserId = configDto.OwnerId,
-                TaskType = TaskType.Review,
-                Data = (from d in _context.Data
-                       where configDto.RequestedDataIds.Contains(d.Id)
-                       select d).ToList()
+                UserId = ownerId,
+                TaskType = TaskType.Review
             };
+
+            // add all requested data to the task. If it already exists, add that, or create a new data entity.
+            foreach (var rf in requestedFields)
+            {
+                var storedDataValue = (from d in _context.Data
+                                       where d.ArticleId == articleId && rf == d.FieldId
+                                       select d).SingleOrDefault();
+
+                if (storedDataValue == null)
+                {
+                    storedDataValue = new Data
+                    {
+                        ArticleId = articleId,
+                        FieldId = rf,
+                        Value = ""
+                    };
+                }
+                task.Data.Add(storedDataValue);
+            }
 
             _context.Tasks.Add(task);
             _context.SaveChanges();
+
             return task.Id;
         }
     }

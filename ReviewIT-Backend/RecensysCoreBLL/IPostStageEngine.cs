@@ -2,7 +2,7 @@
 
 namespace RecensysCoreBLL
 {
-    public interface ICriteriaEngine
+    public interface IPostStageEngine
     {
         int Evaluate(int stageId);
 

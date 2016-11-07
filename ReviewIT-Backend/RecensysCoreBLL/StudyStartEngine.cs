@@ -1,47 +1,46 @@
-﻿using System.Collections.Generic;
+﻿using System.Linq;
 using RecensysCoreRepository.Repositories;
-using System.Linq;
 
 namespace RecensysCoreBLL
 {
     public class StudyStartEngine: IStudyStartEngine
     {
 
-        private readonly ITaskDistributionEngine _tdEngine;
-        private readonly ICriteriaEngine _cEngine;
-        private readonly IStageDetailsRepository _sdRepo;
+        private readonly IStageStartEngine _stageEngine;
+        private readonly IStageDetailsRepository _stageRepo;
         private readonly IArticleRepository _aRepo;
+        private readonly ITaskDistributionEngine _tdEngine;
 
-        public StudyStartEngine(ITaskDistributionEngine tdEngine, IStageDetailsRepository sdRepo, IArticleRepository aRepo, ICriteriaEngine cEngine)
+        public StudyStartEngine(IStageStartEngine stageEngine, IStageDetailsRepository stageRepo, IArticleRepository aRepo, ITaskDistributionEngine tdEngine)
         {
-            _tdEngine = tdEngine;
-            _sdRepo = sdRepo;
+            _stageEngine = stageEngine;
+            _stageRepo = stageRepo;
             _aRepo = aRepo;
-            _cEngine = cEngine;
+            _tdEngine = tdEngine;
         }
 
-        public int StartStudy(int id)
+
+        public int StartStudy(int studyId)
         {
-
-            // TODO do linked list or ref first stage from study
-            // find stage with lowest id, and assume it's the first one
-            int minStageId;
-            using (_sdRepo)
-            using(_aRepo)
+            using (_aRepo)
             {
-                minStageId = _sdRepo.GetAll(id).Min(sd => sd.Id);
-
-                // add all articles to the first stage
-                var articlesInStudy = _aRepo.GetAllIdsForStudy(id).ToList();
-                foreach (var i in articlesInStudy)
+                using (_stageRepo)
                 {
-                    _aRepo.AddToStage(minStageId, i);
-                }
+                    // add articles from previous stage
+                    var includedArticles = _aRepo.GetAllIdsForStudy(studyId);
+                    var minStageId = _stageRepo.GetAll(studyId).Min(s => s.Id);
+                    foreach (var i in includedArticles.ToList())
+                    {
+                        _aRepo.AddToStage(minStageId, i);
+                    }
 
-                // create tasks for the first stage
-                var nrOfTasksCreated = _tdEngine.Generate(minStageId);
-                return nrOfTasksCreated;
+                    // create tasks for the first stage
+                    var nrOfTasksCreated = _tdEngine.Generate(minStageId);
+
+                    return nrOfTasksCreated;
+                }
             }
+            
         }
     }
 }

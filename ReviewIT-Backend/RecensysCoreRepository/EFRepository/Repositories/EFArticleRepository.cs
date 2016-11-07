@@ -38,5 +38,28 @@ namespace RecensysCoreRepository.EFRepository.Repositories
                 where a.StudyId == studyId
                 select a.Id;
         }
+
+        public IEnumerable<int> GetAllIncludedFromPreviousStage(int currentStage)
+        {
+            var prevStageId = PreviousStage(currentStage);
+
+            return from sa in _context.StageArticleRelations
+                where sa.StageId == prevStageId && (sa.CriteriaId == null || sa.Criteria.Type == CriteriaType.Inclusion)
+                select sa.ArticleId;
+        }
+
+        public int PreviousStage(int current)
+        {
+            var studyId = (from s in _context.Stages
+                           where s.Id == current
+                           select s.StudyId).Single();
+
+            var prevStage = (from s in _context.Stages
+                             where s.StudyId == studyId
+                             orderby s.Id
+                             select s.Id).ToList();
+
+            return prevStage[prevStage.IndexOf(current) - 1];
+        }
     }
 }

@@ -7,7 +7,7 @@ namespace RecensysCoreRepository.DTOs
 {
     public class ArticleWithRequestedFieldsDTO
     {
-        public ICollection<int> DataIds { get; set; }
+        public int[] FieldIds { get; set; }
         public int ArticleId { get; set; }
     }
 }
