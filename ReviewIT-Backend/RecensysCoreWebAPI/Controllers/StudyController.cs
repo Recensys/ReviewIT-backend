@@ -26,7 +26,8 @@ namespace RecensysCoreWebAPI.Controllers
         private readonly IStudyStartEngine _ssEngine;
 
         public StudyController(IStudyMemberRepository resRepo, IStudyDetailsRepository deRepo,
-            IStudySourceRepository soRepo, IStageDetailsRepository sdRepo, ITaskDistributionEngine tdEngine, IArticleRepository aRepo, IStudyStartEngine ssEngine)
+            IStudySourceRepository soRepo, IStageDetailsRepository sdRepo, ITaskDistributionEngine tdEngine,
+            IArticleRepository aRepo, IStudyStartEngine ssEngine)
         {
             _deRepo = deRepo;
             _soRepo = soRepo;
@@ -109,13 +110,34 @@ namespace RecensysCoreWebAPI.Controllers
         [HttpPost]
         public IActionResult Post([FromBody] StudyDetailsDTO dto)
         {
-            if(!ModelState.IsValid) return BadRequest();
+            if (!ModelState.IsValid) return BadRequest();
 
             try
             {
                 using (_deRepo)
                 {
                     return Json(_deRepo.Create(dto));
+                }
+            }
+            catch (Exception e)
+            {
+                return StatusCode(500, e.Message);
+            }
+        }
+
+
+        [HttpDelete]
+        [Route("{id}")]
+        public IActionResult Delete(int id)
+        {
+            if (!ModelState.IsValid) return BadRequest(ModelState);
+
+            try
+            {
+                using (_sdRepo)
+                {
+                    _deRepo.Delete(id);
+                    return Ok();
                 }
             }
             catch (Exception e)

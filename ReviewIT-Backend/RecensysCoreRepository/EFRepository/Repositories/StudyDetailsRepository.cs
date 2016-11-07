@@ -59,6 +59,15 @@ namespace RecensysCoreRepository.EFRepository.Repositories
             return entity.Id;
         }
 
+        public bool Delete(int id)
+        {
+            var entity = from s in _context.Studies
+                where s.Id == id
+                select s;
+            _context.Studies.RemoveRange(entity);
+            return _context.SaveChanges() > 0;
+        }
+
         public IEnumerable<UserDetailsDTO> GetAllResearchers(int studyId)
         {
             return from us in _context.UserStudyRelations
