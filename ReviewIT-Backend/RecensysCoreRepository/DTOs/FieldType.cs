@@ -1,4 +1,4 @@
-﻿namespace RecensysCoreRepository.EFRepository.Entities
+﻿namespace RecensysCoreRepository.DTOs
 {
     public enum FieldType
     {

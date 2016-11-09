@@ -5,7 +5,7 @@ using RecensysCoreRepository.EFRepository;
 using RecensysCoreRepository.EFRepository.Entities;
 using RecensysCoreRepository.EFRepository.Repositories;
 using Xunit;
-using FieldType = RecensysCoreRepository.EFRepository.Entities.FieldType;
+using FieldType = RecensysCoreRepository.DTOs.FieldType;
 
 namespace RecensysCoreRepository.Tests.Unittests
 {

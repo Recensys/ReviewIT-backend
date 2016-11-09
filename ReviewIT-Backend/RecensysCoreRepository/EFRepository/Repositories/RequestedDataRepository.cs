@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using RecensysCoreRepository.DTOs;
 using RecensysCoreRepository.EFRepository.Entities;
 using RecensysCoreRepository.Repositories;
-using FieldType = RecensysCoreRepository.EFRepository.Entities.FieldType;
+using FieldType = RecensysCoreRepository.DTOs.FieldType;
 
 namespace RecensysCoreRepository.EFRepository.Repositories
 {

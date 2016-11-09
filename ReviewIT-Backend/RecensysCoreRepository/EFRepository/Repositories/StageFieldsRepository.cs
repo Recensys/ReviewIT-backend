@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using RecensysCoreRepository.DTOs;
 using RecensysCoreRepository.EFRepository.Entities;
 using RecensysCoreRepository.Repositories;
-using FieldType = RecensysCoreRepository.EFRepository.Entities.FieldType;
+using FieldType = RecensysCoreRepository.DTOs.FieldType;
 using Task = System.Threading.Tasks.Task;
 
 namespace RecensysCoreRepository.EFRepository.Repositories

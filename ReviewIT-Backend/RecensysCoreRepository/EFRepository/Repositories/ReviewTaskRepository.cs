@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using RecensysCoreRepository.DTOs;
+using RecensysCoreRepository.EFRepository.Entities;
 using RecensysCoreRepository.Repositories;
 
 namespace RecensysCoreRepository.EFRepository.Repositories
@@ -26,22 +27,27 @@ namespace RecensysCoreRepository.EFRepository.Repositories
         public ReviewTaskListDTO GetListDto(int stageId, int userId)
         {
 
-            var taskList = new ReviewTaskListDTO {};
-
             var fields = (from sf in _context.StageFieldRelations
                 where sf.StageId == stageId
                 orderby sf.FieldId
-                select new { Field = new FieldDTO {Id = sf.Field.Id, Name = sf.Field.Name, DataType = sf.Field.DataType}, sf.FieldType }).ToList();
-
+                let f = sf.Field
+                select
+                new TaskFieldDTO
+                {
+                    Id = f.Id,
+                    Name = f.Name,
+                    FieldType = sf.FieldType,
+                    DataType = f.DataType
+                }).ToList();
+            
             var taskDtos = (from t in _context.Tasks
                               where t.StageId == stageId && t.UserId == userId
                               select new ReviewTaskDTO
                               {
                                   Id = t.Id,
                                   TaskState = 0,
-                                  Data = (from d in t.Data
-                                         join f in fields on d.FieldId equals f.Field.Id
-                                         orderby f.Field.Id
+                                  Data = (from d in _context.Data
+                                         orderby d.FieldId
                                          select new DataDTO
                                          {
                                              Id = d.Id,
@@ -51,7 +57,7 @@ namespace RecensysCoreRepository.EFRepository.Repositories
 
             var result = new ReviewTaskListDTO
             {
-                Fields = fields.Select(f => f.Field).ToList(),
+                Fields = fields,
                 Tasks = taskDtos
             };
 

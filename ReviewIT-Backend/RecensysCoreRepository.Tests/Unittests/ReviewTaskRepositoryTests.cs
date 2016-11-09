@@ -393,6 +393,6 @@ namespace RecensysCoreRepository.Tests.Unittests
                 Assert.Equal("empty", data[1].Value);
             }
         }
-
+        
     }
 }

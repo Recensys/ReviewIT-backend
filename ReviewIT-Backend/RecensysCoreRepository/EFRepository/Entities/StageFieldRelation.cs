@@ -1,4 +1,6 @@
-﻿namespace RecensysCoreRepository.EFRepository.Entities
+﻿using RecensysCoreRepository.DTOs;
+
+namespace RecensysCoreRepository.EFRepository.Entities
 {
     
 
