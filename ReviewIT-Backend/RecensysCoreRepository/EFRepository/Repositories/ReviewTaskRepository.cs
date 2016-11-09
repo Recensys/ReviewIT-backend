@@ -47,6 +47,7 @@ namespace RecensysCoreRepository.EFRepository.Repositories
                                   Id = t.Id,
                                   TaskState = 0,
                                   Data = (from d in _context.Data
+                                          where d.TaskId == t.Id
                                          orderby d.FieldId
                                          select new DataDTO
                                          {

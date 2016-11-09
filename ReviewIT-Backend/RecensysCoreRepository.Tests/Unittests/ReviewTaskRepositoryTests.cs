@@ -69,7 +69,82 @@ namespace RecensysCoreRepository.Tests.Unittests
                 Assert.Equal(1, r.Tasks.Count);
             }
         }
-        
+
+        [Fact]
+        public void GetListDto__DoNotGetUnrelatedData()
+        {
+            var options = Helpers.CreateInMemoryOptions();
+            var context = new RecensysContext(options);
+            var repo = new ReviewTaskRepository(context);
+            #region model
+
+            var study = new Study
+            {
+                Id = 1,
+                Stages = new List<Stage>
+                {
+                    new Stage
+                    {
+                        Id = 1,
+                        Tasks = new List<Task>
+                        {
+                            new Task
+                            {
+                                Id = 1,
+                                TaskType = TaskType.Review,
+                                User = new User {Id = 1},
+                                Data = new List<Data>
+                                {
+                                    new Data
+                                    {
+                                        Id = 1,
+                                        Field = new Field
+                                        {
+                                            DataType = DataType.Boolean,
+                                            StageFields = new List<StageFieldRelation>
+                                            {
+                                                new StageFieldRelation
+                                                {
+                                                    FieldType = FieldType.Visible
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        StageArticleRelations = new List<StageArticleRelation>
+                        {
+                            new StageArticleRelation
+                            {
+                                Article = new Article
+                                {
+                                    Data = new List<Data>
+                                    {
+                                        new Data {Id = 2},
+                                        new Data {Id = 3},
+                                        new Data {Id = 4},
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            };
+            #endregion
+            context.Studies.Add(study);
+            context.SaveChanges();
+
+            using (repo)
+            {
+                var r = repo.GetListDto(1, 1);
+
+                var t = r.Tasks.Single(ta => ta.Id == 1);
+
+                Assert.Equal(1, t.Data.Count);
+            }
+        }
+
         [Fact]
         public void GetListDto_twoFieldsStoredInOrder__FieldsReturnedInOrder()
         {
