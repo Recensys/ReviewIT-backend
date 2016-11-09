@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using RecensysCoreRepository.DTOs;
 
 namespace RecensysCoreRepository.EFRepository.Entities
 {
@@ -7,6 +8,7 @@ namespace RecensysCoreRepository.EFRepository.Entities
     {
         Unknown, Review, Conflict
     }
+    
 
     public class Task : IEntity
     {
@@ -22,6 +24,8 @@ namespace RecensysCoreRepository.EFRepository.Entities
         public virtual User User { get; set; }
 
         public TaskType TaskType { get; set; }
+
+        public TaskState TaskState { get; set; }
 
         //public int? ParentId { get; set; }
         //public virtual Article Parent { get; set; }
