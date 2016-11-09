@@ -63,5 +63,22 @@ namespace RecensysCoreRepository.EFRepository.Repositories
 
             return result;
         }
+
+        public bool Update(ReviewTaskDTO dto)
+        {
+            var stored = (from t in _context.Tasks
+                where t.Id == dto.Id
+                select t).Single();
+
+            stored.TaskState = dto.TaskState;
+
+            foreach (var d in dto.Data)
+            {
+                var ds = _context.Data.Single(da => da.Id == d.Id);
+                ds.Value = d.Value;
+            }
+
+            return _context.SaveChanges() > 0;
+        }
     }
 }

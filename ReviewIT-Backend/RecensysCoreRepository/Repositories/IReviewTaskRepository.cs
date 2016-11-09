@@ -6,5 +6,7 @@ namespace RecensysCoreRepository.Repositories
     public interface IReviewTaskRepository: IDisposable
     {
         ReviewTaskListDTO GetListDto(int stageId, int userId);
+        bool Update(ReviewTaskDTO dto);
+
     }
 }

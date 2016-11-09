@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using RecensysCoreRepository.DTOs;
 using RecensysCoreRepository.Repositories;
 
 // For more information on enabling Web API for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
@@ -38,6 +39,26 @@ namespace RecensysCoreWebAPI.Controllers
             {
                 return StatusCode(500, e.Message);
             }
+        }
+
+        [HttpPut("tasks")]
+        public IActionResult Put([FromBody] ReviewTaskDTO dto)
+        {
+
+            if (!ModelState.IsValid) return BadRequest(ModelState);
+
+            try
+            {
+                using (_tRepo)
+                {
+                    _tRepo
+                }
+            }
+            catch (Exception e)
+            {
+                return StatusCode(500, e.Message);
+            }
+
         }
         
         
