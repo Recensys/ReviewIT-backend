@@ -31,7 +31,8 @@ namespace RecensysCoreRepository.EFRepository.Repositories
                 ArticleId = articleId,
                 StageId = stageId,
                 UserId = ownerId,
-                TaskType = TaskType.Review
+                TaskType = TaskType.Review,
+                TaskState = TaskState.New
             };
 
             // add all requested data to the task. If it already exists, add that, or create a new data entity.
