@@ -14,6 +14,10 @@ declare module RecensysCoreRepository.DTOs {
 		Number = 4,
 		Resource = 5
 	}
+	export const enum FieldType {
+		Visible = 0,
+		Requested = 1
+	}
 	export const enum ResearcherRole {
 		Researcher = 0,
 		ResearchManager = 1
@@ -55,7 +59,7 @@ declare module RecensysCoreRepository.DTOs {
 		TaskState: TaskState;
 	}
 	export class ReviewTaskListDTO {
-		Fields: FieldDTO[];
+		Fields: TaskFieldDTO[];
 		Tasks: ReviewTaskDTO[];
 	}
 	export class StageDetailsDTO {
@@ -78,6 +82,12 @@ declare module RecensysCoreRepository.DTOs {
 		Id: number;
 		LastName: string;
 		Role: ResearcherRole;
+	}
+	export class TaskFieldDTO {
+		DataType: DataType;
+		FieldType: FieldType;
+		Id: number;
+		Name: string;
 	}
 	export class UserDetailsDTO {
 		Email: string;

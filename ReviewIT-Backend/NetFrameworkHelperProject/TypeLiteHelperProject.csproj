@@ -66,6 +66,9 @@
     <Compile Include="..\RecensysCoreRepository\DTOs\FieldDTO.cs">
       <Link>DTOs\FieldDTO.cs</Link>
     </Compile>
+    <Compile Include="..\RecensysCoreRepository\DTOs\FieldType.cs">
+      <Link>DTOs\FieldType.cs</Link>
+    </Compile>
     <Compile Include="..\RecensysCoreRepository\DTOs\ReviewTaskConfigDTO.cs">
       <Link>DTOs\ReviewTaskConfigDTO.cs</Link>
     </Compile>
@@ -92,6 +95,9 @@
     </Compile>
     <Compile Include="..\RecensysCoreRepository\DTOs\StudySourceItemDTO.cs">
       <Link>DTOs\StudySourceItemDTO.cs</Link>
+    </Compile>
+    <Compile Include="..\RecensysCoreRepository\DTOs\TaskFieldDTO.cs">
+      <Link>DTOs\TaskFieldDTO.cs</Link>
     </Compile>
     <Compile Include="..\RecensysCoreRepository\DTOs\UserDetailsDTO.cs">
       <Link>DTOs\UserDetailsDTO.cs</Link>
