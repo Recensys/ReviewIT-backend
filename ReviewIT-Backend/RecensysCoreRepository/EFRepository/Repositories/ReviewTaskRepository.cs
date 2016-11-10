@@ -26,7 +26,7 @@ namespace RecensysCoreRepository.EFRepository.Repositories
 
         public ReviewTaskListDTO GetListDto(int stageId, int userId)
         {
-
+            // Find fields
             var fields = (from sf in _context.StageFieldRelations
                 where sf.StageId == stageId
                 orderby sf.FieldId
@@ -39,22 +39,23 @@ namespace RecensysCoreRepository.EFRepository.Repositories
                     FieldType = sf.FieldType,
                     DataType = f.DataType
                 }).ToList();
-            
+
+            // Find Tasks and populate data
             var taskDtos = (from t in _context.Tasks
-                              where t.StageId == stageId && t.UserId == userId
-                              select new ReviewTaskDTO
-                              {
-                                  Id = t.Id,
-                                  TaskState = 0,
-                                  Data = (from d in _context.Data
-                                          where d.TaskId == t.Id
-                                         orderby d.FieldId
-                                         select new DataDTO
-                                         {
-                                             Id = d.Id,
-                                             Value = d.Value
-                                         }).ToList()
-                              }).ToList();
+                where t.StageId == stageId && t.UserId == userId
+                select new ReviewTaskDTO
+                {
+                    Id = t.Id,
+                    TaskState = t.TaskState,
+                    Data = (from d in _context.Data
+                        where fields.Any(fi => fi.Id == d.FieldId) && d.ArticleId == t.ArticleId
+                        orderby d.FieldId
+                        select new DataDTO
+                        {
+                            Id = d.Id,
+                            Value = d.Value
+                        }).ToList()
+                }).ToList();
 
             var result = new ReviewTaskListDTO
             {
