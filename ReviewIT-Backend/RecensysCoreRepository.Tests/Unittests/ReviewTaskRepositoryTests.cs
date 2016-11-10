@@ -145,6 +145,8 @@ namespace RecensysCoreRepository.Tests.Unittests
             }
         }
 
+        
+
         [Fact]
         public void GetListDto_twoFieldsStoredInOrder__FieldsReturnedInOrder()
         {

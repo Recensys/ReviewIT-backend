@@ -344,5 +344,68 @@ namespace RecensysCoreRepository.Tests.Unittests
 
         }
 
+
+        [Fact]
+        public void Create_1ArticleWith1VisibleField__VisDataPointsToTask()
+        {
+            var options = Helpers.CreateInMemoryOptions();
+            var context = new RecensysContext(options);
+            var repo = new TaskConfigRepository(context);
+            #region model
+            var study = new Study
+            {
+                Stages = new List<Stage>
+                {
+                    new Stage
+                    {
+                        Id = 1,
+                        StageFields = new List<StageFieldRelation>
+                        {
+                            new StageFieldRelation
+                            {
+                                FieldType = FieldType.Visible,
+                                Field = new Field
+                                {
+                                    Id = 1,
+                                    DataType = DataType.Boolean,
+                                    Data = new List<Data>
+                                    {
+                                        new Data
+                                        {
+                                            Id = 1,
+                                            Value = "true",
+                                            Article = new Article
+                                            {
+                                                Id = 2
+                                            }
+                                        },
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                UserRelations = new List<UserStudyRelation>
+                {
+                    new UserStudyRelation
+                    {
+                        User = new User { Id = 1 }
+                    }
+                }
+            };
+            #endregion
+            context.Studies.Add(study);
+            context.SaveChanges();
+
+
+            using (repo)
+            {
+                var r = repo.Create(1, 2, 1, new[] { 1 });
+                
+                Assert.Equal(r, context.Data.Single(da => da.Id == 1).TaskId);
+            }
+
+        }
+
     }
 }
