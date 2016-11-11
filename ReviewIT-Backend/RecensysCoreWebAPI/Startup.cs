@@ -59,13 +59,14 @@ namespace RecensysCoreWebAPI
             services.AddScoped<IFieldRepository, FieldRepository>();
             services.AddScoped<ICriteriaRepository, EFCriteriaRepository>();
             services.AddScoped<ITaskDistributionEngine, TaskDistributionEngine>();
-            services.AddScoped<IRequestedDataRepository, RequestedDataRepository>();
+            services.AddScoped<IRequestedFieldsRepository, RequestedFieldsRepository>();
             services.AddScoped<ITaskConfigRepository, TaskConfigRepository>();
             services.AddScoped<IArticleRepository, EFArticleRepository>();
             services.AddScoped<IStageStartEngine, StageStartEngine>();
             services.AddScoped<IStudyStartEngine, StudyStartEngine>();
             services.AddScoped<IPostStageEngine, PostStageEngine>();
             services.AddScoped<IReviewTaskRepository, ReviewTaskRepository>();
+            services.AddScoped<IDataRepository, EFDataRepository>();
 
             services.AddCors();
 
