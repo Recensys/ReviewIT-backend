@@ -23,7 +23,7 @@ namespace RecensysCoreBLL
             using(_aRepo)
             {
                 // add articles from previous stage
-                var includedArticles = _aRepo.GetAllIncludedFromPreviousStage(id);
+                var includedArticles = _aRepo.GetAllIdsForStage(id);
                 foreach (var i in includedArticles)
                 {
                     _aRepo.AddToStage(id, i);

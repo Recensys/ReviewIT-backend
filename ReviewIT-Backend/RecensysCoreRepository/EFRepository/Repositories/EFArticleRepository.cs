@@ -78,9 +78,7 @@ namespace RecensysCoreRepository.EFRepository.Repositories
             return _context.SaveChanges() > 0;
         }
 
-
-
-        public IEnumerable<int> GetAllIncludedFromPreviousStage(int currentStage)
+        public IEnumerable<int> GetAllIdsForStage(int currentStage)
         {
             var prevStageId = PreviousStage(currentStage);
 
@@ -89,7 +87,7 @@ namespace RecensysCoreRepository.EFRepository.Repositories
                 select sa.ArticleId;
         }
 
-        public int PreviousStage(int current)
+        private int PreviousStage(int current)
         {
             var studyId = (from s in _context.Stages
                            where s.Id == current

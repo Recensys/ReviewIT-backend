@@ -50,7 +50,7 @@ namespace RecensysCoreBLL.CriteriaEngine
                 stageFields = _sfRepo.Get(stageId, FieldType.Requested);
                 var studyId = _stageDetailsRepo.GetStudyId(stageId);
                 criteria = _cRepo.Read(studyId);
-                var articles = _articleRepo.GetAllIncludedFromPreviousStage(stageId).ToList();
+                var articles = _articleRepo.GetAllIdsForStage(stageId).ToList();
                 foreach (var stageField in stageFields)
                 {
                     var inc =
