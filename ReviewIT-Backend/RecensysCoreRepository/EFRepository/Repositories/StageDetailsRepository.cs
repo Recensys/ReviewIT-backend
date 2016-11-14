@@ -36,6 +36,13 @@ namespace RecensysCoreRepository.EFRepository.Repositories
                 }).Single();
         }
 
+        public int GetStudyId(int stageId)
+        {
+            return (from s in _context.Stages
+                where s.Id == stageId
+                select s.StudyId).Single();
+        }
+
         public int Create(int studyId, StageDetailsDTO dto)
         {
             var entity = new Stage()

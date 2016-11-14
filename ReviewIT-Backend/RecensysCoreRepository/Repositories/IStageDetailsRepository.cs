@@ -9,6 +9,7 @@ namespace RecensysCoreRepository.Repositories
     public interface IStageDetailsRepository: IDisposable
     {
         StageDetailsDTO Read(int id);
+        int GetStudyId(int stageId);
         int Create(int studyId, StageDetailsDTO dto);
         bool Update(StageDetailsDTO dto);
         ICollection<StageDetailsDTO> GetAll(int studyId);
