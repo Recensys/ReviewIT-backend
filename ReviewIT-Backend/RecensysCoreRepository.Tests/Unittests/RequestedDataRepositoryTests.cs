@@ -18,7 +18,7 @@ namespace RecensysCoreRepository.Tests.Unittests
         {
             var options = Helpers.CreateInMemoryOptions();
             var context = new RecensysContext(options);
-            var repo = new RequestedDataRepository(context);
+            var repo = new RequestedFieldsRepository(context);
             #region model
             var study = new Study
             {
@@ -73,7 +73,7 @@ namespace RecensysCoreRepository.Tests.Unittests
         {
             var options = Helpers.CreateInMemoryOptions();
             var context = new RecensysContext(options);
-            var repo = new RequestedDataRepository(context);
+            var repo = new RequestedFieldsRepository(context);
             #region model
             var study = new Study
             {

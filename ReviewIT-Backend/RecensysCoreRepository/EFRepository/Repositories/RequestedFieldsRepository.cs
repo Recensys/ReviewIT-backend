@@ -9,12 +9,12 @@ using FieldType = RecensysCoreRepository.DTOs.FieldType;
 
 namespace RecensysCoreRepository.EFRepository.Repositories
 {
-    public class RequestedDataRepository: IRequestedDataRepository
+    public class RequestedFieldsRepository: IRequestedFieldsRepository
     {
 
         private readonly RecensysContext _context;
 
-        public RequestedDataRepository(RecensysContext context)
+        public RequestedFieldsRepository(RecensysContext context)
         {
             if (context == null) throw new ArgumentNullException($"{nameof(context)} is null");
             _context = context;

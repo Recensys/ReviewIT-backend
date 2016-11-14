@@ -24,7 +24,7 @@ namespace RecensysCoreBLL.Tests
                     new UserWorkDTO {Id = 1, Range = new []{0.0,100.0}}
                 }
             });
-            var dataMock = new Mock<IRequestedDataRepository>();
+            var dataMock = new Mock<IRequestedFieldsRepository>();
             dataMock.Setup(d => d.GetAll(1)).Returns(new List<ArticleWithRequestedFieldsDTO>
             {
                 new ArticleWithRequestedFieldsDTO {ArticleId = 1, FieldIds = new [] {1}},
@@ -49,7 +49,7 @@ namespace RecensysCoreBLL.Tests
                     new UserWorkDTO {Id = 1, Range = new []{0.0,100.0}}
                 }
             });
-            var dataMock = new Mock<IRequestedDataRepository>();
+            var dataMock = new Mock<IRequestedFieldsRepository>();
             dataMock.Setup(d => d.GetAll(1)).Returns(new List<ArticleWithRequestedFieldsDTO>
             {
                 new ArticleWithRequestedFieldsDTO {ArticleId = 1, FieldIds = new [] {1}},
@@ -76,7 +76,7 @@ namespace RecensysCoreBLL.Tests
                     new UserWorkDTO {Id = 1, Range = new []{0.0,100.0}}
                 }
             });
-            var dataMock = new Mock<IRequestedDataRepository>();
+            var dataMock = new Mock<IRequestedFieldsRepository>();
             dataMock.Setup(d => d.GetAll(1)).Returns(new List<ArticleWithRequestedFieldsDTO>
             {
                 new ArticleWithRequestedFieldsDTO {ArticleId = 1, FieldIds = new [] {1}},
@@ -103,7 +103,7 @@ namespace RecensysCoreBLL.Tests
     //                new UserWorkDTO {Id = 2, Range = new []{50.0,100.0}},
     //            }
     //        });
-    //        var dataMock = new Mock<IRequestedDataRepository>();
+    //        var dataMock = new Mock<IRequestedFieldsRepository>();
     //        dataMock.Setup(d => d.GetAll(1)).Returns(new List<ArticleWithRequestedFieldsDTO>
     //        {
     //            new ArticleWithRequestedFieldsDTO {ArticleId = 1, FieldIds = new [] {1}},
@@ -132,7 +132,7 @@ namespace RecensysCoreBLL.Tests
     //                new UserWorkDTO {Id = 3, Range = new []{66.0, 100.0}},
     //            }
     //        });
-    //        var dataMock = new Mock<IRequestedDataRepository>();
+    //        var dataMock = new Mock<IRequestedFieldsRepository>();
     //        dataMock.Setup(d => d.GetAll(1)).Returns(new List<ArticleWithRequestedFieldsDTO>
     //        {
     //            new ArticleWithRequestedFieldsDTO {ArticleId = 1, FieldIds = new [] {1}},
@@ -162,7 +162,7 @@ namespace RecensysCoreBLL.Tests
     //                new UserWorkDTO {Id = 2, Range = new []{0.0, 100.0}}
     //            }
     //        });
-    //        var dataMock = new Mock<IRequestedDataRepository>();
+    //        var dataMock = new Mock<IRequestedFieldsRepository>();
     //        dataMock.Setup(d => d.GetAll(1)).Returns(new List<ArticleWithRequestedFieldsDTO>
     //        {
     //            new ArticleWithRequestedFieldsDTO {ArticleId = 1, FieldIds = new [] {1}},
@@ -191,7 +191,7 @@ namespace RecensysCoreBLL.Tests
     //                new UserWorkDTO {Id = 2, Range = new []{50.0, 100.0}}
     //            }
     //        });
-    //        var dataMock = new Mock<IRequestedDataRepository>();
+    //        var dataMock = new Mock<IRequestedFieldsRepository>();
     //        dataMock.Setup(d => d.GetAll(1)).Returns(new List<ArticleWithRequestedFieldsDTO>
     //        {
     //            new ArticleWithRequestedFieldsDTO {ArticleId = 1, FieldIds = new [] {1}},
@@ -219,7 +219,7 @@ namespace RecensysCoreBLL.Tests
     //                new UserWorkDTO {Id = 1, Range = new []{0.0, 50.0}}
     //            }
     //        });
-    //        var dataMock = new Mock<IRequestedDataRepository>();
+    //        var dataMock = new Mock<IRequestedFieldsRepository>();
     //        dataMock.Setup(d => d.GetAll(1)).Returns(new List<ArticleWithRequestedFieldsDTO>
     //        {
     //            new ArticleWithRequestedFieldsDTO {ArticleId = 1, FieldIds = new [] {1}},
@@ -248,7 +248,7 @@ namespace RecensysCoreBLL.Tests
     //                new UserWorkDTO {Id = 2, Range = new []{50.0, 100.0}}
     //            }
     //        });
-    //        var dataMock = new Mock<IRequestedDataRepository>();
+    //        var dataMock = new Mock<IRequestedFieldsRepository>();
     //        dataMock.Setup(d => d.GetAll(1)).Returns(new List<ArticleWithRequestedFieldsDTO>
     //        {
     //            #region model
@@ -377,7 +377,7 @@ namespace RecensysCoreBLL.Tests
     //                new UserWorkDTO {Id = 3, Range = new []{66.0, 100.0}}
     //            }
     //        });
-    //        var dataMock = new Mock<IRequestedDataRepository>();
+    //        var dataMock = new Mock<IRequestedFieldsRepository>();
     //        dataMock.Setup(d => d.GetAll(1)).Returns(new List<ArticleWithRequestedFieldsDTO>
     //        {
     //            #region model

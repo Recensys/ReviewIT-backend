@@ -9,11 +9,11 @@ namespace RecensysCoreBLL
     public class TaskDistributionEngine : ITaskDistributionEngine
     {
         private readonly IDistributionRepository _distRepo;
-        private readonly IRequestedDataRepository _rdRepo;
+        private readonly IRequestedFieldsRepository _rdRepo;
         private readonly ITaskConfigRepository _tRepo;
 
 
-        public TaskDistributionEngine(IDistributionRepository distRepo, IRequestedDataRepository rdRepo,
+        public TaskDistributionEngine(IDistributionRepository distRepo, IRequestedFieldsRepository rdRepo,
             ITaskConfigRepository tRepo)
         {
             _distRepo = distRepo;

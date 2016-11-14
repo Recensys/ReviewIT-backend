@@ -6,7 +6,7 @@ using RecensysCoreRepository.DTOs;
 
 namespace RecensysCoreRepository.Repositories
 {
-    public interface IRequestedDataRepository: IDisposable
+    public interface IRequestedFieldsRepository: IDisposable
     {
         IEnumerable<ArticleWithRequestedFieldsDTO> GetAll(int stageId);
         ArticleWithRequestedFieldsDTO Read(int articleId);
