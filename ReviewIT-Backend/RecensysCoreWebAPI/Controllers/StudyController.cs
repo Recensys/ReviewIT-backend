@@ -21,19 +21,13 @@ namespace RecensysCoreWebAPI.Controllers
         private readonly IStudyDetailsRepository _deRepo;
         private readonly IStudySourceRepository _soRepo;
         private readonly IStageDetailsRepository _sdRepo;
-        private readonly ITaskDistributionEngine _tdEngine;
-        private readonly IArticleRepository _aRepo;
         private readonly IStudyStartEngine _ssEngine;
 
-        public StudyController(IStudyMemberRepository resRepo, IStudyDetailsRepository deRepo,
-            IStudySourceRepository soRepo, IStageDetailsRepository sdRepo, ITaskDistributionEngine tdEngine,
-            IArticleRepository aRepo, IStudyStartEngine ssEngine)
+        public StudyController(IStudyDetailsRepository deRepo, IStudySourceRepository soRepo, IStageDetailsRepository sdRepo, IStudyStartEngine ssEngine)
         {
             _deRepo = deRepo;
             _soRepo = soRepo;
             _sdRepo = sdRepo;
-            _tdEngine = tdEngine;
-            _aRepo = aRepo;
             _ssEngine = ssEngine;
         }
 
