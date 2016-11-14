@@ -82,5 +82,17 @@ namespace RecensysCoreRepository.EFRepository.Repositories
 
             return _context.SaveChanges() > 0;
         }
+
+        public int CountIncomplete(int stageId)
+        {
+            return _context.Tasks.Count(t => t.StageId == stageId && t.TaskType == TaskType.Review && t.TaskState != TaskState.Done);
+        }
+
+        public int GetStageId(ReviewTaskDTO dto)
+        {
+            return (from t in _context.Tasks
+                where t.Id == dto.Id
+                select t.StageId).Single();
+        }
     }
 }

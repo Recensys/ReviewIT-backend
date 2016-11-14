@@ -7,6 +7,7 @@ namespace RecensysCoreRepository.Repositories
     {
         ReviewTaskListDTO GetListDto(int stageId, int userId);
         bool Update(ReviewTaskDTO dto);
-
+        int CountIncomplete(int stageId);
+        int GetStageId(ReviewTaskDTO dto);
     }
 }

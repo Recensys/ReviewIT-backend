@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using RecensysCoreBLL;
 using RecensysCoreRepository.DTOs;
 using RecensysCoreRepository.Repositories;
 
@@ -15,10 +16,12 @@ namespace RecensysCoreWebAPI.Controllers
     {
 
         private readonly IReviewTaskRepository _tRepo;
+        private readonly IReviewTaskLogic _tLogic;
 
-        public TaskController(IReviewTaskRepository tRepo)
+        public TaskController(IReviewTaskRepository tRepo, IReviewTaskLogic tLogic)
         {
             _tRepo = tRepo;
+            _tLogic = tLogic;
         }
 
         // GET: api/values
@@ -44,21 +47,9 @@ namespace RecensysCoreWebAPI.Controllers
         [HttpPut("tasks")]
         public IActionResult Put([FromBody] ReviewTaskDTO dto)
         {
-
             if (!ModelState.IsValid) return BadRequest(ModelState);
 
-            try
-            {
-                using (_tRepo)
-                {
-                    _tRepo
-                }
-            }
-            catch (Exception e)
-            {
-                return StatusCode(500, e.Message);
-            }
-
+            return _tLogic.Update(dto) ? NoContent() : StatusCode(500);
         }
         
         
