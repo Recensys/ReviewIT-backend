@@ -48,6 +48,13 @@ namespace RecensysCoreRepository.EFRepository.Repositories
             return dto;
         }
 
+        public List<FieldDTO> Get(int stageId, FieldType fieldType)
+        {
+            return (from sf in _context.StageFieldRelations
+             where sf.StageId == stageId && sf.FieldType == fieldType
+             select new FieldDTO() { Id = sf.FieldId, Name = sf.Field.Name, DataType = sf.Field.DataType }).ToList();
+        }
+
         public async Task<StageFieldsDTO> GetAsync(int stageId)
         {
             throw new NotImplementedException();
