@@ -9,16 +9,14 @@ namespace RecensysCoreBLL
     public class TaskDistributionEngine : ITaskDistributionEngine
     {
         private readonly IDistributionRepository _distRepo;
-        private readonly IRequestedFieldsRepository _rdRepo;
         private readonly ITaskConfigRepository _tRepo;
+        private readonly IArticleRepository _articleRepo;
 
-
-        public TaskDistributionEngine(IDistributionRepository distRepo, IRequestedFieldsRepository rdRepo,
-            ITaskConfigRepository tRepo)
+        public TaskDistributionEngine(IDistributionRepository distRepo, ITaskConfigRepository tRepo, IArticleRepository articleRepo)
         {
             _distRepo = distRepo;
-            _rdRepo = rdRepo;
             _tRepo = tRepo;
+            _articleRepo = articleRepo;
         }
 
 
@@ -26,11 +24,10 @@ namespace RecensysCoreBLL
         {
             var createdTasks = 0;
 
-            using (_rdRepo)
             using (_distRepo)
             using (_tRepo)
             {
-                var article = _rdRepo.GetAll(stageId).ToList();
+                var article = _articleRepo.GetAllWithRequestedFields(stageId).ToList();
                 var distDto = _distRepo.Read(stageId);
                 var dist = distDto.Dist;
 

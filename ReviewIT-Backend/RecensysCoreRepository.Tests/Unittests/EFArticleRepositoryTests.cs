@@ -388,5 +388,107 @@ namespace RecensysCoreRepository.Tests.Unittests
                 Assert.Equal(0, r.Count(id => id == 2));
             }
         }
+
+        [Fact]
+        public void GetAllWithRequestedData_stageWith1RequestedField__1RequestedField()
+        {
+            var options = Helpers.CreateInMemoryOptions();
+            var context = new RecensysContext(options);
+            var repo = new EFArticleRepository(context);
+            #region model
+            var study = new Study
+            {
+                Id = 1,
+                Stages = new List<Stage>
+                {
+                    new Stage
+                    {
+                        Id = 1,
+                        StageFields = new List<StageFieldRelation>
+                        {
+                            new StageFieldRelation
+                            {
+                                FieldType = FieldType.Requested,
+                                Field = new Field
+                                {
+                                    Data = new List<Data>
+                                    {
+                                        new Data
+                                        {
+                                            Id = 1,
+                                            Article = new Article
+                                            {
+                                                Id = 1,
+                                                StudyId = 1
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            };
+            #endregion
+            context.Studies.Add(study);
+            context.SaveChanges();
+
+            using (repo)
+            {
+                var r = repo.GetAllWithRequestedFields(1);
+                Assert.Equal(1, r.First().FieldIds.Count());
+            }
+        }
+
+        [Fact]
+        public void GetAllWithRequestedData_stageWith1VisibleField__0RequestedField()
+        {
+            var options = Helpers.CreateInMemoryOptions();
+            var context = new RecensysContext(options);
+            var repo = new EFArticleRepository(context);
+            #region model
+            var study = new Study
+            {
+                Id = 1,
+                Stages = new List<Stage>
+                {
+                    new Stage
+                    {
+                        Id = 1,
+                        StageFields = new List<StageFieldRelation>
+                        {
+                            new StageFieldRelation
+                            {
+                                FieldType = FieldType.Visible,
+                                Field = new Field
+                                {
+                                    Data = new List<Data>
+                                    {
+                                        new Data
+                                        {
+                                            Id = 1,
+                                            Article = new Article
+                                            {
+                                                Id = 1,
+                                                StudyId = 1
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            };
+            #endregion
+            context.Studies.Add(study);
+            context.SaveChanges();
+
+            using (repo)
+            {
+                var r = repo.GetAllWithRequestedFields(1).ToList();
+                Assert.Equal(0, r.First().FieldIds.Count());
+            }
+        }
     }
 }

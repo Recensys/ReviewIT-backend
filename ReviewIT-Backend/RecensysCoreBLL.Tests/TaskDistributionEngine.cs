@@ -24,15 +24,15 @@ namespace RecensysCoreBLL.Tests
                     new UserWorkDTO {Id = 1, Range = new []{0.0,100.0}}
                 }
             });
-            var dataMock = new Mock<IRequestedFieldsRepository>();
-            dataMock.Setup(d => d.GetAll(1)).Returns(new List<ArticleWithRequestedFieldsDTO>
+            var dataMock = new Mock<IArticleRepository>();
+            dataMock.Setup(d => d.GetAllWithRequestedFields(1)).Returns(new List<ArticleWithRequestedFieldsDTO>
             {
                 new ArticleWithRequestedFieldsDTO {ArticleId = 1, FieldIds = new [] {1}},
                 new ArticleWithRequestedFieldsDTO {ArticleId = 2, FieldIds = new [] {2}}
             });
             var taskMock = new Mock<ITaskConfigRepository>();
             
-            var engine = new RecensysCoreBLL.TaskDistributionEngine(distMock.Object, dataMock.Object, taskMock.Object);
+            var engine = new RecensysCoreBLL.TaskDistributionEngine(distMock.Object, taskMock.Object, dataMock.Object);
             var r = engine.Generate(1);
 
             Assert.Equal(r, 2);
@@ -49,8 +49,8 @@ namespace RecensysCoreBLL.Tests
                     new UserWorkDTO {Id = 1, Range = new []{0.0,100.0}}
                 }
             });
-            var dataMock = new Mock<IRequestedFieldsRepository>();
-            dataMock.Setup(d => d.GetAll(1)).Returns(new List<ArticleWithRequestedFieldsDTO>
+            var dataMock = new Mock<IArticleRepository>();
+            dataMock.Setup(d => d.GetAllWithRequestedFields(1)).Returns(new List<ArticleWithRequestedFieldsDTO>
             {
                 new ArticleWithRequestedFieldsDTO {ArticleId = 1, FieldIds = new [] {1}},
                 new ArticleWithRequestedFieldsDTO {ArticleId = 2, FieldIds = new [] {2}}
@@ -58,7 +58,7 @@ namespace RecensysCoreBLL.Tests
             var taskMock = new Mock<ITaskConfigRepository>();
 
 
-            var engine = new RecensysCoreBLL.TaskDistributionEngine(distMock.Object, dataMock.Object, taskMock.Object);
+            var engine = new RecensysCoreBLL.TaskDistributionEngine(distMock.Object, taskMock.Object, dataMock.Object);
             var r = engine.Generate(1);
 
             taskMock.Verify(t => t.Create(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int[]>()), Times.Exactly(2));
@@ -76,8 +76,8 @@ namespace RecensysCoreBLL.Tests
                     new UserWorkDTO {Id = 1, Range = new []{0.0,100.0}}
                 }
             });
-            var dataMock = new Mock<IRequestedFieldsRepository>();
-            dataMock.Setup(d => d.GetAll(1)).Returns(new List<ArticleWithRequestedFieldsDTO>
+            var dataMock = new Mock<IArticleRepository>();
+            dataMock.Setup(d => d.GetAllWithRequestedFields(1)).Returns(new List<ArticleWithRequestedFieldsDTO>
             {
                 new ArticleWithRequestedFieldsDTO {ArticleId = 1, FieldIds = new [] {1}},
                 new ArticleWithRequestedFieldsDTO {ArticleId = 2, FieldIds = new [] {2}}
@@ -85,7 +85,7 @@ namespace RecensysCoreBLL.Tests
             var taskMock = new Mock<ITaskConfigRepository>();
 
 
-            var engine = new RecensysCoreBLL.TaskDistributionEngine(distMock.Object, dataMock.Object, taskMock.Object);
+            var engine = new RecensysCoreBLL.TaskDistributionEngine(distMock.Object, taskMock.Object, dataMock.Object);
             var r = engine.Generate(1);
 
             taskMock.Verify(t => t.Create(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int[]>()), Times.Exactly(2));

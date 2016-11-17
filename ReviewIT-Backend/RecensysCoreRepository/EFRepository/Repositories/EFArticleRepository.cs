@@ -108,6 +108,21 @@ namespace RecensysCoreRepository.EFRepository.Repositories
 
         }
 
+        public IEnumerable<ArticleWithRequestedFieldsDTO> GetAllWithRequestedFields(int stageId)
+        {
+            var articleIds = GetAllActive(stageId).ToArray();
+
+            return from i in _context.Articles
+                where articleIds.Any(aid => aid == i.Id)
+                select new ArticleWithRequestedFieldsDTO
+                {
+                    ArticleId = i.Id,
+                    FieldIds = (from sf in _context.StageFieldRelations
+                                where sf.StageId == stageId && sf.FieldType == FieldType.Requested
+                                select sf.FieldId).ToArray()
+                };
+        }
+
         /// <summary>
         ///     
         /// </summary>

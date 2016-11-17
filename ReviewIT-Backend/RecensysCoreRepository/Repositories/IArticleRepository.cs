@@ -11,5 +11,6 @@ namespace RecensysCoreRepository.Repositories
         IEnumerable<int> GetAllIdsForStudy(int studyId);
         bool AddCriteriaResult(int criteriaId, int stageId, int articleId);
         IEnumerable<int> GetAllActive(int currentStage);
+        IEnumerable<ArticleWithRequestedFieldsDTO> GetAllWithRequestedFields(int stageId);
     }
 }
