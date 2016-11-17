@@ -13,5 +13,6 @@ namespace RecensysCoreRepository.Repositories
         int Create(int studyId, StageDetailsDTO dto);
         bool Update(StageDetailsDTO dto);
         ICollection<StageDetailsDTO> GetAll(int studyId);
+        bool TryGetNextStage(int currentStageId, out int nextStageId);
     }
 }

@@ -80,5 +80,28 @@ namespace RecensysCoreRepository.EFRepository.Repositories
                     Description = s.Description
                 }).ToList();
         }
+
+        public bool TryGetNextStage(int currentStageId, out int nextStageId)
+        {
+            var studyId = GetStudyId(currentStageId);
+
+            var stageIds = (from s in _context.Stages
+                where s.StudyId == studyId
+                orderby s.Id
+                select s.Id).ToArray();
+
+            var index = Array.IndexOf(stageIds, currentStageId);
+            if (index == stageIds.Length)
+            {
+                nextStageId = -1;
+                return false;
+            }
+            else
+            {
+                nextStageId = stageIds[index + 1];
+                return true;
+            }
+            
+        }
     }
 }

@@ -113,9 +113,9 @@ namespace RecensysCoreRepository.Tests.Unittests
                                 }
                             }
                         },
-                        StageArticleRelations = new List<StageArticleRelation>
+                        CriteriaResults = new List<CriteriaResult>
                         {
-                            new StageArticleRelation
+                            new CriteriaResult
                             {
                                 Article = new Article
                                 {

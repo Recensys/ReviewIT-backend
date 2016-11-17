@@ -39,7 +39,7 @@ namespace RecensysCoreBLL.Tests
             var articleMock = new Mock<IArticleRepository>();
             articleMock.Setup(a => a.AddCriteriaResult(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>()))
                 .Returns(() => true);
-            articleMock.Setup(a => a.GetAllIdsForStage(1)).Returns(() => new List<int> {1});
+            articleMock.Setup(a => a.GetAllActive(1)).Returns(() => new List<int> {1});
 
             var dataMock = new Mock<IDataRepository>();
             dataMock.Setup(d => d.Read(1, 1)).Returns(() => new DataDTO {Id = 1, Value = "2001"});
@@ -81,7 +81,7 @@ namespace RecensysCoreBLL.Tests
             var articleMock = new Mock<IArticleRepository>();
             articleMock.Setup(a => a.AddCriteriaResult(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>()))
                 .Returns(() => true);
-            articleMock.Setup(a => a.GetAllIdsForStage(1)).Returns(() => new List<int> { 1 });
+            articleMock.Setup(a => a.GetAllActive(1)).Returns(() => new List<int> { 1 });
 
             var dataMock = new Mock<IDataRepository>();
             dataMock.Setup(d => d.Read(1, 1)).Returns(() => new DataDTO { Id = 1, Value = "2001" });
@@ -134,7 +134,7 @@ namespace RecensysCoreBLL.Tests
             var articleMock = new Mock<IArticleRepository>();
             articleMock.Setup(a => a.AddCriteriaResult(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>()))
                 .Returns(() => true);
-            articleMock.Setup(a => a.GetAllIdsForStage(1)).Returns(() => new List<int> { 1 });
+            articleMock.Setup(a => a.GetAllActive(1)).Returns(() => new List<int> { 1 });
 
             var dataMock = new Mock<IDataRepository>();
             dataMock.Setup(d => d.Read(1, 1)).Returns(() => new DataDTO { Id = 1, Value = "2002" });

@@ -51,7 +51,7 @@ namespace RecensysCoreRepository.EFRepository.Repositories
 
         public bool AddToStage(int stageId, int articleId)
         {
-            _context.StageArticleRelations.Add(new StageArticleRelation
+            _context.CriteriaResults.Add(new CriteriaResult
             {
                 StageId = stageId,
                 ArticleId = articleId
@@ -69,7 +69,7 @@ namespace RecensysCoreRepository.EFRepository.Repositories
 
         public bool AddCriteriaResult(int criteriaId, int stageId, int articleId)
         {
-            _context.StageArticleRelations.Add(new StageArticleRelation
+            _context.CriteriaResults.Add(new CriteriaResult
             {
                 ArticleId = articleId,
                 CriteriaId = criteriaId,
@@ -78,27 +78,64 @@ namespace RecensysCoreRepository.EFRepository.Repositories
             return _context.SaveChanges() > 0;
         }
 
-        public IEnumerable<int> GetAllIdsForStage(int currentStage)
+        /// <summary>
+        ///     An active article is defined by an article that's not excluded - thus either included or not affected by a criteria
+        /// </summary>
+        /// <param name="currentStage"></param>
+        /// <returns></returns>
+        public IEnumerable<int> GetAllActive(int currentStage)
         {
-            var prevStageId = PreviousStage(currentStage);
+            int studyId = (from s in _context.Stages
+                where s.Id == currentStage
+                select s.StudyId).Single();
 
-            return from sa in _context.StageArticleRelations
-                where sa.StageId == prevStageId && (sa.CriteriaId == null || sa.Criteria.Type == CriteriaType.Inclusion)
-                select sa.ArticleId;
+            //For some reason, this does not return the article if it's not affected by a criteria, so it has to be done with two calls to the db
+            //return (from a in _context.Articles
+            //        where a.StudyId == studyId && (!a.CriteriaResultId.HasValue || a.CriteriaResult.Criteria.Type != CriteriaType.Exclusion)
+            //        select a.Id).ToArray();
+
+            var unAffectedArticles = (from a in _context.Articles
+                                      where a.StudyId == studyId && !a.CriteriaResultId.HasValue
+                                      select a.Id).ToArray();
+
+            var includedArticles = (from a in _context.Articles
+                                    where a.StudyId == studyId && a.CriteriaResultId.HasValue && a.CriteriaResult.Criteria.Type != CriteriaType.Exclusion
+                                    select a.Id).ToArray();
+
+            var allArticleIds = unAffectedArticles.Concat(includedArticles);
+
+            return allArticleIds;
+
         }
 
-        private int PreviousStage(int current)
+        /// <summary>
+        ///     
+        /// </summary>
+        /// <param name="current"></param>
+        /// <param name="prevStage"></param>
+        /// <returns>true if got prev stagId, false if there is no prev stage</returns>
+        private bool TryGetPreviousStage(int current, out int prevStage)
         {
             var studyId = (from s in _context.Stages
                            where s.Id == current
                            select s.StudyId).Single();
 
-            var prevStage = (from s in _context.Stages
+            var stageIds = (from s in _context.Stages
                              where s.StudyId == studyId
                              orderby s.Id
-                             select s.Id).ToList();
+                             select s.Id).ToArray();
 
-            return prevStage[prevStage.IndexOf(current) - 1];
+            var index = Array.IndexOf(stageIds, current);
+            if (index == 0)
+            {
+                prevStage = -1;
+                return false;
+            }
+            else
+            {
+                prevStage = stageIds[index - 1];
+                return true;
+            }
         }
     }
 }

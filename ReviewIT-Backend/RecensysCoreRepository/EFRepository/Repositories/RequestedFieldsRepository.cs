@@ -13,11 +13,13 @@ namespace RecensysCoreRepository.EFRepository.Repositories
     {
 
         private readonly RecensysContext _context;
+        private readonly IArticleRepository _aRepo;
 
-        public RequestedFieldsRepository(RecensysContext context)
+        public RequestedFieldsRepository(RecensysContext context, IArticleRepository aRepo)
         {
             if (context == null) throw new ArgumentNullException($"{nameof(context)} is null");
             _context = context;
+            _aRepo = aRepo;
         }
 
         public void Dispose()
@@ -28,8 +30,19 @@ namespace RecensysCoreRepository.EFRepository.Repositories
         public IEnumerable<ArticleWithRequestedFieldsDTO> GetAll(int stageId)
         {
 
-            var dtos = from i in _context.StageArticleRelations
-                where i.StageId == stageId
+            // get all articles
+
+            // get all requested fields in the stage per article
+
+            // TODO move to article repo
+
+            using (_aRepo)
+            {
+                _aRepo.GetAllActive()
+            }
+
+            var dtos = from i in _context.Articles
+                where i.StudyId
                 select new ArticleWithRequestedFieldsDTO
                 {
                     ArticleId = i.ArticleId,

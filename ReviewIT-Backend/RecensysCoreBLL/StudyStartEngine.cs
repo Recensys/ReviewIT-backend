@@ -26,13 +26,16 @@ namespace RecensysCoreBLL
             {
                 using (_stageRepo)
                 {
-                    // add articles from previous stage
-                    var includedArticles = _aRepo.GetAllIdsForStudy(studyId);
+
                     var minStageId = _stageRepo.GetAll(studyId).Min(s => s.Id);
-                    foreach (var i in includedArticles.ToList())
-                    {
-                        _aRepo.AddToStage(minStageId, i);
-                    }
+
+                    // add articles from previous stage
+                    // No longer needed
+                    //var includedArticles = _aRepo.GetAllIdsForStudy(studyId).ToList();
+                    //foreach (var i in includedArticles)
+                    //{
+                    //    _aRepo.AddToStage(minStageId, i);
+                    //}
 
                     // create tasks for the first stage
                     var nrOfTasksCreated = _tdEngine.Generate(minStageId);

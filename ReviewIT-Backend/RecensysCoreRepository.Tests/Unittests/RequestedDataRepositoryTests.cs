@@ -41,13 +41,12 @@ namespace RecensysCoreRepository.Tests.Unittests
                                             Id = 1,
                                             Article = new Article
                                             {
-                                                StageArticleRelations = new List<StageArticleRelation>
-                                                {
-                                                    new StageArticleRelation
+                                                CriteriaResult =
+                                                    new CriteriaResult
                                                     {
                                                         StageId = 1,
                                                     }
-                                                }
+                                                
                                             }
                                         }
                                     }
@@ -96,13 +95,12 @@ namespace RecensysCoreRepository.Tests.Unittests
                                             Id = 1,
                                             Article = new Article
                                             {
-                                                StageArticleRelations = new List<StageArticleRelation>
-                                                {
-                                                    new StageArticleRelation
+                                                CriteriaResult = 
+                                                    new CriteriaResult
                                                     {
                                                         StageId = 1,
                                                     }
-                                                }
+                                                
                                             }
                                         }
                                     }

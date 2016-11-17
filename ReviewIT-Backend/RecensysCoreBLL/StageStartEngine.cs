@@ -11,7 +11,7 @@ namespace RecensysCoreBLL
         private readonly IArticleRepository _aRepo;
         private readonly IStageDetailsRepository _sdRepo;
 
-        public StageStartEngine(ITaskDistributionEngine tdEngine, IArticleRepository aRepo, IPostStageEngine cEngine, IStageDetailsRepository sdRepo)
+        public StageStartEngine(ITaskDistributionEngine tdEngine, IArticleRepository aRepo, IStageDetailsRepository sdRepo)
         {
             _tdEngine = tdEngine;
             _aRepo = aRepo;
@@ -23,7 +23,7 @@ namespace RecensysCoreBLL
             using(_aRepo)
             {
                 // add articles from previous stage
-                var includedArticles = _aRepo.GetAllIdsForStage(id);
+                var includedArticles = _aRepo.GetAllActive(id);
                 foreach (var i in includedArticles)
                 {
                     _aRepo.AddToStage(id, i);
