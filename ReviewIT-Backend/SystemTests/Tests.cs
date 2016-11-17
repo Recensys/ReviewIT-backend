@@ -29,7 +29,8 @@ namespace SystemTests
         public TestServer TestServer { get; set; }
         public HttpClient HttpClient { get; set; }
         public string StudyId { get; set; }
-        public string StageId { get; set; }
+        public string StageId1 { get; set; }
+        public string StageId2 { get; set; }
         public int UserId { get; set; }
 
         public TestFixture()
@@ -48,7 +49,6 @@ namespace SystemTests
         
     }
 
-    
 
 
     public class Tests : IClassFixture<TestFixture>
@@ -67,9 +67,17 @@ namespace SystemTests
             await Study_Post_Get();
             await Source_Post();
             await AddIsGSDField();
+            await AddIsGSDCriteria();
             await AddUser();
             await AddStage();
-            await StageFields();
+            await StageFieldsStage1();
+            await DistributionStage1();
+            //await AddStage2();
+            //await StageFieldsStage2();
+            //await DistributionStage2();
+            await StartStudy();
+            await CompleteTasksForStage1();
+            await CompleteTasksForStage2();
         }
 
         //[Fact(DisplayName = "Post new study")]
@@ -137,6 +145,37 @@ namespace SystemTests
             Assert.Equal(14, response3Dto.Length);
         }
 
+        public async Task AddIsGSDCriteria()
+        {
+            // Search for isGSD field
+            var response = await _f.HttpClient.GetStringAsync($"api/study/{_f.StudyId}/field/search?term=IsGSD?");
+            var responseDto = JsonConvert.DeserializeObject<FieldDTO[]>(response);
+            var isGSDField = responseDto.Single(dto => dto.Name == "IsGSD?");
+
+            var response2 = await _f.HttpClient.GetStringAsync($"api/study/{_f.StudyId}/criteria");
+            var response2Dto = JsonConvert.DeserializeObject<CriteriaDTO>(response2);
+
+            Assert.Equal(0, response2Dto.Inclusions.Count);
+            Assert.Equal(0, response2Dto.Exclusions.Count);
+            var isGsdField = new FieldCriteriaDTO
+            {
+                Field = isGSDField,
+                Operator = "==",
+                Value = "false"
+            };
+            response2Dto.Exclusions.Add(isGsdField);
+
+            var content = new StringContent(JsonConvert.SerializeObject(response2Dto), Encoding.UTF8, "application/json");
+            var response3 = await _f.HttpClient.PutAsync($"api/study/{_f.StudyId}/criteria", content);
+            response3.EnsureSuccessStatusCode();
+
+            var response4 = await _f.HttpClient.GetStringAsync($"api/study/{_f.StudyId}/criteria");
+            var response4Dto = JsonConvert.DeserializeObject<CriteriaDTO>(response4);
+
+            Assert.Equal(1, response4Dto.Exclusions.Count);
+            Assert.Equal(0, response4Dto.Inclusions.Count);
+        }
+
         //[Fact(DisplayName = "Add a user to the study")]
         public async Task AddUser()
         {
@@ -168,17 +207,34 @@ namespace SystemTests
             var content = new StringContent(JsonConvert.SerializeObject(dto), Encoding.UTF8, "application/json");
             var response = await _f.HttpClient.PostAsync($"api/study/{_f.StudyId}/stage", content);
             response.EnsureSuccessStatusCode();
-            _f.StageId = await response.Content.ReadAsStringAsync();
+            _f.StageId1 = await response.Content.ReadAsStringAsync();
 
-            var response2 = await _f.HttpClient.GetStringAsync($"api/stage/{_f.StageId}");
+            var response2 = await _f.HttpClient.GetStringAsync($"api/stage/{_f.StageId1}");
 
             var response2Dto = JsonConvert.DeserializeObject<StageDetailsDTO>(response2);
             Assert.Equal("Test Stage", response2Dto.Name);
         }
 
-        public async Task StageFields()
+        public async Task AddStage2()
         {
-            var response = await _f.HttpClient.GetStringAsync($"api/stage/{_f.StageId}/stagefield");
+            var dto = new StageDetailsDTO
+            {
+                Name = "Test Stage 2"
+            };
+            var content = new StringContent(JsonConvert.SerializeObject(dto), Encoding.UTF8, "application/json");
+            var response = await _f.HttpClient.PostAsync($"api/study/{_f.StudyId}/stage", content);
+            response.EnsureSuccessStatusCode();
+            _f.StageId2 = await response.Content.ReadAsStringAsync();
+
+            var response2 = await _f.HttpClient.GetStringAsync($"api/stage/{_f.StageId2}");
+
+            var response2Dto = JsonConvert.DeserializeObject<StageDetailsDTO>(response2);
+            Assert.Equal("Test Stage 2", response2Dto.Name);
+        }
+
+        public async Task StageFieldsStage1()
+        {
+            var response = await _f.HttpClient.GetStringAsync($"api/stage/{_f.StageId1}/stagefield");
             var responseDto = JsonConvert.DeserializeObject<StageFieldsDTO>(response);
 
             Assert.Equal(14, responseDto.AvailableFields.Count);
@@ -191,15 +247,146 @@ namespace SystemTests
             responseDto.RequestedFields.Add(isGsdField);
 
             var content = new StringContent(JsonConvert.SerializeObject(responseDto), Encoding.UTF8, "application/json");
-            var response2 = await _f.HttpClient.PutAsync($"api/stage/{_f.StageId}/stagefield", content);
+            var response2 = await _f.HttpClient.PutAsync($"api/stage/{_f.StageId1}/stagefield", content);
             response2.EnsureSuccessStatusCode();
 
-            var response3 = await _f.HttpClient.GetStringAsync($"api/stage/{_f.StageId}/stagefield");
+            var response3 = await _f.HttpClient.GetStringAsync($"api/stage/{_f.StageId1}/stagefield");
             var response3Dto = JsonConvert.DeserializeObject<StageFieldsDTO>(response3);
 
             Assert.Equal(12, response3Dto.AvailableFields.Count);
             Assert.Equal(1, response3Dto.VisibleFields.Count);
             Assert.Equal(1, response3Dto.RequestedFields.Count);
+        }
+
+
+        public async Task DistributionStage1()
+        {
+            var response = await _f.HttpClient.GetStringAsync($"api/stage/{_f.StageId1}/distribution");
+            var responseDto = JsonConvert.DeserializeObject<DistributionDTO>(response);
+
+            responseDto.Dist = new List<UserWorkDTO>
+            {
+                new UserWorkDTO
+                {
+                    Id = 1,
+                    Range = new double[] {0,100}
+                },
+            };
+            var content = new StringContent(JsonConvert.SerializeObject(responseDto), Encoding.UTF8, "application/json");
+            var response2 = await _f.HttpClient.PutAsync($"api/stage/{_f.StageId1}/distribution", content);
+            response2.EnsureSuccessStatusCode();
+
+            var response3 = await _f.HttpClient.GetStringAsync($"api/stage/{_f.StageId1}/distribution");
+            var response3Dto = JsonConvert.DeserializeObject<DistributionDTO>(response3);
+
+            Assert.Equal(0, response3Dto.Dist.Single(d => d.Id == 1).Range[0]);
+            Assert.Equal(100, response3Dto.Dist.Single(d => d.Id == 1).Range[1]);
+        }
+
+        public async Task StageFieldsStage2()
+        {
+            var response = await _f.HttpClient.GetStringAsync($"api/stage/{_f.StageId2}/stagefield");
+            var responseDto = JsonConvert.DeserializeObject<StageFieldsDTO>(response);
+
+            Assert.Equal(14, responseDto.AvailableFields.Count);
+
+            var titleField = responseDto.AvailableFields.Single(f => f.Name == "Title");
+            responseDto.AvailableFields.Remove(titleField);
+            responseDto.VisibleFields.Add(titleField);
+            var isGsdField = responseDto.AvailableFields.Single(f => f.Name == "IsGSD?");
+            responseDto.AvailableFields.Remove(isGsdField);
+            responseDto.RequestedFields.Add(isGsdField);
+
+            var content = new StringContent(JsonConvert.SerializeObject(responseDto), Encoding.UTF8, "application/json");
+            var response2 = await _f.HttpClient.PutAsync($"api/stage/{_f.StageId2}/stagefield", content);
+            response2.EnsureSuccessStatusCode();
+
+            var response3 = await _f.HttpClient.GetStringAsync($"api/stage/{_f.StageId2}/stagefield");
+            var response3Dto = JsonConvert.DeserializeObject<StageFieldsDTO>(response3);
+
+            Assert.Equal(12, response3Dto.AvailableFields.Count);
+            Assert.Equal(1, response3Dto.VisibleFields.Count);
+            Assert.Equal(1, response3Dto.RequestedFields.Count);
+        }
+
+        public async Task DistributionStage2()
+        {
+            var response = await _f.HttpClient.GetStringAsync($"api/stage/{_f.StageId2}/distribution");
+            var responseDto = JsonConvert.DeserializeObject<DistributionDTO>(response);
+
+            responseDto.Dist = new List<UserWorkDTO>
+            {
+                new UserWorkDTO
+                {
+                    Id = 1,
+                    Range = new double[] {0,100}
+                },
+            };
+            var content = new StringContent(JsonConvert.SerializeObject(responseDto), Encoding.UTF8, "application/json");
+            var response2 = await _f.HttpClient.PutAsync($"api/stage/{_f.StageId2}/distribution", content);
+            response2.EnsureSuccessStatusCode();
+
+            var response3 = await _f.HttpClient.GetStringAsync($"api/stage/{_f.StageId2}/distribution");
+            var response3Dto = JsonConvert.DeserializeObject<DistributionDTO>(response3);
+
+            Assert.Equal(0, response3Dto.Dist.Single(d => d.Id == 1).Range[0]);
+            Assert.Equal(100, response3Dto.Dist.Single(d => d.Id == 1).Range[1]);
+        }
+
+        public async Task StartStudy()
+        {
+            var response = await _f.HttpClient.GetStringAsync($"api/study/{_f.StudyId}/start");
+            
+            Assert.Equal("100", response);
+        }
+
+        public async Task CompleteTasksForStage1()
+        {
+            var response = await _f.HttpClient.GetStringAsync($"api/tasks?sid={_f.StageId1}&uid=1");
+            var dto = JsonConvert.DeserializeObject<ReviewTaskListDTO>(response);
+
+            Assert.Equal(100, dto.Tasks.Count);
+
+            for (int i = 0; i < dto.Tasks.Count; i++)
+            {
+                var reviewTask = dto.Tasks.ElementAt(i);
+                reviewTask.TaskState = TaskState.Done;
+
+                // set half half between true and false
+                reviewTask.Data.ElementAt(1).Value = i % 2 == 0 ? "false" : "true";
+
+                var content = new StringContent(JsonConvert.SerializeObject(reviewTask), Encoding.UTF8, "application/json");
+                var response2 = await _f.HttpClient.PutAsync($"api/tasks", content);
+                response2.EnsureSuccessStatusCode();
+            }
+
+            // check that there are no tasks left
+            var response3 = await _f.HttpClient.GetStringAsync($"api/tasks?sid={_f.StageId1}&uid=1");
+            var dto3 = JsonConvert.DeserializeObject<ReviewTaskListDTO>(response3);
+            Assert.Equal(0, dto3.Tasks.Count);
+        }
+
+        public async Task CompleteTasksForStage2()
+        {
+            var response = await _f.HttpClient.GetStringAsync($"api/tasks?sid={_f.StageId2}&uid=1");
+            var dto = JsonConvert.DeserializeObject<ReviewTaskListDTO>(response);
+
+            Assert.Equal(50, dto.Tasks.Count);
+
+
+
+            //for (int i = 0; i < dto.Tasks.Count; i++)
+            //{
+            //    var reviewTask = dto.Tasks.ElementAt(i);
+            //    reviewTask.TaskState = TaskState.Done;
+
+            //    // set half half between true and false
+            //    reviewTask.Data.ElementAt(1).Value = i % 2 == 0 ? "false" : "true";
+
+            //    var content = new StringContent(JsonConvert.SerializeObject(reviewTask), Encoding.UTF8, "application/json");
+            //    var response2 = await _f.HttpClient.PutAsync($"api/tasks", content);
+            //    response2.EnsureSuccessStatusCode();
+            //}
         }
 
     }
