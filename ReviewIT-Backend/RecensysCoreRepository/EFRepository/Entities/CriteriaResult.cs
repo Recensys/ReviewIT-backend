@@ -9,7 +9,6 @@ namespace RecensysCoreRepository.EFRepository.Entities
 
     public class CriteriaResult
     {
-        [ForeignKey("Article")]
         public int Id { get; set; }
         public int ArticleId { get; set; }
         public Article Article { get; set; }
