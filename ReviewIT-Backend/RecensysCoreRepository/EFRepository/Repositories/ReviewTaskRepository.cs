@@ -42,7 +42,7 @@ namespace RecensysCoreRepository.EFRepository.Repositories
 
             // Find Tasks and populate data
             var taskDtos = (from t in _context.Tasks
-                where t.StageId == stageId && t.UserId == userId
+                where t.StageId == stageId && t.UserId == userId && t.TaskState != TaskState.Done
                 select new ReviewTaskDTO
                 {
                     Id = t.Id,
