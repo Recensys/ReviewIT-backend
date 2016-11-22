@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Linq;
 using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 using RecensysCoreRepository.DTOs;
 using RecensysCoreRepository.EFRepository.Entities;
 using RecensysCoreRepository.Repositories;
@@ -19,7 +21,7 @@ namespace RecensysCoreRepository.EFRepository.Repositories
 
         public void Dispose()
         {
-            _context.Dispose();
+            
         }
 
         public ArticleDTO Read(int id)
@@ -69,12 +71,12 @@ namespace RecensysCoreRepository.EFRepository.Repositories
 
         public bool AddCriteriaResult(int criteriaId, int stageId, int articleId)
         {
-            _context.CriteriaResults.Add(new CriteriaResult
+            var article = _context.Articles.Single(a => a.Id == articleId);
+            article.CriteriaResult = new CriteriaResult
             {
-                ArticleId = articleId,
                 CriteriaId = criteriaId,
-                StageId = stageId
-            });
+                StageId = stageId,
+            };
             return _context.SaveChanges() > 0;
         }
 
@@ -89,23 +91,36 @@ namespace RecensysCoreRepository.EFRepository.Repositories
                 where s.Id == currentStage
                 select s.StudyId).Single();
 
+            {
+                
+            }
+
             //For some reason, this does not return the article if it's not affected by a criteria, so it has to be done with two calls to the db
             //return (from a in _context.Articles
-            //        where a.StudyId == studyId && (!a.CriteriaResultId.HasValue || a.CriteriaResult.Criteria.Type != CriteriaType.Exclusion)
+            //        where a.StudyId == studyId && (!a.CriteriaResultId2.HasValue || a.CriteriaResult.Criteria.Type != CriteriaType.Exclusion)
             //        select a.Id).ToArray();
 
-            var unAffectedArticles = (from a in _context.Articles
-                                      where a.StudyId == studyId && !a.CriteriaResultId.HasValue
-                                      select a.Id).ToArray();
 
-            var includedArticles = (from a in _context.Articles
-                                    where a.StudyId == studyId && a.CriteriaResultId.HasValue && a.CriteriaResult.Criteria.Type != CriteriaType.Exclusion
-                                    select a.Id).ToArray();
+            //var unAffectedArticles = (from a in _context.Articles
+            //                          where a.StudyId == studyId && a.CriteriaResult == null
+            //                          select a.Id).ToArray();
 
-            var allArticleIds = unAffectedArticles.Concat(includedArticles);
+            //var includedArticles = (from a in _context.Articles
+            //                        where a.StudyId == studyId && a.CriteriaResultId2.HasValue && a.CriteriaResult.Criteria.Type != CriteriaType.Exclusion
+            //                        select a.Id).ToArray();
 
-            return allArticleIds;
+            //var allArticleIds = unAffectedArticles.Concat(includedArticles);
 
+            string query = $@"SELECT temp.Id, temp.CriteriaResultId2, temp.StudyId
+                        FROM 
+	                        (SELECT dbo.Articles.Id, dbo.Articles.CriteriaResultId2, dbo.Articles.StudyId, dbo.Criterias.Type
+	                        FROM dbo.Articles
+	                        FULL OUTER JOIN dbo.CriteriaResults ON dbo.Articles.Id = dbo.CriteriaResults.ArticleId
+	                        FULL OUTER JOIN dbo.Criterias ON dbo.Criterias.Id = dbo.CriteriaResults.CriteriaId
+	                        WHERE dbo.Articles.StudyId = {studyId}) AS temp
+                        WHERE temp.Type IS NULL OR temp.Type != 1";
+
+            return _context.Articles.FromSql(query).Select(a => a.Id);
         }
 
         public IEnumerable<ArticleWithRequestedFieldsDTO> GetAllWithRequestedFields(int stageId)

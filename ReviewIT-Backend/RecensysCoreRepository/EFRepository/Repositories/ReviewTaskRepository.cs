@@ -21,7 +21,7 @@ namespace RecensysCoreRepository.EFRepository.Repositories
 
         public void Dispose()
         {
-            _context.Dispose();
+            
         }
 
         public ReviewTaskListDTO GetListDto(int stageId, int userId)

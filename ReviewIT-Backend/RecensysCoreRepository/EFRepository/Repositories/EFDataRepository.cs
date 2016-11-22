@@ -17,7 +17,7 @@ namespace RecensysCoreRepository.EFRepository.Repositories
 
         public void Dispose()
         {
-            _context.Dispose();
+            
         }
 
         public DataDTO Read(int id)

@@ -25,7 +25,7 @@ namespace RecensysCoreRepository.EFRepository.Repositories
 
         public void Dispose()
         {
-            _context.Dispose();
+            
         }
         
         public StageFieldsDTO Get(int stageId)

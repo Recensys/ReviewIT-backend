@@ -21,7 +21,7 @@ namespace RecensysCoreRepository.EFRepository.Repositories
 
         public void Dispose()
         {
-            _context.Dispose();
+            
         }
         public int Create(int stageId, int articleId, int ownerId, int[] requestedFields)
         {

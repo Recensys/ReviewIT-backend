@@ -19,7 +19,7 @@ namespace RecensysCoreRepository.EFRepository.Repositories
 
         public void Dispose()
         {
-            _context.Dispose();
+            
         }
 
         public void Post(int studyId, ICollection<StudySourceItemDTO> dtos)

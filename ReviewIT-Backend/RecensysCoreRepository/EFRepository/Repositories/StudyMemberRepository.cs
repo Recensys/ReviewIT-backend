@@ -20,7 +20,7 @@ namespace RecensysCoreRepository.EFRepository.Repositories
 
         public void Dispose()
         {
-            _context.Dispose();
+            
         }
 
         public ICollection<StudyMemberDTO> Get(int studyId)
