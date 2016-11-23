@@ -8,7 +8,6 @@ namespace RecensysCoreRepository.EFRepository.Entities
         public int StudyId { get; set; }
         public virtual Study Study { get; set; }
 
-        public int? CriteriaResultId { get; set; }
         public CriteriaResult CriteriaResult { get; set; }
 
         //public virtual ICollection<TaskEntity> Tasks { get; set; } = new List<TaskEntity>();

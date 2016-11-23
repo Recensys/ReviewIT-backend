@@ -107,12 +107,7 @@ namespace RecensysCoreRepository.EFRepository
                 .WithMany(cr => cr.CriteriaResults)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            modelBuilder.Entity<Article>()
-                .HasOne(a => a.CriteriaResult)
-                .WithOne(cr => cr.Article)
-                .HasForeignKey<CriteriaResult>(cr => cr.ArticleId)
-                .OnDelete(DeleteBehavior.Restrict);
-
+            
 
         }
 
