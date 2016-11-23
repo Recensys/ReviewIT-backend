@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Moq;
 using RecensysCoreRepository.DTOs;
 using RecensysCoreRepository.EFRepository;
 using RecensysCoreRepository.EFRepository.Entities;
@@ -208,6 +209,98 @@ namespace RecensysCoreRepository.Tests.Unittests
 
                 Assert.Equal(2, r.Count);
             }
+        }
+
+        [Fact(DisplayName = "TryGetNextStage() only stage returns false")]
+        public void TryGetNextStage()
+        {
+            var options = Helpers.CreateInMemoryOptions();
+            var context = new RecensysContext(options);
+            var repo = new StageDetailsRepository(context);
+            #region model
+            var studies = new List<Study>
+            {
+                new Study
+                {
+                    Id = 1,
+                    Stages = new List<Stage>
+                    {
+                        new Stage {Id = 1, StudyId = 1}
+                    }
+                }
+            };
+            #endregion
+            context.Studies.AddRange(studies);
+            context.SaveChanges();
+
+            int nextStageId;
+            int current = 1;
+
+            var result = repo.TryGetNextStage(current, out nextStageId);
+
+            Assert.False(result);
+        }
+
+        [Fact(DisplayName = "TryGetNextStage() two stages given first stage return true")]
+        public void TryGetNextStage2()
+        {
+            var options = Helpers.CreateInMemoryOptions();
+            var context = new RecensysContext(options);
+            var repo = new StageDetailsRepository(context);
+            #region model
+            var studies = new List<Study>
+            {
+                new Study
+                {
+                    Id = 1,
+                    Stages = new List<Stage>
+                    {
+                        new Stage {Id = 1, StudyId = 1},
+                        new Stage {Id = 2, StudyId = 1}
+                    }
+                }
+            };
+            #endregion
+            context.Studies.AddRange(studies);
+            context.SaveChanges();
+
+            int nextStageId;
+            int current = 1;
+
+            var result = repo.TryGetNextStage(current, out nextStageId);
+
+            Assert.True(result);
+        }
+
+        [Fact(DisplayName = "TryGetNextStage() stages with id 1 and 2, given stage 1 returns 2")]
+        public void TryGetNextStage3()
+        {
+            var options = Helpers.CreateInMemoryOptions();
+            var context = new RecensysContext(options);
+            var repo = new StageDetailsRepository(context);
+            #region model
+            var studies = new List<Study>
+            {
+                new Study
+                {
+                    Id = 1,
+                    Stages = new List<Stage>
+                    {
+                        new Stage {Id = 1, StudyId = 1},
+                        new Stage {Id = 2, StudyId = 1}
+                    }
+                }
+            };
+            #endregion
+            context.Studies.AddRange(studies);
+            context.SaveChanges();
+
+            int nextStageId;
+            int current = 1;
+
+            var result = repo.TryGetNextStage(current, out nextStageId);
+
+            Assert.Equal(2, nextStageId);
         }
     }
 }

@@ -81,6 +81,7 @@ namespace RecensysCoreRepository.EFRepository.Repositories
                 }).ToList();
         }
 
+
         public bool TryGetNextStage(int currentStageId, out int nextStageId)
         {
             var studyId = GetStudyId(currentStageId);
@@ -91,7 +92,7 @@ namespace RecensysCoreRepository.EFRepository.Repositories
                 select s.Id).ToArray();
 
             var index = Array.IndexOf(stageIds, currentStageId);
-            if (index == stageIds.Length)
+            if (index == stageIds.Length - 1)
             {
                 nextStageId = -1;
                 return false;
