@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using RecensysCoreRepository.DTOs;
 using RecensysCoreRepository.EFRepository.Entities;
@@ -65,44 +66,34 @@ namespace RecensysCoreRepository.EFRepository.Repositories
                 where c.StudyId == studyId
                 select c).ToList();
 
-            // remove stored criteria that are not passed in dto
-            if (dto.Inclusions != null)
-                foreach (var to in stored) if (dto.Inclusions.All(c => c.Id != to.Id)) _context.Criterias.Remove(to);
-            if (dto.Exclusions != null)
-                foreach (var to in stored) if (dto.Exclusions.All(c => c.Id != to.Id)) _context.Criterias.Remove(to);
+            dto.Inclusions = dto.Inclusions ?? new List<FieldCriteriaDTO>();
+            dto.Exclusions = dto.Exclusions ?? new List<FieldCriteriaDTO>();
+
+            var concatList = dto.Inclusions.Concat(dto.Exclusions).ToList();
+            foreach (var storedCriteria in stored)
+            {
+                if (concatList.All(cl => cl.Id != storedCriteria.Id))
+                {
+                    _context.Criterias.Remove(storedCriteria);
+                }
+                else
+                {
+                    var newCriteria = concatList.Single(c => c.Id == storedCriteria.Id);
+                    storedCriteria.Operator = newCriteria.Operator;
+                    storedCriteria.Value = newCriteria.Value;
+
+                    // remove the updated one from the incoming dto
+                    dto.Inclusions.Remove(newCriteria);
+                    dto.Exclusions.Remove(newCriteria);
+                }
+            }
             _context.SaveChanges();
 
-            if (dto.Inclusions != null)
-                foreach (var inclusion in dto.Inclusions)
-                {
-                    if (inclusion.Id > 0)
-                    {
-                        var c = stored.Single(cr => cr.Id == inclusion.Id);
-                        c.Operator = inclusion.Operator;
-                        c.Value = inclusion.Value;
-                    }
-                    if (inclusion.Id == 0)
-                    {
-                        _context.Criterias.Add(Map(studyId, CriteriaType.Inclusion, inclusion));
-                    }
-                }
+            foreach (var inclusion in dto.Inclusions) _context.Criterias.Add(Map(studyId, CriteriaType.Inclusion, inclusion));
+            foreach (var exclusion in dto.Exclusions) _context.Criterias.Add(Map(studyId, CriteriaType.Exclusion, exclusion));
 
-            if (dto.Exclusions != null)
-                foreach (var exclusion in dto.Exclusions)
-                {
-                    if (exclusion.Id > 0)
-                    {
-                        var c = stored.Single(cr => cr.Id == exclusion.Id);
-                        c.Operator = exclusion.Operator;
-                        c.Value = exclusion.Value;
-                    }
-                    if (exclusion.Id == 0)
-                    {
-                        var c = Map(studyId, CriteriaType.Exclusion, exclusion);
-                        _context.Criterias.Add(c);
-                    }
-                }
             return _context.SaveChanges() > 0;
+            
         }
 
         private Criteria Map(int studyId, CriteriaType type, FieldCriteriaDTO dto)
