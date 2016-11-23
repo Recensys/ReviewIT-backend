@@ -9,8 +9,8 @@ namespace RecensysCoreBLL.Tests
 {
     public class CriteriaEngineTests
     {
-        [Fact]
-        public void Evaluate__1ArticleYear2001AndInclusionCriteriaYearOver2000__Included()
+        [Fact(DisplayName = "Evaluate() Article year 2001, include year over 2000 = article included")]
+        public void Evaluate1()
         {
             var sfMock = new Mock<IStageFieldsRepository>();
             sfMock.Setup(sf => sf.Get(1, FieldType.Requested)).Returns(() => new List<FieldDTO>
@@ -30,8 +30,8 @@ namespace RecensysCoreBLL.Tests
                     {
                         Id = 1,
                         Field = new FieldDTO {DataType = DataType.Number, Id = 1},
-                        Operator = "<",
-                        Value = "2000"
+                        Value = "2000",
+                        Operator = "<"
                     }
                 }
             });
@@ -51,8 +51,8 @@ namespace RecensysCoreBLL.Tests
             articleMock.Verify(a => a.AddCriteriaResult(1,1,1), Times.Exactly(1));
         }
 
-        [Fact]
-        public void Evaluate__1ArticleYear2001AndInclusionCriteriaYearUnder2000__NotIncludedOrExcluded()
+        [Fact(DisplayName = "Evaluate() Article year 2001, include year under 2000 = article included")]
+        public void Evaluate2()
         {
             var sfMock = new Mock<IStageFieldsRepository>();
             sfMock.Setup(sf => sf.Get(1, FieldType.Requested)).Returns(() => new List<FieldDTO>
@@ -72,8 +72,8 @@ namespace RecensysCoreBLL.Tests
                     {
                         Id = 1,
                         Field = new FieldDTO {DataType = DataType.Number, Id = 1},
-                        Operator = ">",
-                        Value = "2000"
+                        Value = "2000",
+                        Operator = ">"
                     }
                 }
             });
@@ -93,9 +93,8 @@ namespace RecensysCoreBLL.Tests
             articleMock.Verify(a => a.AddCriteriaResult(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>()), Times.Exactly(0));
         }
 
-        // [Fact(DisplayName = "AddProduct() returns true when Create() returns true in IProductRepo")]
-        [Fact(DisplayName = "Evaluate() include year > 2000 && exclude year < 2005 given year 2002 = included")]
-        public void Evaluate_Year_IncludeOver2000AndExcludeUnder2005_YearIs2002__Included()
+        [Fact(DisplayName = "Evaluate() Article year 2001, include year > 2000 && exclude year < 2005 given year 2002 = included")]
+        public void Evaluate3()
         {
             var sfMock = new Mock<IStageFieldsRepository>();
             sfMock.Setup(sf => sf.Get(1, FieldType.Requested)).Returns(() => new List<FieldDTO>
