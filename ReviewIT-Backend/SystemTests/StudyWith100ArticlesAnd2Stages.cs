@@ -5,6 +5,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
@@ -51,11 +52,11 @@ namespace SystemTests
 
 
 
-    public class Tests : IClassFixture<TestFixture>
+    public class StudyWith100ArticlesAnd2Stages : IClassFixture<TestFixture>
     {
         private TestFixture _f;
 
-        public Tests(TestFixture fixture)
+        public StudyWith100ArticlesAnd2Stages(TestFixture fixture)
         {
             _f = fixture;
         }
@@ -64,20 +65,34 @@ namespace SystemTests
         [Fact(DisplayName = "Go through a whole study with 100 articles and 2 phases")]
         public async Task TestRunner()
         {
+            // setup study
             await Study_Post_Get();
             await Source_Post();
             await AddIsGSDField();
             await AddIsGSDCriteria();
+            await AddIsANiceYearFieldd();
+            await AddIsANiceYearCriteria();
             await AddUser();
+
+            // setup first stage
             await AddStage();
             await StageFieldsStage1();
             await DistributionStage1();
-            //await AddStage2();
-            //await StageFieldsStage2();
-            //await DistributionStage2();
+
+            // setup second stage
+            await AddStage2();
+            await StageFieldsStage2();
+            await DistributionStage2();
+
+            // conduct study
             await StartStudy();
             await CompleteTasksForStage1();
             await CompleteTasksForStage2();
+        }
+
+        public async Task TestThrow()
+        {
+            Assert.False(true);
         }
 
         //[Fact(DisplayName = "Post new study")]
@@ -176,6 +191,60 @@ namespace SystemTests
             Assert.Equal(0, response4Dto.Inclusions.Count);
         }
 
+        public async Task AddIsANiceYearFieldd()
+        {
+            var response = await _f.HttpClient.GetStringAsync($"api/study/{_f.StudyId}/field");
+            var responseDto = JsonConvert.DeserializeObject<FieldDTO[]>(response).ToList();
+
+            Assert.Equal(14, responseDto.Count);
+            var niceYearField = new FieldDTO
+            {
+                DataType = DataType.Boolean,
+                Name = "Is a nice year?"
+            };
+            responseDto.Add(niceYearField);
+
+            var content = new StringContent(JsonConvert.SerializeObject(responseDto), Encoding.UTF8, "application/json");
+            var response2 = await _f.HttpClient.PutAsync($"api/study/{_f.StudyId}/field", content);
+            response2.EnsureSuccessStatusCode();
+
+            var response3 = await _f.HttpClient.GetStringAsync($"api/study/{_f.StudyId}/field");
+            var response3Dto = JsonConvert.DeserializeObject<FieldDTO[]>(response3);
+
+            Assert.Equal(15, response3Dto.Length);
+        }
+
+        public async Task AddIsANiceYearCriteria()
+        {
+            // Search for isGSD field
+            var response = await _f.HttpClient.GetStringAsync($"api/study/{_f.StudyId}/field/search?term=Is a nice year?");
+            var responseDto = JsonConvert.DeserializeObject<FieldDTO[]>(response);
+            var niceYearField = responseDto.Single(dto => dto.Name == "Is a nice year?");
+
+            var response2 = await _f.HttpClient.GetStringAsync($"api/study/{_f.StudyId}/criteria");
+            var response2Dto = JsonConvert.DeserializeObject<CriteriaDTO>(response2);
+
+            Assert.Equal(0, response2Dto.Inclusions.Count);
+            Assert.Equal(1, response2Dto.Exclusions.Count);
+            var isGsdField = new FieldCriteriaDTO
+            {
+                Field = niceYearField,
+                Operator = "==",
+                Value = "true"
+            };
+            response2Dto.Inclusions.Add(isGsdField);
+
+            var content = new StringContent(JsonConvert.SerializeObject(response2Dto), Encoding.UTF8, "application/json");
+            var response3 = await _f.HttpClient.PutAsync($"api/study/{_f.StudyId}/criteria", content);
+            response3.EnsureSuccessStatusCode();
+
+            var response4 = await _f.HttpClient.GetStringAsync($"api/study/{_f.StudyId}/criteria");
+            var response4Dto = JsonConvert.DeserializeObject<CriteriaDTO>(response4);
+
+            Assert.Equal(1, response4Dto.Exclusions.Count);
+            Assert.Equal(1, response4Dto.Inclusions.Count);
+        }
+
         //[Fact(DisplayName = "Add a user to the study")]
         public async Task AddUser()
         {
@@ -253,7 +322,7 @@ namespace SystemTests
             var response3 = await _f.HttpClient.GetStringAsync($"api/stage/{_f.StageId1}/stagefield");
             var response3Dto = JsonConvert.DeserializeObject<StageFieldsDTO>(response3);
 
-            Assert.Equal(12, response3Dto.AvailableFields.Count);
+            Assert.Equal(13, response3Dto.AvailableFields.Count);
             Assert.Equal(1, response3Dto.VisibleFields.Count);
             Assert.Equal(1, response3Dto.RequestedFields.Count);
         }
@@ -290,12 +359,12 @@ namespace SystemTests
 
             Assert.Equal(14, responseDto.AvailableFields.Count);
 
-            var titleField = responseDto.AvailableFields.Single(f => f.Name == "Title");
-            responseDto.AvailableFields.Remove(titleField);
-            responseDto.VisibleFields.Add(titleField);
-            var isGsdField = responseDto.AvailableFields.Single(f => f.Name == "IsGSD?");
-            responseDto.AvailableFields.Remove(isGsdField);
-            responseDto.RequestedFields.Add(isGsdField);
+            var yearField = responseDto.AvailableFields.Single(f => f.Name == "Year");
+            responseDto.AvailableFields.Remove(yearField);
+            responseDto.VisibleFields.Add(yearField);
+            var isNiceYearField = responseDto.AvailableFields.Single(f => f.Name == "Is a nice year?");
+            responseDto.AvailableFields.Remove(isNiceYearField);
+            responseDto.RequestedFields.Add(isNiceYearField);
 
             var content = new StringContent(JsonConvert.SerializeObject(responseDto), Encoding.UTF8, "application/json");
             var response2 = await _f.HttpClient.PutAsync($"api/stage/{_f.StageId2}/stagefield", content);
@@ -304,7 +373,7 @@ namespace SystemTests
             var response3 = await _f.HttpClient.GetStringAsync($"api/stage/{_f.StageId2}/stagefield");
             var response3Dto = JsonConvert.DeserializeObject<StageFieldsDTO>(response3);
 
-            Assert.Equal(12, response3Dto.AvailableFields.Count);
+            Assert.Equal(13, response3Dto.AvailableFields.Count);
             Assert.Equal(1, response3Dto.VisibleFields.Count);
             Assert.Equal(1, response3Dto.RequestedFields.Count);
         }
@@ -373,20 +442,23 @@ namespace SystemTests
 
             Assert.Equal(50, dto.Tasks.Count);
 
+            for (int i = 0; i < dto.Tasks.Count; i++)
+            {
+                var reviewTask = dto.Tasks.ElementAt(i);
+                reviewTask.TaskState = TaskState.Done;
 
+                // set half half between true and false
+                reviewTask.Data.ElementAt(1).Value = i % 2 == 0 ? "false" : "true";
 
-            //for (int i = 0; i < dto.Tasks.Count; i++)
-            //{
-            //    var reviewTask = dto.Tasks.ElementAt(i);
-            //    reviewTask.TaskState = TaskState.Done;
+                var content = new StringContent(JsonConvert.SerializeObject(reviewTask), Encoding.UTF8, "application/json");
+                var response2 = await _f.HttpClient.PutAsync($"api/tasks", content);
+                response2.EnsureSuccessStatusCode();
+            }
 
-            //    // set half half between true and false
-            //    reviewTask.Data.ElementAt(1).Value = i % 2 == 0 ? "false" : "true";
-
-            //    var content = new StringContent(JsonConvert.SerializeObject(reviewTask), Encoding.UTF8, "application/json");
-            //    var response2 = await _f.HttpClient.PutAsync($"api/tasks", content);
-            //    response2.EnsureSuccessStatusCode();
-            //}
+            // check that there are no tasks left
+            var response3 = await _f.HttpClient.GetStringAsync($"api/tasks?sid={_f.StageId2}&uid=1");
+            var dto3 = JsonConvert.DeserializeObject<ReviewTaskListDTO>(response3);
+            Assert.Equal(0, dto3.Tasks.Count);
         }
 
     }
