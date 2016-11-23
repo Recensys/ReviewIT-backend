@@ -147,5 +147,82 @@ namespace RecensysCoreBLL.Tests
         }
 
 
+        [Fact(DisplayName = "Evaluate() criteria not run on a field not related to the stage")]
+        public void Evaluate4()
+        {
+            var sfMock = new Mock<IStageFieldsRepository>();
+            sfMock.Setup(sf => sf.Get(1, FieldType.Requested)).Returns(() => new List<FieldDTO>
+            {
+                new FieldDTO {Id = 1, DataType = DataType.Number}
+            });
+
+            var sdMock = new Mock<IStageDetailsRepository>();
+            sdMock.Setup(s => s.GetStudyId(1)).Returns(() => 1);
+
+            var criteriaMock = new Mock<ICriteriaRepository>();
+            criteriaMock.Setup(c => c.Read(1)).Returns(() => new CriteriaDTO
+            {
+                Inclusions = new List<FieldCriteriaDTO>
+                {
+                    new FieldCriteriaDTO
+                    {
+                        Id = 1,
+                        Field = new FieldDTO {DataType = DataType.Boolean, Id = 2},
+                        Operator = "==",
+                        Value = "true"
+                    }
+                }
+            });
+
+            var articleMock = new Mock<IArticleRepository>();
+            articleMock.Setup(a => a.AddCriteriaResult(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>()))
+                .Returns(() => true);
+            articleMock.Setup(a => a.GetAllActive(1)).Returns(() => new List<int> { 1 });
+
+            var dataMock = new Mock<IDataRepository>();
+            dataMock.Setup(d => d.Read(1, 1)).Returns(() => new DataDTO { Id = 1, Value = "2002" });
+
+            var criteriaEngine = new CriteriaEngine.CriteriaEngine(sfMock.Object, criteriaMock.Object, sdMock.Object, articleMock.Object, dataMock.Object);
+
+            criteriaEngine.Evaluate(1);
+
+            articleMock.Verify(a => a.AddCriteriaResult(1, It.IsAny<int>(), It.IsAny<int>()), Times.Never);
+        }
+
+        [Fact(DisplayName = "Evaluate() no criteria = no results")]
+        public void Evaluate5()
+        {
+            var sfMock = new Mock<IStageFieldsRepository>();
+            sfMock.Setup(sf => sf.Get(1, FieldType.Requested)).Returns(() => new List<FieldDTO>
+            {
+                new FieldDTO {Id = 1, DataType = DataType.Number}
+            });
+
+            var sdMock = new Mock<IStageDetailsRepository>();
+            sdMock.Setup(s => s.GetStudyId(1)).Returns(() => 1);
+
+            var criteriaMock = new Mock<ICriteriaRepository>();
+            criteriaMock.Setup(c => c.Read(1)).Returns(() => new CriteriaDTO
+            {
+                
+            });
+
+            var articleMock = new Mock<IArticleRepository>();
+            articleMock.Setup(a => a.AddCriteriaResult(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>()))
+                .Returns(() => true);
+            articleMock.Setup(a => a.GetAllActive(1)).Returns(() => new List<int> { 1 });
+
+            var dataMock = new Mock<IDataRepository>();
+            dataMock.Setup(d => d.Read(1, 1)).Returns(() => new DataDTO { Id = 1, Value = "2002" });
+
+            var criteriaEngine = new CriteriaEngine.CriteriaEngine(sfMock.Object, criteriaMock.Object, sdMock.Object, articleMock.Object, dataMock.Object);
+
+            criteriaEngine.Evaluate(1);
+
+            articleMock.Verify(a => a.AddCriteriaResult(1, It.IsAny<int>(), It.IsAny<int>()), Times.Never);
+        }
+
+        
+
     }
 }
