@@ -5,7 +5,7 @@ namespace RecensysCoreRepository.DTOs
 {
     public enum DataType
     {
-        String, Boolean, Radio, Checkbox, Number, Resource
+        String, Boolean, Radio, Checkbox, Number, Resource, Pdf
     }
 
     public class FieldDTO
