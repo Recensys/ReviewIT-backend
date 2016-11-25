@@ -222,7 +222,47 @@ namespace RecensysCoreBLL.Tests
             articleMock.Verify(a => a.AddCriteriaResult(1, It.IsAny<int>(), It.IsAny<int>()), Times.Never);
         }
 
-        
+        [Fact(DisplayName = "Evaluate() two inclusion criteria for year = both are evaluated")]
+        public void Evaluate6()
+        {
+            var sfMock = new Mock<IStageFieldsRepository>();
+            sfMock.Setup(sf => sf.Get(1, FieldType.Requested)).Returns(() => new List<FieldDTO>
+            {
+                new FieldDTO {Id = 1, DataType = DataType.Number}
+            });
+
+            var sdMock = new Mock<IStageDetailsRepository>();
+            sdMock.Setup(s => s.GetStudyId(1)).Returns(() => 1);
+
+            var criteriaMock = new Mock<ICriteriaRepository>();
+            criteriaMock.Setup(c => c.Read(1)).Returns(() => new CriteriaDTO
+            {
+                Inclusions = new List<FieldCriteriaDTO>
+                {
+                    new FieldCriteriaDTO
+                    {
+                        Id = 1,
+                        Field = new FieldDTO {Id = 1, DataType = DataType.Boolean},
+                        Operator = "==",
+                        Value = "true"
+                    }
+                }
+            });
+
+            var articleMock = new Mock<IArticleRepository>();
+            articleMock.Setup(a => a.AddCriteriaResult(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>()))
+                .Returns(() => true);
+            articleMock.Setup(a => a.GetAllActive(1)).Returns(() => new List<int> { 1 });
+
+            var dataMock = new Mock<IDataRepository>();
+            dataMock.Setup(d => d.Read(1, 1)).Returns(() => new DataDTO { Id = 1, Value = "true" });
+
+            var criteriaEngine = new CriteriaEngine.CriteriaEngine(sfMock.Object, criteriaMock.Object, sdMock.Object, articleMock.Object, dataMock.Object);
+
+            criteriaEngine.Evaluate(1);
+
+            articleMock.Verify(a => a.AddCriteriaResult(1, It.IsAny<int>(), It.IsAny<int>()), Times.Exactly(2));
+        }
 
     }
 }
