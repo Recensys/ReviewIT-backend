@@ -13,5 +13,6 @@ namespace RecensysCoreRepository.Repositories
         bool Update(StudyDetailsDTO dto);
         int Create(StudyDetailsDTO dto);
         bool Delete(int id);
+        IEnumerable<int> GetStageIds(int studyId);
     }
 }

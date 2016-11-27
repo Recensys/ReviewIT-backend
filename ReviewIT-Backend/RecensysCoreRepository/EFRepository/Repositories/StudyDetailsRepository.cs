@@ -68,6 +68,13 @@ namespace RecensysCoreRepository.EFRepository.Repositories
             return _context.SaveChanges() > 0;
         }
 
+        public IEnumerable<int> GetStageIds(int studyId)
+        {
+            return from s in _context.Stages
+                where s.StudyId == studyId
+                select s.Id;
+        }
+
         public IEnumerable<UserDetailsDTO> GetAllResearchers(int studyId)
         {
             return from us in _context.UserStudyRelations

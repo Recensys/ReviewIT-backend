@@ -8,6 +8,6 @@ namespace RecensysCoreRepository.DTOs
     public class ArticleDTO
     {
         public int Id { get; set; }
-        public Dictionary<FieldDTO, DataDTO> Data { get; set; }
+        public Dictionary<string, string> Data { get; set; }
     }
 }

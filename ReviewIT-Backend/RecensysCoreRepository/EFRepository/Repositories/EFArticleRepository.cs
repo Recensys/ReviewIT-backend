@@ -23,34 +23,7 @@ namespace RecensysCoreRepository.EFRepository.Repositories
         {
             
         }
-
-        public ArticleDTO Read(int id)
-        {
-            return (from a in _context.Articles
-                where a.Id == id
-                select new ArticleDTO
-                {
-                    Id = a.Id,
-                    Data = (from d in a.Data
-                            select new
-                            {
-                                field = new FieldDTO
-                                {
-                                    Id = d.Field.Id,
-                                    Name = d.Field.Name,
-                                    DataType = d.Field.DataType
-                                },
-                                data = new DataDTO
-                                {
-                                    Id = d.Id,
-                                    Value = d.Value
-                                }
-                            })
-                        .ToDictionary(r => r.field, t => t.data)
-                }).Single();
-
-        }
-
+        
         public bool AddToStage(int stageId, int articleId)
         {
             _context.CriteriaResults.Add(new CriteriaResult
@@ -85,15 +58,12 @@ namespace RecensysCoreRepository.EFRepository.Repositories
         /// </summary>
         /// <param name="currentStage"></param>
         /// <returns></returns>
-        public IEnumerable<int> GetAllActive(int currentStage)
+        public IEnumerable<int> GetAllActiveIds(int currentStage)
         {
             int studyId = (from s in _context.Stages
                 where s.Id == currentStage
                 select s.StudyId).Single();
-
-            {
-                
-            }
+            
 
             //For some reason, this does not return the article if it's not affected by a criteria, so it has to be done with two calls to the db
             //return (from a in _context.Articles
@@ -123,9 +93,23 @@ namespace RecensysCoreRepository.EFRepository.Repositories
             return _context.Articles.FromSql(query).Select(a => a.Id);
         }
 
+        public IEnumerable<ArticleDTO> GetAllActive(int stage)
+        {
+            var articleIds = GetAllActiveIds(stage).ToArray();
+
+            return from i in _context.Articles
+                   where articleIds.Any(aid => aid == i.Id)
+                   select new ArticleDTO()
+                   {
+                       Id = i.Id,
+                       Data = (from d in i.Data
+                                select new { d.Field.Name, d.Value }).ToDictionary(r => r.Name, r => r.Value)
+                   };
+        }
+
         public IEnumerable<ArticleWithRequestedFieldsDTO> GetAllWithRequestedFields(int stageId)
         {
-            var articleIds = GetAllActive(stageId).ToArray();
+            var articleIds = GetAllActiveIds(stageId).ToArray();
 
             return from i in _context.Articles
                 where articleIds.Any(aid => aid == i.Id)

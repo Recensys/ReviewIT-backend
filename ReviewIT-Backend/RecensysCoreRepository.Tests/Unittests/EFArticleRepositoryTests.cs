@@ -42,7 +42,7 @@ namespace RecensysCoreRepository.Tests.Unittests
         //    var r = context.Articles.FromSql(query).Select(a => a.Id).ToList();
         //}
 
-        //[Fact(DisplayName = "GetAllActive() one included article = one articleId returned")]
+        //[Fact(DisplayName = "GetAllActiveIds() one included article = one articleId returned")]
         //public void GetAllActiveTest1()
         //{
         //    var options = Helpers.CreateInMemoryOptions();
@@ -75,13 +75,13 @@ namespace RecensysCoreRepository.Tests.Unittests
 
         //    using (repo)
         //    {
-        //        var r = repo.GetAllActive(1).ToList();
+        //        var r = repo.GetAllActiveIds(1).ToList();
 
         //        Assert.Equal(1, r.Count(id => id == 1));
         //    }
         //}
 
-        //[Fact(DisplayName = "GetAllActive() one excluded article = no articleIds returned")]
+        //[Fact(DisplayName = "GetAllActiveIds() one excluded article = no articleIds returned")]
         //public void GetAllActiveTest2()
         //{
         //    var options = Helpers.CreateInMemoryOptions();
@@ -114,7 +114,7 @@ namespace RecensysCoreRepository.Tests.Unittests
 
         //    using (repo)
         //    {
-        //        var r = repo.GetAllActive(1).ToList();
+        //        var r = repo.GetAllActiveIds(1).ToList();
 
         //        Assert.Equal(0, r.Count(id => id == 1));
         //    }
@@ -122,7 +122,7 @@ namespace RecensysCoreRepository.Tests.Unittests
 
         
 
-        //[Fact(DisplayName = "GetAllActive() one excluded and one included article = included articleId returned")]
+        //[Fact(DisplayName = "GetAllActiveIds() one excluded and one included article = included articleId returned")]
         //public void GetAllActiveTest3()
         //{
         //    var options = Helpers.CreateInMemoryOptions();
@@ -159,13 +159,13 @@ namespace RecensysCoreRepository.Tests.Unittests
 
         //    using (repo)
         //    {
-        //        var r = repo.GetAllActive(1).ToList();
+        //        var r = repo.GetAllActiveIds(1).ToList();
 
         //        Assert.Equal(1, r.Count(id => id == 2));
         //    }
         //}
 
-        //[Fact(DisplayName = "GetAllActive() 3 stages with 1 article excluded in first stage = no articleIds returned")]
+        //[Fact(DisplayName = "GetAllActiveIds() 3 stages with 1 article excluded in first stage = no articleIds returned")]
         //public void GetAllActiveTest4()
         //{
         //    var options = Helpers.CreateInMemoryOptions();
@@ -206,14 +206,14 @@ namespace RecensysCoreRepository.Tests.Unittests
 
         //    using (repo)
         //    {
-        //        var r = repo.GetAllActive(3).ToList();
+        //        var r = repo.GetAllActiveIds(3).ToList();
 
         //        Assert.Equal(0, r.Count(id => id == 1));
         //    }
         //}
 
 
-        //[Fact(DisplayName = "GetAllActive() 3 stages with 1 article included in first stage = one articleId returned")]
+        //[Fact(DisplayName = "GetAllActiveIds() 3 stages with 1 article included in first stage = one articleId returned")]
         //public void GetAllActiveTest5()
         //{
         //    var options = Helpers.CreateInMemoryOptions();
@@ -253,13 +253,13 @@ namespace RecensysCoreRepository.Tests.Unittests
 
         //    using (repo)
         //    {
-        //        var r = repo.GetAllActive(3).ToList();
+        //        var r = repo.GetAllActiveIds(3).ToList();
 
         //        Assert.Equal(1, r.Count(id => id == 1));
         //    }
         //}
 
-        //[Fact(DisplayName = "GetAllActive() one article with no criteria = one articleId returned")]
+        //[Fact(DisplayName = "GetAllActiveIds() one article with no criteria = one articleId returned")]
         //public async Task GetAllActiveTest6()
         //{
         //    var options = Helpers.CreateInMemoryOptions();
@@ -296,14 +296,14 @@ namespace RecensysCoreRepository.Tests.Unittests
 
         //    using (repo)
         //    {
-        //        var r = repo.GetAllActive(1).ToList();
+        //        var r = repo.GetAllActiveIds(1).ToList();
 
         //        Assert.Equal(1, r.Count(id => id == 1));
         //    }
         //}
 
 
-        //[Fact(DisplayName = "GetAllActive() one article with no criteria and one with inclusion = two articleIds returned")]
+        //[Fact(DisplayName = "GetAllActiveIds() one article with no criteria and one with inclusion = two articleIds returned")]
         //public void GetAllActiveTest7()
         //{
         //    var options = Helpers.CreateInMemoryOptions();
@@ -351,7 +351,7 @@ namespace RecensysCoreRepository.Tests.Unittests
             
         //    using (repo)
         //    {
-        //        var r = repo.GetAllActive(1).ToList();
+        //        var r = repo.GetAllActiveIds(1).ToList();
 
         //        Assert.Equal(1, r.Count(id => id == 1));
         //        Assert.Equal(1, r.Count(id => id == 2));
@@ -359,7 +359,7 @@ namespace RecensysCoreRepository.Tests.Unittests
         //}
 
 
-        //[Fact(DisplayName = "GetAllActive() one article with no criteria and one with exclusion = one articleId returned")]
+        //[Fact(DisplayName = "GetAllActiveIds() one article with no criteria and one with exclusion = one articleId returned")]
         //public void GetAllActiveTest8()
         //{
         //    var options = Helpers.CreateInMemoryOptions();
@@ -407,7 +407,7 @@ namespace RecensysCoreRepository.Tests.Unittests
 
         //    using (repo)
         //    {
-        //        var r = repo.GetAllActive(1).ToList();
+        //        var r = repo.GetAllActiveIds(1).ToList();
 
         //        Assert.Equal(1, r.Count(id => id == 1));
         //        Assert.Equal(0, r.Count(id => id == 2));
@@ -415,7 +415,7 @@ namespace RecensysCoreRepository.Tests.Unittests
         //}
 
 
-        //[Fact(DisplayName = "GetAllActive() one article in other study = no active")]
+        //[Fact(DisplayName = "GetAllActiveIds() one article in other study = no active")]
         //public void GetAllActiveTest9()
         //{
         //    var options = Helpers.CreateInMemoryOptions();
@@ -471,7 +471,7 @@ namespace RecensysCoreRepository.Tests.Unittests
 
         //    using (repo)
         //    {
-        //        var r = repo.GetAllActive(3).ToList();
+        //        var r = repo.GetAllActiveIds(3).ToList();
 
         //        Assert.Equal(0, r.Count);
         //    }
