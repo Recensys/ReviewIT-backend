@@ -9,8 +9,8 @@ namespace RecensysCoreRepository.Repositories
 
         IEnumerable<UserDetailsDTO> Get();
         IEnumerable<UserDetailsDTO> GetForStudy(int studyId);
-
         bool Update(int studyId, ICollection<UserDetailsDTO> dtos);
+        UserDetailsDTO Create(UserDetailsDTO dto);
 
     }
 }

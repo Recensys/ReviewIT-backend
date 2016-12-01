@@ -62,15 +62,27 @@ namespace RecensysCoreRepository.EFRepository.Repositories
             foreach (var userDto in dtos)
             {
                 if (userDto.Id == 0)
-                {
                     _context.UserStudyRelations.Add(new UserStudyRelation {StudyId = studyId, UserId = userDto.Id });
-                }
                 if (userDto.Id > 0)
                 {
                     var s = stored.Single(st => st.UserId == userDto.Id);
                 }
             }
             return _context.SaveChanges() > 0;
+        }
+
+        public UserDetailsDTO Create(UserDetailsDTO dto)
+        {
+            var entity = new User
+            {
+                FirstName = dto.FirstName,
+                LastName = dto.LastName,
+                Email = dto.Email
+            };
+            _context.Users.Add(entity);
+            _context.SaveChanges();
+            dto.Id = entity.Id;
+            return dto;
         }
     }
 }

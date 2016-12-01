@@ -59,7 +59,16 @@ namespace RecensysCoreWebAPI.Controllers
             }
         }
 
-        
+        [HttpPost]
+        public IActionResult Post([FromBody] UserDetailsDTO dto)
+        {
+            if(!ModelState.IsValid) return BadRequest(ModelState);
+
+            using (_rdRepo)
+            {
+                return Ok(_rdRepo.Create(dto));
+            }
+        }
 
     }
 }
