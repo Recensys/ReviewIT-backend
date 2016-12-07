@@ -3,7 +3,7 @@ using Xunit;
 
 namespace RecensysCoreBLL.Tests
 {
-    public class GenericEvaluatorTests
+    public class EvaluatorTests
     {
         [Fact]
         public void Evaluate_2largerThan1_true()
@@ -43,6 +43,38 @@ namespace RecensysCoreBLL.Tests
             var r = g.Eval("true", "!=", "true");
 
             Assert.False(r);
+        }
+
+        [Fact]
+        public void String_actualEmpty_inEmpty__false()
+        {
+            var s = new StringEvaluator();
+
+            var r = s.Eval("", "", "");
+
+            // Should this be false?
+            Assert.True(r);
+        }
+
+
+        [Fact]
+        public void String_ActualContainsInput__true()
+        {
+            var s = new StringEvaluator();
+
+            var r = s.Eval("flad", "", "Jorden er flad");
+
+            Assert.True(r);
+        }
+
+        [Fact]
+        public void String_CapitalDifference__true()
+        {
+            var s = new StringEvaluator();
+
+            var r = s.Eval("FLAD", "", "flad");
+
+            Assert.True(r);
         }
     }
 }

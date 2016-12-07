@@ -28,10 +28,12 @@ namespace RecensysCoreBLL.CriteriaEngine
 
             var g = new GenericEvaluator();
             var n = new NumberEvaluator();
+            var s = new StringEvaluator();
             _evaluators = new Dictionary<DataType, IEvaluator>
             {
                 [DataType.Boolean] = g,
-                [DataType.Number] = g
+                [DataType.Number] = g,
+                [DataType.String] = s
             };
         }
 
