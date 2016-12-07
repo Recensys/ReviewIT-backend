@@ -9,6 +9,7 @@ namespace RecensysCoreRepository.Repositories
     public interface IStudyDetailsRepository: IDisposable
     {
         IEnumerable<StudyDetailsDTO> GetAll();
+        IEnumerable<StudyDetailsDTO> GetAll(int userId);
         StudyDetailsDTO Read(int id);
         bool Update(StudyDetailsDTO dto);
         int Create(StudyDetailsDTO dto);

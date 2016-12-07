@@ -23,6 +23,14 @@ namespace RecensysCoreRepository.EFRepository.Repositories
                     select new StudyDetailsDTO {Id = s.Id, Name = s.Name, Description = s.Description};
         }
 
+        public IEnumerable<StudyDetailsDTO> GetAll(int userId)
+        {
+            return from us in _context.UserStudyRelations
+                   where us.UserId == userId
+                   let s = us.Study
+                   select new StudyDetailsDTO { Id = s.Id, Name = s.Name, Description = s.Description };
+        }
+
         public StudyDetailsDTO Read(int id)
         {
             return (from s in _context.Studies
