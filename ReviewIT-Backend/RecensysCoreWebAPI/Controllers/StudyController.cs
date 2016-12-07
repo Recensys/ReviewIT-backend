@@ -1,11 +1,14 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using BibliographyParserCore.BibTex;
 using BibliographyParserCore.ItemValidators;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using RecensysCoreRepository.DTOs;
 using RecensysCoreRepository.EFRepository;
 using RecensysCoreRepository.Repositories;
@@ -22,13 +25,15 @@ namespace RecensysCoreWebAPI.Controllers
         private readonly IStudySourceRepository _soRepo;
         private readonly IStageDetailsRepository _sdRepo;
         private readonly IStudyStartEngine _ssEngine;
+        private readonly IStudyMemberRepository _studyMemberRepo;
 
-        public StudyController(IStudyDetailsRepository deRepo, IStudySourceRepository soRepo, IStageDetailsRepository sdRepo, IStudyStartEngine ssEngine)
+        public StudyController(IStudyDetailsRepository deRepo, IStudySourceRepository soRepo, IStageDetailsRepository sdRepo, IStudyStartEngine ssEngine, IStudyMemberRepository studyMemberRepo)
         {
             _deRepo = deRepo;
             _soRepo = soRepo;
             _sdRepo = sdRepo;
             _ssEngine = ssEngine;
+            _studyMemberRepo = studyMemberRepo;
         }
 
         [HttpGet("{id}/stages")]
@@ -62,8 +67,7 @@ namespace RecensysCoreWebAPI.Controllers
                 return StatusCode(500, e.Message);
             }
         }
-
-
+        
 
         [HttpPut]
         public IActionResult Put([FromBody] StudyDetailsDTO dto)
@@ -86,13 +90,13 @@ namespace RecensysCoreWebAPI.Controllers
         /// </summary>
         /// <returns>Json array of study details</returns>
         [HttpGet("list")]
-        public IActionResult GetList()
+        public IActionResult GetList([FromQuery]int uid)
         {
             try
             {
                 using (_deRepo)
                 {
-                    return Json(_deRepo.GetAll().ToArray());
+                    return Json(_deRepo.GetAll(uid).ToArray());
                 }
             }
             catch (Exception e)
@@ -102,15 +106,18 @@ namespace RecensysCoreWebAPI.Controllers
         }
 
         [HttpPost]
-        public IActionResult Post([FromBody] StudyDetailsDTO dto)
+        public IActionResult Post([FromBody] StudyDetailsDTO dto, [FromQuery]int uid)
         {
             if (!ModelState.IsValid) return BadRequest();
 
             try
             {
                 using (_deRepo)
+                using (_studyMemberRepo)
                 {
-                    return Json(_deRepo.Create(dto));
+                    var sid = _deRepo.Create(dto);
+                    _studyMemberRepo.Update(sid, new StudyMemberDTO[] {new StudyMemberDTO {Id = uid, Role = ResearcherRole.ResearchManager} });
+                    return Json(sid);
                 }
             }
             catch (Exception e)
@@ -170,6 +177,7 @@ namespace RecensysCoreWebAPI.Controllers
         [HttpGet("{id}/start")]
         public IActionResult Start(int id)
         {
+
             try
             {
                 var tasksCreated = _ssEngine.StartStudy(id);

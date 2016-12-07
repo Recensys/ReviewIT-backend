@@ -19,7 +19,8 @@
     "RecensysCoreBLL": "1.0.0-*",
     "Swashbuckle": "6.0.0-beta902",
     "Microsoft.AspNetCore.Cors": "1.0.0",
-    "Microsoft.Extensions.Configuration.UserSecrets": "1.0.0"
+    "Microsoft.Extensions.Configuration.UserSecrets": "1.0.0",
+    "Microsoft.AspNetCore.Authentication.JwtBearer": "1.0.0"
   },
 
   "tools": {
