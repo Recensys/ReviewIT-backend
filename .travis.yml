@@ -9,7 +9,7 @@ matrix:
  
 script:
   # Build the source
-  - cd reviewit-backend/RecensysCoreWebAPI
+  - cd ReviewIT-Backend/RecensysCoreWebAPI
   - dotnet restore
   - dotnet build
  
